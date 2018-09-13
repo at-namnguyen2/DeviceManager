@@ -22,7 +22,7 @@ public class UserRole {
 	
 	//@JsonIgnoreProperties("userRoles")
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false, foreignKey=@ForeignKey(name="ref_user_role111"))
+	@JoinColumn(name = "user_id", nullable = false, foreignKey=@ForeignKey(name="ref_user_role11"))
 	private User user;
 	
 	//@JsonIgnoreProperties("userRoles")

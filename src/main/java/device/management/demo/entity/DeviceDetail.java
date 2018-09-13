@@ -30,6 +30,9 @@ public class DeviceDetail {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "name", nullable = false)
+	private String name;
     
 	//@JsonIgnoreProperties("device_detail")
 	@JsonIgnore
@@ -40,11 +43,11 @@ public class DeviceDetail {
 	@Column(name = "product_id", nullable = false)
 	private String productId;
 	
-	@Column(name = "device_detail_description", nullable = false)
+	@Column(name = "device_detail_description", nullable = true)
 	private String descriptionDeviceDetail;
 
-	@Column(name = "status", columnDefinition = "TINYINT(1) default 0", nullable = false)
-	private Boolean status = false;
+	@Column(name = "status", columnDefinition = "TINYINT(1) default 1", nullable = false)
+	private Boolean status = true;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "update_date", nullable = false)
@@ -63,9 +66,10 @@ public class DeviceDetail {
 	public DeviceDetail() {
 		super();
 	}
-	public DeviceDetail(Long id, Device device, String productId, Boolean status, Date updateDate, Boolean working, List<Device_Deliver_Receive> deviceDeliverReceive) {
+	public DeviceDetail(Long id, String name, Device device, String productId, Boolean status, Date updateDate, Boolean working, List<Device_Deliver_Receive> deviceDeliverReceive) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.device = device;
 		this.productId = productId;
 		this.status = status;
@@ -81,7 +85,14 @@ public class DeviceDetail {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public Device getDevice() {
 		return device;
 	}
