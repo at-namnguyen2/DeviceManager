@@ -23,7 +23,7 @@ public class Role {
     @Column(name = "role_name", nullable = false)
     private String roleName;
     
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = true)
     private String description;
     
     //@JsonIgnoreProperties({"role","user"})
