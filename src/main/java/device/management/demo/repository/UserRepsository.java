@@ -10,12 +10,12 @@ import org.springframework.data.jpa.repository.Query;
 import device.management.demo.entity.User;
 
 public interface UserRepsository extends JpaRepository<User, Long> {
-
+	
+	
 	Optional<User> findByEmail(String email);
 	//kich hoat tai khoan nguoi dung...
-	
+
 	@Modifying
 	@Query(value = "update user set enable = 1 where id=?1", nativeQuery = true)
 	int activeUser(Long id);
-
 }

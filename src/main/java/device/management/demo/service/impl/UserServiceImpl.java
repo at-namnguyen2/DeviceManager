@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 	public User saveUser(User user) {
 		return userRepository.save(user);
 	}
+	
 	@Override
 	public User editUser(User objUser) {
 		return userRepository.save(objUser);
@@ -69,5 +70,10 @@ public class UserServiceImpl implements UserService {
 		userRepository.activeUser(id);
 		return true;
 //	}
+	}
+	@Override
+	public Optional<User> findUserByUserId(Long id) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(id);
 	}
 }

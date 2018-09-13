@@ -22,11 +22,9 @@ public class UserRole {
 	
 	//@JsonIgnoreProperties("userRoles")
 	@ManyToOne
-<<<<<<< HEAD
+
 	@JoinColumn(name = "user_id", nullable = false, foreignKey=@ForeignKey(name="ref_user_role1"))
-=======
-	@JoinColumn(name = "user_id", nullable = false, foreignKey=@ForeignKey(name="ref_user_role111"))
->>>>>>> 8a3d4a543a41d1a6405f22ef3ec3f26bb50dbd11
+
 	private User user;
 	
 	//@JsonIgnoreProperties("userRoles")
@@ -37,11 +35,13 @@ public class UserRole {
 	public UserRole() {
 		super();
 	}
+	
 	public UserRole(User user, Role role) {
 		super();
 		this.user = user;
 		this.role = role;
 	}
+	
 	public UserRole(Long id, User user, Role role) {
 		super();
 		this.id = id;

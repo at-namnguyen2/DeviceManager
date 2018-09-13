@@ -1,7 +1,6 @@
-<<<<<<< HEAD
+
 package device.management.demo.api;
-=======
->>>>>>> 8a3d4a543a41d1a6405f22ef3ec3f26bb50dbd11
+
 //package device.management.demo.api;
 //
 //import java.util.ArrayList;

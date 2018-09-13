@@ -36,24 +36,24 @@ public class Employee {
     @Column(name = "employee_name", nullable = false)
     private String employeeName;
     
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
     
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = true)
     private String phone;
     
     @Column(name = "gender", nullable = false, columnDefinition = "TINYINT(1) default 1")
     private Boolean gender = true;
     
     @Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_of_birth", nullable = false)
+	@Column(name = "date_of_birth", nullable = true)
 	@CreationTimestamp
 	private Date dateOfBirth;
     
     @Column(name = "team", nullable = false)
     private String team;
     
-    @Column(name = "avatar", nullable = false)
+    @Column(name = "avatar", nullable = true)
     private String avatar;
     
     //@JsonIgnore
