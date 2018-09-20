@@ -174,4 +174,10 @@ public class UserServiceImpl implements UserService {
 		user.setEmployee(employee);
 		return user;
 	}
+
+	@Override
+	public void saveUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
 }

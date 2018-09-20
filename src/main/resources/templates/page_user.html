@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="assets/img/basic/favicon.ico" type="image/x-icon">
+    <link href="../static/assets/css/app.css" th:href="@{/assets/css/app.css}"
+	rel="stylesheet" />
+    <link rel="icon" href="../static/assets/img/basic/favicon.ico" th:href="@{/assets/img/basic/favicon.ico}" type="image/x-icon">
     <title>Paper</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/app.css">
     <style>
         .loader {
             position: fixed;
@@ -80,7 +81,7 @@
 <aside class="main-sidebar fixed offcanvas shadow">
     <section class="sidebar">
         <div class="w-80px mt-3 mb-3 ml-3">
-            <img src="assets/img/basic/logo.png" alt="">
+            <img th:src="@{/assets/img/basic/logo.png}" alt="">
         </div>
         <div class="relative">
             <a data-toggle="collapse" href="#userSettingsCollapse" role="button" aria-expanded="false"
@@ -90,7 +91,7 @@
             <div class="user-panel p-3 light mb-2">
                 <div>
                     <div class="float-left image">
-                        <img class="user_avatar" src="assets/img/dummy/u2.png" alt="User Image">
+                        <img class="user_avatar" th:src="@{/assets/img/dummy/u2.png}" alt="User Image">
                     </div>
                     <div class="float-left info">
                         <h6 class="font-weight-light mt-2 mb-1">Alexander Pierce</h6>
@@ -172,7 +173,7 @@
         <!-- User Account-->
         <li class="dropdown custom-dropdown user user-menu">
             <a href="#" class="nav-link" data-toggle="dropdown">
-                <img src="assets/img/dummy/u6.png" class="user-image" alt="User Image">
+                <img th:src="@{/assets/img/dummy/u6.png}" class="user-image" alt="User Image">
                 <i class="icon-more_vert "></i>
             </a>
             <div class="dropdown-menu p-4">
@@ -211,7 +212,7 @@
                     <div class="col">
                         <div class="pb-3">
                             <div class="image mr-3  float-left">
-                                <img class="user_avatar no-b no-p" src="assets/img/dummy/u6.png" alt="User Image">
+                                <img class="user_avatar no-b no-p" th:src="@{/assets/img/dummy/u6.png}" alt="User Image">
                             </div>
                             <div>
                                 <h6 class="p-t-10">Alexander Pierce</h6>
@@ -263,7 +264,7 @@
                                    <li class="list-group-item">
                                        <a href="">
                                            <div class="image mr-3  float-left">
-                                               <img class="user_avatar" src="assets/img/dummy/u3.png" alt="User Image">
+                                               <img class="user_avatar" th:src="@{/assets/img/dummy/u3.png}" alt="User Image">
                                            </div>
                                            <h6 class="p-t-10">Alexander Pierce</h6>
                                            <span><i class="icon-mobile-phone"></i>+92 333470963</span>
@@ -278,14 +279,14 @@
                                    <ul class="list-group list-group-flush">
                                        <li class="list-group-item">
                                            <div class="image mr-3  float-left">
-                                               <img class="user_avatar" src="assets/img/dummy/u1.png" alt="User Image">
+                                               <img class="user_avatar" th:src="@{/assets/img/dummy/u1.png}" alt="User Image">
                                            </div>
                                            <h6 class="p-t-10">Alexander Pierce</h6>
                                            <span> +92 333470963</span>
                                        </li>
                                        <li class="list-group-item">
                                            <div class="image mr-3  float-left">
-                                               <img class="user_avatar" src="assets/img/dummy/u2.png" alt="User Image">
+                                               <img class="user_avatar" th:src="@{/assets/img/dummy/a}" alt="User Image">
                                            </div>
                                            <h6 class="p-t-10">Alexander Pierce</h6>
                                            <span> +92 333470963</span>
@@ -355,7 +356,7 @@
                               <td>
                                   <div class="avatar avatar-md mr-3 mt-1 float-left">
                                       <img height="48" width="48" class="text-green"
-                                           src="assets/fonts/icons/svg/cenz.svg"/>
+                                           th:src="@{/assets/fonts/icons/svg/cenz.svg}"/>
                                   </div>
                                   <div>
                                       <div>
@@ -374,7 +375,7 @@
                               <td>
                                   <div class="avatar avatar-md mr-3 mt-1 float-left">
                                       <img height="48" width="48" class="text-green"
-                                           src="assets/fonts/icons/svg/eth.svg"/>
+                                           th:src="@{/assets/fonts/icons/svg/eth.svg}"/>
                                   </div>
                                   <div>
                                       <div>
@@ -393,7 +394,7 @@
                               <td>
                                   <div class="avatar avatar-md mr-3 mt-1 float-left">
                                       <img height="48" width="48" class="text-green"
-                                           src="assets/fonts/icons/svg/sbd.svg"/>
+                                           th:src="@{/assets/fonts/icons/svg/sbd.svg}"/>
                                   </div>
                                   <div>
                                       <div>
@@ -412,7 +413,7 @@
                               <td>
                                   <div class="avatar avatar-md mr-3 mt-1 float-left">
                                       <img height="48" width="48" class="text-green"
-                                           src="assets/fonts/icons/svg/ada.svg"/>
+                                           th:src="@{/assets/fonts/icons/svg/ada.svg}"/>
                                   </div>
                                   <div>
                                       <div>
@@ -683,6 +684,6 @@
 </div>
 
 <!--/#app -->
-<script src="assets/js/app.js"></script>
+<script th:src="@{/assets/js/app.js}"></script>
 </body>
 </html>

@@ -58,4 +58,6 @@ public interface UserService {
    	 * @return User
    	 */
     User updateUser(RequestResponse request);
+    
+    void saveUser(User user);
 }
