@@ -1,7 +1,9 @@
 package device.management.demo.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,4 +59,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return empObj;
 	}
 
+	@Override
+	public Boolean existsByEmployee(long userId) {
+		Optional<Employee> exist = employeeRepository.findById(userId);
+		if(!exist.isPresent()) {
+			return false;
+		}
+		return true;
+		
+	}
+
+	@Override
+	public void addEmployeeFunction(String address, String avatar, Date birthDate, String employeeName, Boolean gender,
+			String phone, String team, Long user_id) {
+		employeeRepository.addEmployeeFunction(address, avatar, birthDate, employeeName, gender,
+			phone, team, user_id);	
+	}
 }

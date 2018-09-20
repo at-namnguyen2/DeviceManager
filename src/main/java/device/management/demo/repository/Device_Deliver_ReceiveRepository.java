@@ -12,6 +12,13 @@ import java.util.Date;
 
 public interface Device_Deliver_ReceiveRepository extends JpaRepository<Device_Deliver_Receive, Long> {
 
+	/**
+	 * @summary return device deliver receive return
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return Device_Deliver_Receive
+	 **/
 	Device_Deliver_Receive findByDeviceDetail(DeviceDetail deviceDetail);
 
 	/**

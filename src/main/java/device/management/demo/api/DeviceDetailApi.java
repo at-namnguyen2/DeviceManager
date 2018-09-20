@@ -33,19 +33,40 @@ public class DeviceDetailApi {
 	@Autowired
 	DeviceService deviceService;
 
+	/**
+	 * @summary get list devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return List<DeviceDetail> deviceDetail
+	 **/
 	@PostMapping(path = "/Getdevicedetails")
 	public ResponseEntity<Object> GetDeviceDetails(@RequestBody Device device) {
-		List<DeviceDetail> deviceDetail = deviceDetailService.getDeviceDetails(device);
+		List<DetailResponse> deviceDetail = deviceDetailService.getDeviceDetails(device);
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetail, HttpStatus.OK);
 	}
-
+	
+	/**
+	 * @summary edit devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return List<DeviceDetail> deviceDetail
+	 **/
 	@PutMapping(path = "/editdevicedetails")
 	public ResponseEntity<Object> editDeviceDetails(@RequestBody DeviceDetail deviceDetail) {
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetailService.editDeviceDetails(deviceDetail), HttpStatus.OK);
 	}
 
+	/**
+	 * @summary del devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return String message
+	 **/
 	// only delete device if record in device_Deliver_Receive have field date return
 	// not null validation return field form font end
 	@DeleteMapping(path = "/deldevicedetails")
@@ -59,7 +80,14 @@ public class DeviceDetailApi {
 		return new ResponseEntity<>("delete Device Successed", HttpStatus.OK);
 	}
 
-	// filter devicedetails not user and normal for allocation
+	/**
+	 * @summary filter devicedetails not used and normal for allocation via name or catalog
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return String message
+	 **/
+	// filter devicedetails not used and normal for allocation
 	@PostMapping(path = "/filterdetailsnotused")
 	public ResponseEntity<Object> GetDetailsNotUsed(@RequestBody FilterDetailDTO filter) {
 		List<DetailResponse> deviceDetail = deviceDetailService.filterDetails(detailConst.NOTUSED, detailConst.NORMAL,
@@ -67,7 +95,14 @@ public class DeviceDetailApi {
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetail, HttpStatus.OK);
 	}
-
+	
+	/**
+	 * @summary add new device detail
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  DetailDTO d
+	 * @return DetailObj
+	 **/
 	// add devicedetails
 	@PostMapping(path = "/adddetail")
 	public ResponseEntity<Object> AddDetail(@RequestBody DetailDTO d) {

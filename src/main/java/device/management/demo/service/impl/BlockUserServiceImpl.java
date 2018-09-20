@@ -21,9 +21,17 @@ public class BlockUserServiceImpl implements BlockUserService {
 			return false;
 		}
 		blockUserRepository.deleteBlockUserById(id);
-		return true;
-		
-		
+		return true;	
+	}
+	
+	@Override
+	public BlockUser addBlockUser(BlockUser blockUser) {
+		return blockUserRepository.save(blockUser);
+	}
+
+	@Override
+	public BlockUser editBlockUser(BlockUser blockUser) {
+		return blockUserRepository.save(blockUser);
 	}
 
 }

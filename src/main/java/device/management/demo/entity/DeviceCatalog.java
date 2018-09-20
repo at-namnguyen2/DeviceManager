@@ -32,6 +32,9 @@ public class DeviceCatalog {
 		super();
 	}
 
+	public DeviceCatalog(Long id) {
+		this.id = id;
+	}
 	
 	public DeviceCatalog(String name) {
 		super();

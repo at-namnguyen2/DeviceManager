@@ -10,6 +10,11 @@ public class UserController {
 	
 	@GetMapping(path="/myprofile")
 	public String MyProfile() {
-		return "page_user";
+		return "page-user";
+	}
+	
+	@GetMapping("my-profile")
+	public String showUserProfile() {
+		return "user-home";
 	}
 }

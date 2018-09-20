@@ -154,6 +154,14 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 		edr.setTeam(ddr.getEmployee().getTeam());
 		return edr;
 	}	
+	
+	/**
+	 * @summary return device deliver receive
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return Device_Deliver_Receive
+	 **/
 	@Override
 	public Device_Deliver_Receive getDevDeRe(DeviceDetail deviceDetail) {
 		// TODO Auto-generated method stub

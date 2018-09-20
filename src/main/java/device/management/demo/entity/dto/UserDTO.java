@@ -50,7 +50,27 @@ public class UserDTO implements Serializable{
     
 	private String matchingPassword;
 	
+    private String description;
 	
+	@NotBlank(message = "Employee Name must not be blank")
+	private String employeeName;
+	
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}
