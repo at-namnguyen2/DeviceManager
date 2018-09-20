@@ -1,5 +1,7 @@
 package device.management.demo.service;
 
-public interface DeviceService {
+import device.management.demo.entity.Device;
 
+public interface DeviceService {
+	Device getDeviceById(long id);
 }
