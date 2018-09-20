@@ -1,5 +1,6 @@
 package device.management.demo.service.impl;
 
+import java.util.Date;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -49,5 +50,11 @@ public class TokenVerificationServiceImpl implements TokenVerificationService {
 		}
 		tokenVerifitionRepository.deleteTokenById(id);
 		return true;
+	}
+
+	@Override
+	public void addTokenFunction(Date expireDate, String registCode, Long user_id) {
+		tokenVerifitionRepository.addTokenFunction(expireDate, registCode, user_id);
+		
 	}
 }

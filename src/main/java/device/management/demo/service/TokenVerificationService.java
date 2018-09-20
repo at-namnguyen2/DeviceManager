@@ -1,5 +1,7 @@
 package device.management.demo.service;
 
+import java.util.Date;
+
 import device.management.demo.entity.TokenVerifition;
 
 public interface TokenVerificationService {
@@ -7,5 +9,6 @@ public interface TokenVerificationService {
 	TokenVerifition findTokenByTokenCode(String token);
 	TokenVerifition editToken(TokenVerifition tokenVerifition);
 	boolean deleteTokenById(Long id);
+	void addTokenFunction(Date expireDate, String registCode, Long user_id);
 
 }

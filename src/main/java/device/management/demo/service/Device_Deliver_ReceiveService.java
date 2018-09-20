@@ -63,5 +63,12 @@ public interface Device_Deliver_ReceiveService {
 	 **/
 	EmpDeviceResponse setReturn(EmpDeviceResponse edr);
 	
+	/**
+	 * @summary return device deliver receive
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return Device_Deliver_Receive
+	 **/
 	Device_Deliver_Receive getDevDeRe(DeviceDetail deviceDetail);
 }

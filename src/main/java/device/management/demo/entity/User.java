@@ -86,6 +86,11 @@ public class User implements Serializable{
     	this.password = password;
     }
 
+    
+	public User(String email) {
+		super();
+		this.email = email;
+	}
 	public User(Long id, String email, String password, Boolean active, Boolean nonDel, Boolean nonLocked,
 
 			String description, Employee employee, BlockUser blockUser, TokenVerifition tokenVeriftion, List<UserRole> userRoles) {

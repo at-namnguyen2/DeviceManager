@@ -9,6 +9,7 @@ import device.management.demo.entity.dto.UserDTO;
 import device.management.demo.entity.response.PhoneSA;
 import device.management.demo.entity.response.RequestResponse;
 import device.management.demo.entity.response.UserResponse;
+import device.management.demo.entity.response.UserResponse2;
 
 public interface UserService {
 	
@@ -59,5 +60,18 @@ public interface UserService {
    	 */
     User updateUser(RequestResponse request);
     
-    void saveUser(User user);
+    
+    //van
+    User saveUser(User user);
+    User editUser(User objUser);
+    boolean checkDuplicateEmail(String email);
+    User addUser(UserDTO userDTO);
+    boolean activeUser(Long id);
+	void addUserFunction(String description, String email, String password);
+	List<User> getAllUser();
+	User getUserById1(long id);
+	boolean deleteUserById(long id);
+	List<UserResponse2> showUserStateNonDel();
+	List<UserResponse2> getUserAdmin();
+	List<UserResponse2> filterUser(String search);
 }
