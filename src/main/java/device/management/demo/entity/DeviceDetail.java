@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,11 +42,12 @@ public class DeviceDetail {
 	@Column(name = "product_id", nullable = false)
 	private String productId;
 	
-	@Column(name = "device_detail_description", nullable = false)
+	@Column(name = "device_detail_description", nullable = true)
 	private String descriptionDeviceDetail;
 
-	@Column(name = "status", columnDefinition = "TINYINT(1) default 0", nullable = false)
-	private Boolean status = false;
+	@Column(name = "status", columnDefinition = "TINYINT(1) default 1", nullable = false)
+	private long status = 1;
+
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "update_date", nullable = false)
@@ -55,6 +58,7 @@ public class DeviceDetail {
 	@JsonIgnoreProperties("deviceDetail")
 	//@JsonIgnore
 	@OneToMany(mappedBy = "deviceDetail", orphanRemoval = true)
+	@Cascade({ CascadeType.ALL})
 	private List<Device_Deliver_Receive> deviceDeliverReceive;
 
 	@Column(name = "working", columnDefinition = "TINYINT(1) default 0", nullable = false)
@@ -63,7 +67,17 @@ public class DeviceDetail {
 	public DeviceDetail() {
 		super();
 	}
-	public DeviceDetail(Long id, Device device, String productId, Boolean status, Date updateDate, Boolean working, List<Device_Deliver_Receive> deviceDeliverReceive) {
+	
+	public DeviceDetail(Device device, String productId, long status, Date updateDate, Boolean working) {
+		super();
+		this.device = device;
+		this.productId = productId;
+		this.status = status;
+		this.updateDate = updateDate;
+		this.working = working;
+	}
+
+	public DeviceDetail(Long id, Device device, String productId, long status, Date updateDate, Boolean working, List<Device_Deliver_Receive> deviceDeliverReceive) {
 		super();
 		this.id = id;
 		this.device = device;
@@ -82,6 +96,9 @@ public class DeviceDetail {
 		this.id = id;
 	}
 
+	
+
+
 	public Device getDevice() {
 		return device;
 	}
@@ -98,11 +115,11 @@ public class DeviceDetail {
 		this.productId = productId;
 	}
 
-	public Boolean getStatus() {
+	public long getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(long status) {
 		this.status = status;
 	}
 

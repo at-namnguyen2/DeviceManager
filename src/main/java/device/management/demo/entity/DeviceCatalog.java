@@ -20,8 +20,9 @@ public class DeviceCatalog {
 	
 	@Column(name = "name", nullable = false)
 	private String name;
-	
-	@Column(name = "description", nullable = false)
+
+	@Column(name = "description", nullable = true)
+
 	private String description;
     
 	@OneToMany(mappedBy = "deviceCatalog", orphanRemoval=true)
@@ -30,6 +31,13 @@ public class DeviceCatalog {
 	public DeviceCatalog() {
 		super();
 	}
+
+	
+	public DeviceCatalog(String name) {
+		super();
+		this.name = name;
+	}
+
 
 	public DeviceCatalog(Long id, String name, String description) {
 		super();

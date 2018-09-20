@@ -16,6 +16,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 @Entity
 @Table(name = "device")
 public class Device {
@@ -38,16 +41,28 @@ public class Device {
 	@Column(name = "price", nullable = false)
 	private Double price;
 	
-	@Column(name = "description", nullable = false)
+
+	@Column(name = "description", nullable = true)
 	private String description;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "device", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<DeviceDetail> deviceDetail;
 
 	public Device() {
 		super();
 	}
+
+	
+	public Device(DeviceCatalog deviceCatalog, String name, Long quantity, Double price, String description) {
+		super();
+		this.deviceCatalog = deviceCatalog;
+		this.name = name;
+		this.quantity = quantity;
+		this.price = price;
+		this.description = description;
+	}
+
 
 	public Device(Long id, DeviceCatalog deviceCatalog, String name, Long quantity, Double price, String description,
 			List<DeviceDetail> deviceDetail) {

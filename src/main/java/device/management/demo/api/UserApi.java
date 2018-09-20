@@ -1,82 +1,77 @@
 package device.management.demo.api;
 
-import java.security.Principal;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import device.management.demo.entity.Employee;
-import device.management.demo.entity.Role;
-import device.management.demo.entity.User;
-import device.management.demo.entity.UserRole;
-import device.management.demo.service.RoleService;
-import device.management.demo.service.UserRoleService;
+
+import device.management.demo.entity.dto.UserDTO;
+import device.management.demo.entity.response.PhoneSA;
+import device.management.demo.entity.response.UserResponse;
+import device.management.demo.service.EmployeeService;
+import device.management.demo.service.RequestService;
 import device.management.demo.service.UserService;
 
-
-
-@Controller
+@RestController
 public class UserApi {
 	
 	@Autowired
-	UserService userService;
+	EmployeeService employeeService;
 	
 	@Autowired
-	UserRoleService userRoleService;
+	UserService userService;		
 	
 	@Autowired
-	RoleService roleService;
+	RequestService requestService;
 	
-	
-	@Autowired
-	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	@RequestMapping(value = {"/login" }, method = RequestMethod.GET)
-	public String Login() {
-		System.out.println("loginapi");
-		return "login";
-	}
+	/**
+   	* @summary return profile of user
+   	* @date sep 12, 2018
+   	* @author Nam.Nguyen2
+   	* @param email
+   	* @return user
+   	**/
 	@GetMapping(path = "/userapi/myprofile/{email}")
-	public ResponseEntity<Object> viewCurrentUser(@PathVariable("email") String email) {
-//		String email = principal.getName();
-	User user = userService.getUserByEmail(email);
-	return new ResponseEntity<>(user, HttpStatus.OK);
+	public ResponseEntity<Object> ViewCurrentUser(@PathVariable("email") String email) {
+	UserResponse user = userService.findUserByEmail(email);
+	return new ResponseEntity<>(user, HttpStatus.OK);		
 }
 	
-	@RequestMapping(value = "/api/admin/adduser", method = RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public ResponseEntity<Object> createNewUser() {
-		System.out.println( "check"); 
-		User user1 = new User();
-		Employee employee1 = new Employee();
-		employee1.setEmployeeName("Nguyen Phuong Nam");
-		String password = "123456";
-		employee1.setGender(true);
-		
-		user1.setEmail("namnguyen2@gmail.com");
-		user1.setPassword(bCryptPasswordEncoder.encode(password));
-		user1.setEnable(true);
-		User i = userService.saveUser(user1);
-		
-		Role role = roleService.findByRoleName("USER");
-		Optional<User> userobj = userService.findUserByUserId(i.getId());
-		UserRole userrole = new UserRole(userobj.get(), role);
-		userRoleService.addUserRole(userrole);
-		return new ResponseEntity<>("User Existed!", HttpStatus.BAD_REQUEST);
-		
+	/**
+	* @summary edit profile of user
+	* @date sep 13, 2018
+	* @author Nam.Nguyen2
+	* @param userdto
+	* @return String message
+   	**/
+	@PostMapping(path = "/userapi/editmyprofile")
+	public ResponseEntity<Object> EditCurrentUser(@RequestBody UserDTO userdto ) {
+		System.out.println("hihi"+ userdto + "end");
+		if (userdto == null) {
+			return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);			
+		}
+		userService.editProfileUser(userdto);		
+		return new ResponseEntity<>("Your update request is pending", HttpStatus.OK);
+	}
+	
+	/**
+	* @summary list SA contact: phone via rolename Admin
+	* @date sep 13, 2018
+	* @author Nam.Nguyen2
+	* @param 
+	* @return listPhone
+   	**/
+	@GetMapping(path = "userapi/sacontact")
+	public ResponseEntity<Object> ShowSaContact() {
+		System.out.println("test contact");
+		List<PhoneSA> listPhone = userService.getSAContact();		
+		return new ResponseEntity<>(listPhone, HttpStatus.OK);
 	}
 }
 	

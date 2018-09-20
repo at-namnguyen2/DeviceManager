@@ -15,23 +15,57 @@ import device.management.demo.validation.ValidEmail;
 
 @PasswordMatches
 public class UserDTO implements Serializable{
-    @JsonIgnore
+    
+	@JsonIgnore
     private static final long serialVersionUID = 1L;
+    private Long id;
+	
     @ValidEmail(message = "Email must not be blank and must valid")
     private String email;
+    
     @NotBlank(message = "fullname must not blank")
     private String fullname;
+    
     @Phone(message = "Phone must not be blank and must valid")
     private String phone;
+    
     @NotNull(message = "Birthday must not be null")
     private Date birthDay;
+    
+    
     @NotBlank(message = "Address must not be blank")
     private String address;
+    
     @NotNull(message = "Gender must not be null")
     private Boolean gender;
-    @Password(message = "Password must not be valid, has at least one number, one special character, one uppercase character and has from 6 to 10 character")
+    
+    
+    private String avatar;
+    
+    @NotNull(message = "Team must not null")
+    private String team;
+    
+	@Password(message = "Password must not be valid, has at least one number, one special character, one uppercase character and has from 6 to 10 character")
     private String password;
-    private String matchingPassword;
+    
+	private String matchingPassword;
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -88,11 +122,21 @@ public class UserDTO implements Serializable{
 		super();
 	}
 
+
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
 	@Override
 	public String toString() {
-		return "UserDTO [email=" + email + ", fullname=" + fullname + ", phone=" + phone + ", birthDay=" + birthDay
-				+ ", address=" + address + ", gender=" + gender + ", password=" + password + ", matchingPassword="
-				+ matchingPassword + "]";
+		return "{\"email\": \"" + email + "\",\"fullname\": \"" + fullname + "\",\"phone\": \"" + phone + "\",\"birthDay\": \"" + birthDay
+				+ "\",\"address\": \"" + address + "\",\"gender\": " + gender + ",\"team\": \"" + team + "\",\"avatar\": \""
+				+ avatar + "\"}";
 	}
 	
 	
