@@ -54,7 +54,7 @@ public class UserProfileApiController {
 
 	}
 
-	@PutMapping("change-password")
+	@PutMapping("/change-password")
 	public ResponseEntity<Object> changePasswordMyProfile(@Valid @RequestBody PasswordDTO passwordDTO, BindingResult bindingResult,
 			Principal principal) {
 		
@@ -63,13 +63,19 @@ public class UserProfileApiController {
 		}
 		if (bindingResult.hasErrors()) {
 			String fieldName = bindingResult.getFieldError().getField();
+			System.out.println("///////////////////"+ fieldName);
 			String message = bindingResult.getFieldError().getDefaultMessage();
+			System.out.println(message);
 			return new ResponseEntity<>(fieldName+" : "+message,HttpStatus.BAD_REQUEST);
 		}
+		
+		
 		User user = passwordService.viewCurrentUsers(principal);
+		System.out.println("/////////////////////"+ user.getEmail());
 
 		String existingPassword = passwordDTO.getPasswordCurrent();
 		String dbPassword = user.getPassword();
+		System.out.println(dbPassword);
 		String newPassword = passwordDTO.getNewPassword();
 		String newMatchingPassword = passwordDTO.getNewMatchingPassword();
 
@@ -82,15 +88,18 @@ public class UserProfileApiController {
 		if (!checkDuplicatePasswordCurrent) {
 			return new ResponseEntity<>("The password you enter does not match the current password",
 					HttpStatus.CONFLICT);
+			//System.out.println("Khong trung password trong database...");
 		}
 		if (checkDuplicateNewPassowrds) {
 			System.out.println(checkDuplicateNewPassowrds);
+			//System.out.println("Password cu trung password moi...");
 			return new ResponseEntity<>("The password you entered is the same as your current password",
 					HttpStatus.CONFLICT);
 		}
 		if (!checkDuplicateMatchingPassword) {
 			return new ResponseEntity<>("The password you entered does not match Password matching",
 					HttpStatus.CONFLICT);
+			//System.out.println("Password xac nhan va password khong trung nhau...");
 		}
 
 		passwordService.saveNewPasswords(user, newPassword);

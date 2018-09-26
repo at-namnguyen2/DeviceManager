@@ -17,6 +17,7 @@ public class LoginController {
 	public String login(Model model, HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			//return "redirect:/home";
 			return "redirect:/home";
 		}
 		Object error =  request.getSession().getAttribute("error");
@@ -27,8 +28,12 @@ public class LoginController {
 		return "login-page";
 	}
 
-	@GetMapping(path = {"/","/home"})
-	public String home() {
-		return "user-home";
-	}	
+//	@GetMapping(path = {"/","/home"})
+//	public String home() {
+//		return "user-home";
+//	}
+	@GetMapping(path = {"/", "/home"})
+	public String myProfile() {
+		return "trang-chung";
+	}
 }

@@ -70,9 +70,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void addEmployeeFunction(String address, String avatar, Date birthDate, String employeeName, Boolean gender,
+	public void addEmployeeFunction(String address, Date birthDate, String employeeName, Boolean gender,
 			String phone, String team, Long user_id) {
-		employeeRepository.addEmployeeFunction(address, avatar, birthDate, employeeName, gender,
+		employeeRepository.addEmployeeFunction(address, birthDate, employeeName, gender,
 			phone, team, user_id);	
 	}
-}
+		
+	}

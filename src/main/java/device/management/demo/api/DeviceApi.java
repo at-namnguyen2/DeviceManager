@@ -57,13 +57,9 @@ import device.management.demo.service.EmployeeService;
 @RequestMapping("/")
 
 public class DeviceApi {
-	@Autowired
-	
-	private Device_Deliver_ReceiveRepository device_deliver_receive_repository;
+
 	@Autowired
 	private EmployeeRepository employeeRepository;
-	@Autowired
-	private EmployeeService employeeService;
 	
 	@Autowired
 	private UserRepsository userRepository;
@@ -71,8 +67,6 @@ public class DeviceApi {
 	@Autowired
 	private DeviceRepository deviceRepository;
 	
-	@Autowired
-	private DeviceDetailRepository deviceDetailRepository;
 	@Autowired
 	private DeviceCatalogRepository deviceCatalogRepository;
 	@Autowired

@@ -66,14 +66,15 @@ $(document).ready(function() {
 					 } else {
 						 $("."+key+"").append("<td class=\"working\"><span class=\" icon icon-circle s-12  mr-2 text-success\"></span> Active</td>");
 					 }
+					 
 			 if(detail.status === 1){ $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-primary\">Normal</span></td>");
 			 } else if(detail.status === 2){  $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-warning \">Error</span></td>");			
 			 } else { $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-danger \">Break</span></td>");
 			 }
 			 $("."+key+"").append("<td><a href=\"panel-page-profile.html\"><i class=\"icon-eye mr-3\"></i></a>"
-						+"<a class=\"\" href=\"#step-22\"><i class=\"editDetail icon-pencil\"></i></a></td><td class=\"deviceName\" hidden=\"\">"+detail.devicename+"</td><td class=\"catalogName\" hidden=\"\">"+detail.catalogname+"</td></tr>");			 
+						+"<a class=\"\" href=\"#step-22\"><i class=\"editDetail icon-pencil\"></i></a></td><td class=\"deviceName\" hidden=\"\">"+detail.devicename+"</td><td class=\"catalogName\" hidden=\"\">"+detail.catalogname+"</td><td class=\"idDevice\" hidden=\"\">"+json.id+"</td></tr>");			 
 			convertToIconDetail(detail.catalogname);
-			
+		
 				 });
 			},
 			error : function(err) {
@@ -92,27 +93,65 @@ $(document).ready(function() {
 		var working = $row.find(".working").text();
 		var deviceName = $row.find(".deviceName").text();
 		var cataloName = $row.find(".catalogName").text();
+		var idDevice = $row.find("#idDevice").text();
 		console.log(cataloName);
 		$('#deviceName').val(deviceName);
 		$('#detail-icon').removeAttr('class');
 		$('#detail-icon').removeAttr('class',cataloName);
 		$('#productId').val(productId);
 		$('#catalogName').val(cataloName);
-		
+		$('#id_detaildevice').val(detailId);
+		$('#id_Device').val(idDevice);
 		 $('#SwitchWorking').prop("checked", true);
 //		$('#SwitchWorking').prop
-
 		if(status ==="Normal"){ 
 $('#SwitchStatusNormal').prop("checked", true); $('#SwitchStatusBreak').prop("checked", false); $('#SwitchStatusError').prop("checked", false);}
 		else if(status ==="Break"){
 $('#SwitchStatusNormal').prop("checked", false); $('#SwitchStatusBreak').prop("checked", true); $('#SwitchStatusError').prop("checked", false);}
 		else if(status ==="Error"){ 
 $('#SwitchStatusNormal').prop("checked", false); $('#SwitchStatusBreak').prop("checked", false); $('#SwitchStatusError').prop("checked", true);}
-		if(working ===1){ $('#SwitchWorking').prop("checked", true);}
+	
+		if(working === 'inactive'){ 
+			alert();
+			$('#SwitchWorking').prop("checked", true);
+			$('#SwitchStatusNormal').attr('disabled',true);
+			$('#SwitchStatusBreak').prop("disabled","");
+			$('#SwitchStatusError').attr('disabled');
+		}
 
 	})
 	
+ $('#sumitUpdate').click(function() {
+	   event.preventDefault();
+////	   event.addEventListener('click', swapper, false);
+	 var DetailInfo = $('#edit-detail-form').serializeJSON({parseBooleans: true});
+	 if(DetailInfo.statusB === "on"){ DetailInfo["status"] = 0;}
+	 else if(DetailInfo.statusN === "on"){DetailInfo["status"] = 1;}
+	 else {DetailInfo["status"] = 2;}
+	 alert(DetailInfo.productId);
+	 alert($('#productId').val());
+		var datajson = JSON.stringify(DetailInfo);
+		 alert(datajson);
+		$.ajax({
+			url : '/editdevicedetails',
+			  type: 'PUT',
+				contentType : "application/json; charset=utf-8",
+				data : datajson,
+				dataType : 'json',
+			success : function(value) {
+				console.log(value);
+			},
+			error : function(err) {
+				console.log(err);	 
+			}
+		});
+	 
+	 
+//	 var jsond["id"] = $('#id_Device').val();
+	 
+	
 
+			    });
 	
 			 $('#SwitchStatusNormal').change(function() {
 				 $('#SwitchStatusBreak').prop("checked", false);

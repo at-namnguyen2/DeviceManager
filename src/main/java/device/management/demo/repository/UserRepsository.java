@@ -34,29 +34,35 @@ public interface UserRepsository extends JpaRepository<User, Long> {
 	
 	
 	//van
-	@Transactional
-	@Modifying
-	@Query(value = "update user set active = 1 where id=?1", nativeQuery = true)
-	int activeUser(Long id);
-	
-	@Transactional
-	@Modifying
-	@Query(value = "insert into user values(0, false, ?1, ?2, true, true, ?3)", nativeQuery = true)
-	int addUserFunction(String description, String email, String password);
-	
-	@Transactional
-	@Query(value = "select * from  user where non_del = 1 and active = 1", nativeQuery = true)
-	List<User> ShowUserStateNondel();
-	
-List<User> findByNonDelIsTrueAndActiveIsTrue();
-	
-	List<User> findByUserRolesRoleRoleNameAndNonDelIsTrueAndActiveIsTrue(String rolename);
-	
-	@Transactional
-	@Modifying
-	@Query(value = "insert into user values(0, ?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
-	int addUser1(Boolean active, String description, String email, Boolean nonDel, Boolean nonLocked, String password);
-   
+		@Transactional
+		@Modifying
+		@Query(value = "update user set active = 1 where id=?1", nativeQuery = true)
+		int activeUser(Long id);
+		
+		@Transactional
+		@Modifying
+		@Query(value = "insert into user values(0, false, ?1, ?2, true, true, ?3)", nativeQuery = true)
+		int addUserFunction(String description, String email, String password);
+		
+		@Transactional
+		@Query(value = "select * from  user where non_del = 1 and active = 1", nativeQuery = true)
+		List<User> ShowUserStateNondel();
+		
+	List<User> findByNonDelIsTrueAndActiveIsTrue();
+		
+		List<User> findByUserRolesRoleRoleNameAndNonDelIsTrueAndActiveIsTrue(String rolename);
+		
+		@Transactional
+		@Modifying
+		@Query(value = "insert into user values(0, ?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
+		int addUser1(Boolean active, String description, String email, Boolean nonDel, Boolean nonLocked, String password);
+	   
 
-	List<User> findByEmailContainingOrEmployeeEmployeeNameContainingOrEmployeeTeam(String email, String name, String team);
+		List<User> findByEmailContainingOrEmployeeEmployeeNameContainingOrEmployeeTeam(String email, String name, String team);
+	    
+		
+		@Transactional
+		@Modifying
+		@Query(value = "update user set non_del = 0", nativeQuery = true)
+		int delAllUser();
 }

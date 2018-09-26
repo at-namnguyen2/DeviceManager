@@ -33,8 +33,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query(value = "insert into employee values(0 ,?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)", nativeQuery = true)
-	int addEmployeeFunction(String address, String avatar, Date birthDate, String employeeName, Boolean gender,
+	@Query(value = "insert into employee values(0 ,?1, null, ?2, ?3, ?4, ?5, ?6, ?7)", nativeQuery = true)
+	int addEmployeeFunction(String address,  Date birthDate, String employeeName, Boolean gender,
 			String phone, String team, Long user_id);
     
 	

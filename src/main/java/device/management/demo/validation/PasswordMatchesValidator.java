@@ -1,13 +1,10 @@
 package device.management.demo.validation;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import device.management.demo.entity.dto.UserDTO;
 
-/**
- * @summary check match password and repassword
- * @author THAILE
- */
 public class PasswordMatchesValidator 
 implements ConstraintValidator<PasswordMatches, Object> { 
    

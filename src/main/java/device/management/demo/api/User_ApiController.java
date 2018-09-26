@@ -1,19 +1,21 @@
 package device.management.demo.api;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,15 +26,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import device.management.demo.entity.Employee;
 import device.management.demo.entity.Role;
 import device.management.demo.entity.User;
 import device.management.demo.entity.UserRole;
+import device.management.demo.entity.response.UserDTOResponse;
 import device.management.demo.entity.response.UserResponse2;
 import device.management.demo.repository.EmployeeRepository;
 import device.management.demo.repository.RoleRepository;
 import device.management.demo.repository.UserRepsository;
 import device.management.demo.repository.UserRoleRepository;
+import device.management.demo.service.RoleService;
 import device.management.demo.service.UserService;
 
 //author: tu viet van
@@ -58,6 +61,9 @@ public class User_ApiController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
+	@Autowired
+	private RoleService roleService;
+	
 	//lay tat ca cac user.
 	@GetMapping("/get-all-user")
 	public ResponseEntity<Object> getAllUser() {
@@ -74,7 +80,9 @@ public class User_ApiController {
 		 if(user == null) {
 			 return new ResponseEntity<Object>("Khong tim thay user co id nay", HttpStatus.NOT_FOUND);
 		 }
-		 return new ResponseEntity<Object>(user, HttpStatus.OK);
+		 UserResponse2 userRespone2 = userService.showInfoUser(user);
+		 
+		 return new ResponseEntity<Object>(userRespone2, HttpStatus.OK);
 	}
 
 	//xoa user theo id
@@ -99,6 +107,30 @@ public class User_ApiController {
 	//them user
 	@PostMapping(path = "/addUser")
 	public ResponseEntity<Object> addUser(@Valid @RequestBody UserResponse2 userResponse1, BindingResult result, Principal principal) {
+		
+		System.out.println(userResponse1.getEmail()+"////////////////////////////////");
+		  System.out.println(userResponse1.getEmail());
+		
+//		UserResponse2Return userResponse2Return = new UserResponse2Return();
+//		  System.out.println(userResponse1.getEmail());
+//		  System.out.println(userResponse1.getEmail());
+//		  //System.out.println("BirthDay: " + userResponse1.getBirthDay());
+//		  
+//		  
+//	      if(result.hasErrors()){          
+//	    	  System.out.println(result.getAllErrors().toString());
+//	          Map<String, String> errors = result.getFieldErrors().stream()
+//	                .collect(
+//	                      Collectors.toMap(FieldError::getField, ObjectError::getDefaultMessage)	                     
+//	                  );	        
+////	          if(result.getAllErrors().toString().indexOf("PasswordMatches")!= -1) {
+////	        	  errors.put("matchingPassword", "Password is not matched");
+////	          }c
+//	          userResponse2Return.setValidated(false);
+//	          userResponse2Return.setErrorMessages(errors); 
+//	          return new ResponseEntity<Object>(userResponse2Return, HttpStatus.BAD_REQUEST);
+//	      }
+		
 		
 		//Danh cho User
 		
@@ -127,17 +159,15 @@ public class User_ApiController {
 		String phone = userResponse1.getPhone();
 		String team = userResponse1.getTeam();
 		Long user_id = user.get().getId();
+		String roleName = userResponse1.getRoleName();
 		employeeRepository.addEmployee1(address, avatar, birthDate , employee1 , gender, phone, team, user_id);
 		
 		
 		//cho Role
-		Role role = new Role();
-		role.setDescription(userResponse1.getDescriptionRole());
-		role.setRoleName(userResponse1.getRoleName());
-		roleRepository.save(role);
+		Role role1 = roleService.findByRoleName(roleName);
 		
 	//cho bang UserRole
-		UserRole userRole = new UserRole(user.get(), role);
+		UserRole userRole = new UserRole(user.get(), role1);
 		userRoleRepository.save(userRole);
 		return new ResponseEntity<Object>("add user thanh cong", HttpStatus.OK);
 	}
@@ -162,7 +192,7 @@ public class User_ApiController {
 		user.get().setNonLocked(userResponse1.getNonLocked());
 		//userRepository.save(user.get());
 		user.get().getEmployee().setAddress(userResponse1.getAddress());
-		user.get().getEmployee().setAvatar(userResponse1.getAvatar());
+//		user.get().getEmployee().setAvatar(userResponse1.getAvatar());
 		user.get().getEmployee().setDateOfBirth(userResponse1.getBirthday());
 		user.get().getEmployee().setEmployeeName(userResponse1.getEmployeeName());
 		user.get().getEmployee().setGender(userResponse1.getGender());

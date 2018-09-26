@@ -452,54 +452,70 @@
 								</div>
 								<div class="tab-pane fade" id="v-pills-timeline" role="tabpanel"
 									aria-labelledby="v-pills-timeline-tab">
-									<div class="container-fluid animatedParent animateOnce">
-										<div class="animated fadeInUpShort">
-											<div class="row my-3">
-												<div class="col-md-7  offset-md-2">
-													<form action="#">
-														<div class="card no-b  no-r">
-															<div class="card-body">
-
-																<div class="form-row">
-																	<div class="form-group col-md-8">
-																		<label for="inputPassword4" class="col-form-label">Current
-																			Password</label> <input type="password" class="form-control"
-																			id="inputPassword4"
-																			placeholder="Enter Current Password">
-																	</div>
-																	<div class="form-group col-md-8">
-																		<label for="inputPassword5" class="col-form-label">New
-																			Password</label> <input type="password" class="form-control"
-																			id="inputPassword5" placeholder="Enter New Password">
-																	</div>
-																	<div class="form-group col-md-8">
-																		<label for="inputPassword7" class="col-form-label">Confirm
-																			Password</label> <input type="password" class="form-control"
-																			id="inputPassword7"
-																			placeholder="Enter Confirm Password">
-																	</div>
-
-
-
+									 <div class="container-fluid animatedParent animateOnce">
+        <div class="animated fadeInUpShort">
+            <div class="row my-3">
+                <div class="col-md-7  offset-md-2">
+                    <form action="#" id="demo-form2">
+                        <div class="card no-b  no-r">
+                            <div class="card-body">
+                             
+                                <div class="form-row">
+								   <div class="form-group col-md-8">
+                                        <label for="inputPassword4" class="col-form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="inputPassword4" name="passwordCurrent"
+                                               placeholder="Enter Current Password">
+                                               
+                                    </div>
+                                    
+									<div class="form-group col-md-8">
+                                        <label for="inputPassword5" class="col-form-label">New Password</label>
+                                        <input type="password" class="form-control" id="inputPassword5" name="newPassword"
+                                               placeholder="Enter New Password">
+                                               
+                                    </div>
+                                    <br>
+                                    
+									<div class="form-group col-md-8">
+                                        <label for="inputPassword7" class="col-form-label">Confirm Password</label>
+                                        <input type="password" class="form-control" id="inputPassword7" name="newMatchingPassword"
+                                               placeholder="Enter Confirm Password">
+                                             
+                                               
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 btn msg-error" style="font-size: 13px">
 																</div>
+                                    
+                                    <!-- <div class="form-group">
+															<div class="col-md-3"></div>
+															<div class="col-md-6"
+																style="font-size: 13px">
+																<div class="col-md-12 col-xs-12 btn msg-error" style="font-size: 13px">
+																</div>
+																</div>
+									</div> -->
+                                    
+                                   
+                                
+                                </div>
 
-
-															</div>
-															<hr>
-
-															<div class="card-body">
-																<button type="submit" class="btn btn-primary btn-lg">
-																	<i class="icon-save mr-2"></i>Save Profile
-																</button>
-
-															</div>
-
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-									</div>
+                             
+                            </div>
+                            <hr>
+                       
+                            <div class="card-body">
+                               <button type="button" id="checkPassword" class="btn btn-success">Submit</button>
+																	
+												
+								
+                            </div>
+							
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+    </div>
 
 								</div>
 								<div class="tab-pane fade" id="v-pills-edit" role="tabpanel"
@@ -698,5 +714,59 @@
 	 
 		<!--/#app -->
 		<script th:src="@{/assets/js/app.js}"></script>
+		   <script
+    src="../static/js/change_password.js"
+    th:src="@{/assets/js/change_password.js}"></script>
+    
+    <script type="text/javascript" src="../static/js/jquery.serializejson.js" th:src="@{/js/jquery.serializejson.js}"></script>
+    <script>
+    	//to do change password
+    	
+    	$('#checkPassword').click(function() {
+		var URL = "/my-profile/change-password";
+		var passwordForm = $('#demo-form2').serializeJSON();
+		console.log(passwordForm);
+		console.log("tu duong");
+		
+		console.log("nguyen thi bai");
+		var jsonStringPassword = JSON.stringify(passwordForm);
+		console.log("///////////" + jsonStringPassword);
+		
+		$.ajax({
+			url : "/my-profile/change-password",
+			type : 'PUT',
+			contentType : "application/json; charset=utf-8",
+			data : jsonStringPassword,
+			dataType : 'json',
+			 complete : function(res) {
+				 console.log("tu viet van11111111111");
+				console.log(res.status);
+				 if (res.status === 200 || res.status ===201){
+					$('.msg-error').fadeIn(1000);
+					$('.msg-error').addClass('btn-success');
+					$('.msg-error').text('Update Password Success!');
+					$('.msg-error').css('background-color', 'green');
+					setTimeout(function() {
+						$('.msg-error').fadeOut(1000);
+					}, 8000);
+				}else if (res.status===409 || res.status===400){
+					console.log("van dep trai");
+					console.log(res.responseText);
+					$('.msg-error').fadeIn(1000);
+					$('.msg-error').addClass('btn-danger');
+					$('.msg-error').text(res.responseText);
+					$('.msg-error').css('background-color', '#2979ff')
+					setTimeout(function() {
+						$('.msg-error').fadeOut(1000);
+					}, 8000);
+				} 
+			}
+			
+		});
+		
+	});
+    </script>
+		
+		
 </body>
 </html>

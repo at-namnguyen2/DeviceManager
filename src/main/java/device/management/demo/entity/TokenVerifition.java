@@ -32,19 +32,17 @@ public class TokenVerifition {
 	@Column(name = "expire_time", nullable = false)
 	private Date expireTime;
 	
-	@Column(name = "type", nullable = false)
-	private Integer type;
 	
 	public TokenVerifition() {
 		super();
 	}
 
-	public TokenVerifition(User user, String tokenCode, Date expireTime, Integer type) {
+	public TokenVerifition(User user, String tokenCode, Date expireTime) {
 		super();
 		this.user = user;
 		this.tokenCode = tokenCode;
 		this.expireTime = expireTime;
-		this.type = type;
+		
 	}
 	public Long getId() {
 		return id;
@@ -77,13 +75,5 @@ public class TokenVerifition {
 	public void setExpireTime(Date expireTime) {
 		this.expireTime = expireTime;
 	}
-
-	public Integer getType() {
-		return type;
-	}
 	
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
 }

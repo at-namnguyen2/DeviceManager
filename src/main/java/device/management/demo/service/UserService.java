@@ -74,4 +74,6 @@ public interface UserService {
 	List<UserResponse2> showUserStateNonDel();
 	List<UserResponse2> getUserAdmin();
 	List<UserResponse2> filterUser(String search);
+
+	UserResponse2 showInfoUser(User user);
 }

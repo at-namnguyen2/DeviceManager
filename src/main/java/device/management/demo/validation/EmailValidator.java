@@ -1,17 +1,11 @@
 package device.management.demo.validation;
 
-
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-/**
- * @summary email validator
- * @author TaiTruong
- */
 public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
    
   private Pattern pattern;

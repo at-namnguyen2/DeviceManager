@@ -80,7 +80,33 @@ public class RegistrationController {
 	@GetMapping(path="/register")
 	public String showRegisterPage() {	
 		
-		return "add-user";
+		return "signup";
+	}
+	
+//	@GetMapping(path = "/registerAccount") 
+//	public String show() {
+//		return "add-user";
+//	}
+	@GetMapping(path ="/user")
+	public String showUser() {
+		return "user-home";
+	}
+//	@GetMapping(path = "/admin")
+//	public String showAdmin() {
+//		return "forget-password";
+//	}
+	
+	@GetMapping(path = "/admin1")
+	public String showAdminPage() {
+		return "user_all";
+	}
+	@GetMapping(path = "/trang-chung")
+	public String showTrangChung() {
+		return "trang-chung";
+	}
+	@GetMapping(path = "/showInfoAdmin")
+	public String showInfoAdmin() {
+		return "showUser";
 	}
 	
 	@PostMapping(path="/registerAccount")	
@@ -88,7 +114,7 @@ public class RegistrationController {
 		  UserDTOResponse userDTOResponse = new UserDTOResponse();
 		  System.out.println(userModel.getEmail());
 		  System.out.println(userModel.getEmail());
-		  System.out.println(userModel.getBirthDay());
+		  System.out.println("BirthDay: " + userModel.getBirthDay());
 		  
 		  
 	      if(result.hasErrors()){          
@@ -97,9 +123,9 @@ public class RegistrationController {
 	                .collect(
 	                      Collectors.toMap(FieldError::getField, ObjectError::getDefaultMessage)	                     
 	                  );	        
-	          if(result.getAllErrors().toString().indexOf("PasswordMatches")!= -1) {
-	        	  errors.put("matchingPassword", "Password is not matched");
-	          }
+//	          if(result.getAllErrors().toString().indexOf("PasswordMatches")!= -1) {
+//	        	  errors.put("matchingPassword", "Password is not matched");
+//	          }c
 	          userDTOResponse.setValidated(false);
 	          userDTOResponse.setErrorMessages(errors); 
 	          return new ResponseEntity<Object>(userDTOResponse, HttpStatus.BAD_REQUEST);
@@ -109,7 +135,7 @@ public class RegistrationController {
 			return new ResponseEntity<Object> ("Email is existed", HttpStatus.CONFLICT);
 		}else {
 			String registCode = veritificationUtil.generateVerificationCode(userModel.getEmail()+userModel.getPassword());
-			System.out.println(registCode);
+			System.out.println("//////////////"+ registCode);
 			Date expireDate = veritificationUtil.calculatorExpireTime();
 			String passwordEncode = passwordEncoder.encode(userModel.getPassword());
 			System.out.println(passwordEncode);
@@ -129,8 +155,7 @@ public class RegistrationController {
 			Boolean gender = userModel.getGender();
 			String phone = userModel.getPhone();
 			String team = userModel.getTeam();
-			//Long user_id = user.getId();
-			String avatar = userModel.getAvatar();
+//			Long user_id = user.getId();
 			
 			try {
 				mailService.sendMail("active account","/activeAccount",userModel.getEmail(),registCode,expireDate);
@@ -142,21 +167,34 @@ public class RegistrationController {
 				//chua user_id o tren...
 				userService.addUserFunction(description, email, password);
 				Optional<User> user1 = userRepsoitory.findByEmail(email);
-				//Optional<Role> role1 = roleRepository.findByRoleName("USER");
-				Role role = new Role("Quyen User", "USER");
-				
-				
 				
 				Long user_id = user1.get().getId();
+				employeeService.addEmployeeFunction(address, birthDate, employeeName, gender, phone, team, user_id);
+				////////////
+				System.out.println("test token");
+				System.out.println(expireDate);
+				System.out.println(registCode);
+				System.out.println(user_id);
+				tokenVerificationService.addTokenFunction(expireDate, registCode, user_id);
+				
+				//Optional<Role> role1 = roleRepository.findByUserRolesUserEmail(email);
+				Role role1 = roleService.findByRoleName("USER");
+				
+				//System.out.println(role1.get().toString());
+				//Role role = new Role("Quyen User", "USER");
+				
+				
+				
+				
 				//Long role_id = role1.get().getId();
 				
 				
 				
-				employeeService.addEmployeeFunction(address, avatar, birthDate, employeeName, gender, phone, team, user_id);
-				tokenVerificationService.addTokenFunction(expireDate, registCode, user_id);
+				//employeeService.addEmployeeFunction(address, birthDate, employeeName, gender, phone, team, user_id);
+				
 				//roleService.addRole();
-				roleRepository.save(role);
-			    UserRole userRole = new UserRole(user1.get(), role);
+				//roleRepository.save(role);
+			    UserRole userRole = new UserRole(user1.get(), role1);
 				userRoleRepository.save(userRole);
 				
 				

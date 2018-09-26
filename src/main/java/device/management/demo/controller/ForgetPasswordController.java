@@ -55,7 +55,7 @@ public class ForgetPasswordController {
 	public Object checkOutEmailAndSendMail(@Valid @ModelAttribute("emailDTO") EmailDTO emailDTO,
 			BindingResult bindingResult, ModelMap modelMap) {
 		String email = emailDTO.getEmail();
-		System.out.println(email);
+		System.out.println("forgetPassword"+ email);
 		// tim kiem user co email la ?
 		User existEmail = userService.getUserByEmail(email);
 		// not bank, dung dinh dang email
@@ -66,25 +66,31 @@ public class ForgetPasswordController {
 				System.out.println(objectError);
 			}
 			modelMap.addAttribute("emailDTO", emailDTO);
+			System.out.println(emailDTO.getEmail());
+			System.out.println("/////////////");
 //			return "check-email";
 			return "checkmail";
 		}
 		// kiem tra k  ton tai
 		if (existEmail == null || !existEmail.getNonDel()) {
+			System.out.println("gggggggggg");
 			modelMap.addAttribute("msg", "Your email does not exist");
 		} else {
 			// da ton tai
 			String registCode = veritificationUtil.generateVerificationCode(email);
 			Date expireDate = veritificationUtil.calculatorExpireTime();
+			System.out.println(registCode);
 			try {
 
 				// tim kiem user co gmail la ?
 				User user = userService.getUserByEmail(email);
 				// neu da goi email roi thi ra ve thong bao
 				if (user.getTokenVerifition() != null) {
+					System.out.println("kiem tra mail");
 					modelMap.addAttribute("msg", "Sent email please check email");
 				} else {
 					// goi email
+					System.out.println("kiem tra mail");
 					mailService.sendMail("FORGET PASSWORD", "/change-password", email,
 							registCode, expireDate);
 					Long user_id = user.getId();

@@ -62,7 +62,7 @@ public class DeviceDetailImpl implements DeviceDetailService {
 		Detailobj.setProductId(d.getProductId());
 		Detailobj.setStatus(d.getStatus());
 		Detailobj.setWorking(d.getWorking());
-		Detailobj.setUpdateDate(d.getUpdateDate());
+//		Detailobj.setUpdateDate(d.getUpdateDate());
 		return deviceDetailRepository.save(Detailobj);
 	}
 	
