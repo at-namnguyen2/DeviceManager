@@ -5,16 +5,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin")
+public class AdminUserController {
 	
-//	@GetMapping(path="/myprofile")
-//	public String MyProfile() {
-//		return "page-user";
-//	}
-	
-	@GetMapping("myprofile")
+	@GetMapping("adduser")
 	public String showUserProfile() {
-		return "user-home";
+		return "add-user";
+	}
+	@GetMapping("notify")
+	public String showNotify() {
+		return "notify";
+	}
+	
+	@GetMapping("device")
+	public String showDevice() {
+		return "device";
 	}
 }

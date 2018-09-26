@@ -28,9 +28,21 @@ public interface Device_Deliver_ReceiveRepository extends JpaRepository<Device_D
 	 * @param team,name,email
 	 * @return List<Device_Deliver_Receive>
 	 **/
-	List<Device_Deliver_Receive> findByEmployeeTeamContainingAndEmployeeEmployeeNameContainingAndEmployeeUserEmailContaining(
+	List<Device_Deliver_Receive> findByEmployeeTeamContainingOrEmployeeEmployeeNameContainingOrEmployeeUserEmailContaining(
 			String team, String name, String email);
 	
+	/**
+	 * @summary find detail allocation via email
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param email
+	 * @return List<Device_Deliver_Receive>
+	 **/
+	List<Device_Deliver_Receive> findByEmployeeUserEmailAndDateReturnNull(String email);
+//	findByEmployeeUserEmail
+	Long countByEmployeeUserEmail(String email);
+	Long countByEmployeeUserEmailAndDateReturnNull(String email);
+	Device_Deliver_Receive findTop1ByEmployeeUserEmail(String email);
 	/**
 	 * @summary filter record aloction
 	 * @date sep 12, 2018

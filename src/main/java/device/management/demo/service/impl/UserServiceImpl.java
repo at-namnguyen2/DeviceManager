@@ -98,9 +98,9 @@ public class UserServiceImpl implements UserService {
 	 * @return true
 	 **/
 	@Override
-	public Boolean editProfileUser(UserDTO userdto) {
+	public Boolean editProfileUser(String email,String userdto) {
 		Date date = new Date();
-		User user = getUserByEmail(userdto.getEmail());
+		User user = getUserByEmail(email);
 		Request request = new Request("" + userdto, requestconst.Update_Info, requestconst.Pending, date, user);
 		requestRepository.save(request);
 		return true;
@@ -117,9 +117,10 @@ public class UserServiceImpl implements UserService {
 	public List<PhoneSA> getSAContact() {
 		List<PhoneSA> listPhone = new ArrayList<>();
 		List<User> user = userRepository.findByUserRolesRoleRoleName("ADMIN");
-		for (User user2 : user) {
+		for (User u : user) {
 			PhoneSA phone = new PhoneSA();
-			phone.setPhone(user2.getEmployee().getPhone());
+			phone.setPhone(u.getEmployee().getPhone());
+			phone.setName(u.getEmployee().getEmployeeName());
 			System.out.println("testfor:" + phone.getPhone());
 			listPhone.add(phone);
 		}
@@ -148,6 +149,7 @@ public class UserServiceImpl implements UserService {
 			if (!optionalUser.isPresent()) {
 				return null;
 			}
+			
 			User user = optionalUser.get();
 			user.getEmployee().setEmployeeName(userdto.getFullname());
 			user.getEmployee().setTeam(userdto.getTeam());
@@ -156,7 +158,7 @@ public class UserServiceImpl implements UserService {
 			user.getEmployee().setPhone(userdto.getPhone());
 			user.getEmployee().setAddress(userdto.getAddress());
 			user.getEmployee().setAvatar(userdto.getAvatar());
-			System.out.println("show3:" + user);
+			System.out.println("show3:" + userdto.getFullname());
 			return userRepository.save(user);
 		} catch (IOException e) {
 

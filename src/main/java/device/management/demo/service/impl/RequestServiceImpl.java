@@ -61,7 +61,7 @@ public class RequestServiceImpl implements RequestService{
 	@Override
 	public List<Request> listRequestbyuser(User user) {
 		// TODO Auto-generated method stub
-		return requestRepository.findByUser(user);
+		return requestRepository.findTop10ByUserOrderByIdDesc(user);
 	}
 	
 	/**
@@ -127,6 +127,7 @@ public class RequestServiceImpl implements RequestService{
 		rr.setContent(r.getContent());
 		rr.setEmail(r.getUser().getEmail());
 		rr.setFullname(r.getUser().getEmployee().getEmployeeName());
+		rr.setEmpId(r.getUser().getEmployee().getId());
 		rr.setId(r.getId());
 		rr.setStatus(r.getStatus());
 		rr.setTeam(r.getUser().getEmployee().getTeam());

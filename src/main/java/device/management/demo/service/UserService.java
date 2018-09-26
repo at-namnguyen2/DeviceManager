@@ -40,7 +40,7 @@ public interface UserService {
 	* @param userdto
 	* @return true
    	**/
-    Boolean editProfileUser(UserDTO userdto);
+    Boolean editProfileUser(String email, String userdto);
     
     /**
 	* @summary list SA contact: phone via rolename Admin

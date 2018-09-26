@@ -34,7 +34,9 @@ import device.management.demo.entity.dto.CatalogDTO;
 import device.management.demo.entity.dto.DeviceDTO;
 import device.management.demo.entity.dto.EditDeviceDTO;
 import device.management.demo.entity.response.CatalogDTOResponse;
+import device.management.demo.entity.response.DetailResponse;
 import device.management.demo.entity.response.DeviceDTOResponse;
+import device.management.demo.entity.response.DeviceResponse;
 import device.management.demo.entity.response.EditCatalogDTOResponse;
 import device.management.demo.entity.response.EditDeviceDTOResponse;
 import device.management.demo.entity.response.UserResponse2;
@@ -121,7 +123,12 @@ public class DeviceApi {
 	 if(device.size() == 0) {
 		 return new ResponseEntity<Object>("Khong co thiet bi nao", HttpStatus.NOT_FOUND);
 	 }
-	 return new ResponseEntity<Object>(device, HttpStatus.OK);
+	 List<DeviceResponse> ldr = new ArrayList<>();	
+	 for (Device d : device) {
+		 DeviceResponse dr = ConverttoDeviceResponse(d);
+		 ldr.add(dr);
+	}
+	 return new ResponseEntity<Object>(ldr, HttpStatus.OK);
 	}
 	
 //	//Tim kiem chi tiet thiet bi boi ten(thu nghiem).
@@ -350,5 +357,17 @@ public class DeviceApi {
 			}
 			
 			return new ResponseEntity<Object>(list, HttpStatus.OK);
+		}
+	    
+	    
+	    public DeviceResponse ConverttoDeviceResponse(Device d){
+	    	DeviceResponse ds = new DeviceResponse();
+			ds.setId(d.getId());
+			ds.setName(d.getName());
+			ds.setPrice(d.getPrice());
+			ds.setQuantity(d.getQuantity());
+			ds.setDescription(d.getDescription());
+			ds.setCatalog(d.getDeviceCatalog().getName());
+			return ds;
 		}
 }

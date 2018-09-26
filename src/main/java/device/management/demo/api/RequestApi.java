@@ -1,5 +1,6 @@
 package device.management.demo.api;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,16 +106,32 @@ public class RequestApi {
 		if (request.getStatus().equals(requestconst.Approved)) {
 			if (request.getType().equals(requestconst.Update_Info)) {
 				userService.updateUser(request);
-				RequestResponse rr = requestService.editRequest(request);
-				return new ResponseEntity<>(rr, HttpStatus.OK);
+
 			}
-		} else if (request.getStatus().equals(requestconst.Reply)) {
-			return new ResponseEntity<>(requestService.createRequest(request), HttpStatus.OK);
-		} else {
-			userService.updateUser(request);
-			RequestResponse rr = requestService.editRequest(request);
-			return new ResponseEntity<>(rr, HttpStatus.OK);
 		}
+		
+		if (!request.getStatus().equals(requestconst.Reply_Pending)) {
+			requestService.editRequest(request);
+		}
+		Date date = new Date();
+		RequestResponse rr = new RequestResponse();
+		rr.setContent(request.getContentReply());
+		rr.setUpdatedate(date);
+		rr.setType(request.getType());
+		rr.setStatus(requestconst.Reply);
+		rr.setEmail(request.getEmail());
+		rr = requestService.createRequest(rr);
+
+//			else {
+//
+//			}
+//		} else if (request.getStatus().equals(requestconst.Reply)) {
+//			return new ResponseEntity<>(requestService.createRequest(request), HttpStatus.OK);
+//		} else {
+//			userService.updateUser(request);
+//			RequestResponse rr = requestService.editRequest(request);
+//			return new ResponseEntity<>(rr, HttpStatus.OK);
+//		}
 		return new ResponseEntity<>("ok2", HttpStatus.OK);
 	}
 

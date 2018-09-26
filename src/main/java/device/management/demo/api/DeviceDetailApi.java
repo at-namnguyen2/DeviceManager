@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import device.management.demo.entity.Device;
@@ -42,6 +44,7 @@ public class DeviceDetailApi {
 	 **/
 	@PostMapping(path = "/Getdevicedetails")
 	public ResponseEntity<Object> GetDeviceDetails(@RequestBody Device device) {
+		System.out.println(device);
 		List<DetailResponse> deviceDetail = deviceDetailService.getDeviceDetails(device);
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetail, HttpStatus.OK);
@@ -89,9 +92,13 @@ public class DeviceDetailApi {
 	 **/
 	// filter devicedetails not used and normal for allocation
 	@PostMapping(path = "/filterdetailsnotused")
-	public ResponseEntity<Object> GetDetailsNotUsed(@RequestBody FilterDetailDTO filter) {
+	public ResponseEntity<Object> GetDetailsNotUsed(@RequestParam String filter) {
+		System.out.println("check:"+filter);
 		List<DetailResponse> deviceDetail = deviceDetailService.filterDetails(detailConst.NOTUSED, detailConst.NORMAL,
-				filter.getName(), filter.getCatalog());
+				filter, filter);
+		if(deviceDetail.size() == 0) {
+			return new ResponseEntity<>("Device Not Found!", HttpStatus.NOT_FOUND);
+		}
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetail, HttpStatus.OK);
 	}

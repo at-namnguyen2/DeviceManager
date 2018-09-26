@@ -88,8 +88,7 @@ public class DeviceDetailImpl implements DeviceDetailService {
 	 **/
 	@Override
 	public List<DetailResponse> filterDetails(Boolean working, long status, String name, String catalog) {
-		List<DeviceDetail> detail = deviceDetailRepository.findByWorkingAndStatusAndDeviceNameContainingAndDeviceDeviceCatalogNameContaining(
-				working, status, name, catalog);
+		List<DeviceDetail> detail = deviceDetailRepository.findByWorkingAndStatusAndDeviceNameContainingOrWorkingAndStatusAndDeviceDeviceCatalogNameContaining(working, status, name, working, status, catalog);
 		List<DetailResponse> detailRes = new ArrayList<>();
 		for (DeviceDetail d : detail) {
 			DetailResponse res = ConverttoDetailRes(d);
@@ -159,6 +158,8 @@ public class DeviceDetailImpl implements DeviceDetailService {
 		res.setPrice(d.getDevice().getPrice());
 		res.setProductid(d.getProductId());
 		res.setUpdatedate(d.getUpdateDate());
+		res.setStatus(d.getStatus());
+		res.setWorking(d.getWorking());
 		return res;
 	}
 	

@@ -5,7 +5,9 @@ import java.util.List;
 import device.management.demo.entity.DeviceDetail;
 import device.management.demo.entity.Device_Deliver_Receive;
 import device.management.demo.entity.dto.EmpDeviceDTO;
+import device.management.demo.entity.response.DetailResponse;
 import device.management.demo.entity.response.EmpDeviceResponse;
+import device.management.demo.entity.response.countResponse;
 
 public interface Device_Deliver_ReceiveService {
 
@@ -16,7 +18,17 @@ public interface Device_Deliver_ReceiveService {
 	 * @param team,name,email
 	 * @return listDevDeRe
 	 **/
-	List<Device_Deliver_Receive> filterDevDeRe(String team, String name, String email);
+	List<DetailResponse> filterDevDeRe(String filter);
+	
+	/**
+	 * @summary return list DetailResponse via email
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  email
+	 * @return List<EmpDeviceResponse>
+	 **/
+	
+	List<DetailResponse> getDevByMail(String email);
 	
 	/**
 	 * @summary filter record aloction
@@ -71,4 +83,6 @@ public interface Device_Deliver_ReceiveService {
 	 * @return Device_Deliver_Receive
 	 **/
 	Device_Deliver_Receive getDevDeRe(DeviceDetail deviceDetail);
+	
+	countResponse countQuantity(String email);
 }

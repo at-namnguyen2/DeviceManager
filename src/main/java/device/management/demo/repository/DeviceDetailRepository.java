@@ -34,7 +34,7 @@ public interface DeviceDetailRepository extends JpaRepository<DeviceDetail, Long
 	 * @param  working, status, name, catalog
 	 * @return List<DeviceDetail>
 	 **/
-	List<DeviceDetail> findByWorkingAndStatusAndDeviceNameContainingAndDeviceDeviceCatalogNameContaining(Boolean working,
-			long status, String name, String catalog);
-	
+	List<DeviceDetail> findByWorkingAndStatusAndDeviceNameContainingOrWorkingAndStatusAndDeviceDeviceCatalogNameContaining(Boolean working,
+			long status, String name, Boolean working2,long status2, String catalog);
+//	List<DeviceDetail> findByStatusAndWorkingAndD
 }
