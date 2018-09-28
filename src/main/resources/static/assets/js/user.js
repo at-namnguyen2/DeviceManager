@@ -57,7 +57,7 @@ $(document).ready(function() {
 	                    	
 	                    	//$(".do-user").append("<tr><td><div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input checkSingle\" required><label class=\"custom-control-label\" for=\"user_id_1\"></label></div></td><td><div class=\"avatar avatar-md mr-3 mt-1 float-left\"><span class=\"avatar-letter avatar-lg  circle\"><img src=\""+contact.avatar+"\" class=\"user-image avatar-user\" alt=\"User Image\"></span></div><div><div><strong>"+contact.employeeName+"</strong></div><small>"+contact.email+"</small></div></td><td>"+contact.team+"</td><td>"+contact.phone+"</td><td><span class=\icon icon-circle s-12  mr-2 text-warning\"></span>"+trang_thai+"</td><td><span class=\"r-3 badge badge-success\">"+contact.roleName+"</span></td><td><a href=\"panel-page-profile.html\"><i class=\"icon-eye mr-3\"></i></a><a href=\"panel-page-profile.html\"><i class=\"icon-pencil\"></i></a></td></tr>");
 	                    	
-	                    	$(".do-user").append("<tr><td><div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input checkSingle\" required><label class=\"custom-control-label\" for=\"user_id_1\"></label></div></td><td><div class=\"avatar avatar-md mr-3 mt-1 float-left\"><span class=\"avatar-letter avatar-lg  circle\"><img src=\""+contact.avatar+"\" class=\"user-image avatar-user\" alt=\"User Image\"></span></div><div><div><strong>"+contact.employeeName+"</strong></div><small>"+contact.email+"</small></div></td><td>"+contact.team+"</td><td>"+contact.phone+"</td><td><span class=\"r-3 badge badge-primary\">"+trang_thai+"</span></td><td><span class=\"r-3 badge badge-success\">"+contact.roleName+"</span></td><td><a href=\"panel-page-profile.html\"><i class=\"icon-eye mr-3\"></i></a><a href=\"#editProfile\" target=\"#editProfile\" data-toggle=\"modal\" class=\"viewDetail\"><i class=\"icon-pencil\" onclick=\"editInfoProfile("+contact.id+")\"></i></a></td></tr>");
+	                    	$(".do-user").append("<tr><td><div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input checkSingle \"><label class=\"custom-control-label\" for=\"user_id_1\"></label></div></td><td><div class=\"avatar avatar-md mr-3 mt-1 float-left\"><span class=\"avatar-letter avatar-lg  circle\"><img src=\""+contact.avatar+"\" class=\"user-image avatar-user\" alt=\"User Image\"></span></div><div><div><strong>"+contact.employeeName+"</strong></div><small>"+contact.email+"</small></div></td><td>"+contact.team+"</td><td>"+contact.phone+"</td><td><span class=\"r-3 badge badge-primary\">"+trang_thai+"</span></td><td><span class=\"r-3 badge badge-success\">"+contact.roleName+"</span></td><td><a href=\"#\" onclick=\"deleteUser("+contact.id+")\"><i class=\"icon-eye mr-3\"></i></a><a href=\"#editProfile\" target=\"#editProfile\" data-toggle=\"modal\" class=\"viewDetail\"><i class=\"icon-pencil\" onclick=\"editInfoProfile("+contact.id+")\"></i></a></td></tr>");
 	                    	
 	                    	
 	                    	//<a href=\"#viewProfile\" target=\"#viewProfile\" data-toggle=\"modal\" class=\"btn btn-success btn-sm mt-3 viewDetail\">View Profile</a>
@@ -269,6 +269,120 @@ function editInfoProfile(m) {
 		}
 			 });
 }
+function deleteUser(idDelete) {
+	
+	alert(idDelete);
+	var test = confirm("Ban co muon xoa khong???");
+	console.log(test);
+	if(test === true) {
+		
+	
+	 $.ajax({
+			url : '/api/users/deleteUser/'+idDelete,
+			type : 'DELETE',
+			contentType : "application/json; charset=utf-8",
+//   		data : userString,
+			dataType : 'json',
+			 complete : function(res) {
+
+				console.log(res.status);
+				 if (res.status === 200 || res.status ===201){
+					$('.msg-error-delete').fadeIn(1000);
+					//$('.msg-error-delete').addClass('btn-success');
+					$('.msg-error-delete').text('!!!Delete User Success!!!');
+					//$('.msg-error-delete').css('background-color', 'green');
+					$('.msg-error-delete').css('color', 'red');
+					location.reload();
+					
+					setTimeout(function() {
+						$('.msg-error-delete').fadeOut(1000);
+					}, 8000);
+				 }
+			 }
+			});
+	}
+}
+
+$(document).ready(function() {
+$('#checkedAll').click(function() {
+	alert("delete all");
+	var test = confirm("Ban co muon xoa tat ca cac user khong???");
+	console.log(test);
+	if(test === true) {
+		
+	
+	 $.ajax({
+			url : '/api/users/deleteAll',
+			type : 'DELETE',
+			contentType : "application/json; charset=utf-8",
+//   		data : userString,
+			dataType : 'json',
+			 complete : function(res) {
+
+				console.log(res.status);
+				 if (res.status === 200 || res.status ===201){
+					location.reload();
+				 }
+			 }
+			});
+	}
+	
+});
+});
+			
+			
+			
+			
+			
+//			 complete : function(res) {
+//				 console.log("tu viet van11111111111");
+//				console.log(res.status);
+//				 if (res.status === 200 || res.status ===201){
+//					$('.msg-error-update').fadeIn(1000);
+//					$('.msg-error-update').addClass('btn-success');
+//					$('.msg-error-update').text('!!!Update User Success!!!');
+//					$('.msg-error-update').css('background-color', 'green');
+//					$('.msg-error-update').css('color', 'white');
+//					$('.msg-error-update').css('height', '50px');
+//					
+//					setTimeout(function() {
+//						$('.msg-error').fadeOut(1000);
+//					}, 8000);
+//				}else if (res.status===409 || res.status===400){
+//					console.log("van dep trai");
+//					console.log(res.responseText);
+//					$('.msg-error-update').fadeIn(1000);
+//					$('.msg-error-update').addClass('btn-danger');
+//					$('.msg-error-update').text(res.responseText);
+//					$('.msg-error-update').css('background-color', '#2979ff')
+//					setTimeout(function() {
+//						$('.msg-error-update').fadeOut(1000);
+//					}, 8000);
+//				} 
+//			}
+//			
+//		}); 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 $(document).ready(function() {
 //update thong tin
@@ -375,9 +489,11 @@ $('#update-user').click(function() {
 				 if (res.status === 200 || res.status ===201){
 					$('.msg-error-update').fadeIn(1000);
 					$('.msg-error-update').addClass('btn-success');
-					$('.msg-error-update').text('!!!!!Add User Success!!!');
-					$('.msg-error1-update').css('background-color', 'green');
-					$('.msg-error1-update').css('color', 'color');
+					$('.msg-error-update').text('!!!Update User Success!!!');
+					$('.msg-error-update').css('background-color', 'green');
+					$('.msg-error-update').css('color', 'white');
+					$('.msg-error-update').css('height', '50px');
+					
 					setTimeout(function() {
 						$('.msg-error').fadeOut(1000);
 					}, 8000);

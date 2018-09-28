@@ -32,8 +32,8 @@ public class LoginController {
 //	public String home() {
 //		return "user-home";
 //	}
-	@GetMapping(path = {"/", "/home"})
-	public String myProfile() {
-		return "trang-chung";
-	}
+//	@GetMapping(path = {"/", "/home"})
+//	public String myProfile() {
+//		return "trang-chung";
+//	}
 }

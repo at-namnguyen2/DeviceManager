@@ -16,21 +16,12 @@ public class DetailResponse implements Serializable {
 	private String decription;
 	private String productid;
 	private Date updatedate;
-	private Boolean working;
 	private Long status;
 	public DetailResponse() {
 		super();
 	}
 	
 	
-	public Boolean getWorking() {
-		return working;
-	}
-
-
-	public void setWorking(Boolean working) {
-		this.working = working;
-	}
 
 
 	public Long getStatus() {

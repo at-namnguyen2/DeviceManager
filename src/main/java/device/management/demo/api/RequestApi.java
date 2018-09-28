@@ -1,5 +1,6 @@
 package device.management.demo.api;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -35,9 +36,9 @@ public class RequestApi {
 	 * @return Request
 	 **/
 	@PostMapping(path = "/createrequest")
-	public ResponseEntity<Object> CreateRequest(@RequestBody RequestResponse request) {
+	public ResponseEntity<Object> CreateRequest(@RequestBody RequestResponse request, Principal p) {
 		System.out.println("get request");
-		String principalemail = "namnguyen2@gmail.com";
+		String principalemail = p.getName();
 		request.setEmail(principalemail);
 		request.setStatus(requestconst.Pending);
 		return new ResponseEntity<>(requestService.createRequest(request), HttpStatus.OK);
@@ -51,8 +52,8 @@ public class RequestApi {
 	 * @return listrequest
 	 **/
 	@GetMapping(path = "/myrequest")
-	public ResponseEntity<Object> ViewRequestUser() {
-		String principalemail = "namnguyen2@gmail.com";
+	public ResponseEntity<Object> ViewRequestUser(Principal p) {
+		String principalemail = p.getName();
 		User user = userService.getUserByEmail(principalemail);
 		List<Request> listRequest = requestService.listRequestbyuser(user);
 		if (listRequest.size() == 0) {
@@ -70,6 +71,7 @@ public class RequestApi {
 	 **/
 	@GetMapping(path = "/requestpending")
 	public ResponseEntity<Object> viewRequestPending() {
+	
 		List<RequestResponse> listRequestr = requestService.listRequestpending();
 		if (listRequestr.equals(null)) {
 			return new ResponseEntity<>(listRequestr, HttpStatus.NOT_FOUND);

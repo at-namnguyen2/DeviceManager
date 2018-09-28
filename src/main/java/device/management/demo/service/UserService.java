@@ -72,6 +72,7 @@ public interface UserService {
 	User getUserById1(long id);
 	boolean deleteUserById(long id);
 	List<UserResponse2> showUserStateNonDel();
+	List<UserResponse2> showUserStateNonDel2();
 	List<UserResponse2> getUserAdmin();
 	List<UserResponse2> filterUser(String search);
 

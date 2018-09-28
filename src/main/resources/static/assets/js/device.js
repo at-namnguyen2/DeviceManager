@@ -61,15 +61,10 @@ $(document).ready(function() {
 				+"<label class=\"custom-control-label\" for=\"user_id_1\"></label></div></td>"
 			+"<td><div class=\"detail-icon icon  s-36 mr-3 mt-1 float-left\"><span class=\"circle\"></span></div>"
 			+"<div><div><strong class=\"productId\">"+detail.productid+"</strong></div></div></td><td>"+datetime+"</td>");
-					 if(detail.working === false){
-						 $("."+key+"").append("<td class=\"working\"><span class=\" icon icon-circle s-12  mr-2 text-dark\"></span> Inactive</td>");
-					 } else {
-						 $("."+key+"").append("<td class=\"working\"><span class=\" icon icon-circle s-12  mr-2 text-success\"></span> Active</td>");
-					 }
 					 
-			 if(detail.status === 1){ $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-primary\">Normal</span></td>");
+			 if(detail.status === 1){ $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-primary\">Working</span></td>");
 			 } else if(detail.status === 2){  $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-warning \">Error</span></td>");			
-			 } else { $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-danger \">Break</span></td>");
+			 } else { $("."+key+"").append("<td class=\"status\"><span class=\"badge-status r-3 badge badge-danger \">Not Use</span></td>");
 			 }
 			 $("."+key+"").append("<td><a href=\"panel-page-profile.html\"><i class=\"icon-eye mr-3\"></i></a>"
 						+"<a class=\"\" href=\"#step-22\"><i class=\"editDetail icon-pencil\"></i></a></td><td class=\"deviceName\" hidden=\"\">"+detail.devicename+"</td><td class=\"catalogName\" hidden=\"\">"+detail.catalogname+"</td><td class=\"idDevice\" hidden=\"\">"+json.id+"</td></tr>");			 
@@ -84,86 +79,72 @@ $(document).ready(function() {
 	})
 	
 	$(".detail-table").on('click','.editDetail',function(e) {	
-	
+		
 		var $row = $(this).closest("tr");
 
 		var detailId = $row.find(".detailId").text();
 		var productId = $row.find(".productId").text();
 		var status = $row.find(".status").text();
-		var working = $row.find(".working").text();
 		var deviceName = $row.find(".deviceName").text();
 		var cataloName = $row.find(".catalogName").text();
-		var idDevice = $row.find("#idDevice").text();
+		convertToIconDetail(cataloName);
 		console.log(cataloName);
 		$('#deviceName').val(deviceName);
-		$('#detail-icon').removeAttr('class');
-		$('#detail-icon').removeAttr('class',cataloName);
 		$('#productId').val(productId);
 		$('#catalogName').val(cataloName);
 		$('#id_detaildevice').val(detailId);
-		$('#id_Device').val(idDevice);
-		 $('#SwitchWorking').prop("checked", true);
-//		$('#SwitchWorking').prop
-		if(status ==="Normal"){ 
-$('#SwitchStatusNormal').prop("checked", true); $('#SwitchStatusBreak').prop("checked", false); $('#SwitchStatusError').prop("checked", false);}
-		else if(status ==="Break"){
-$('#SwitchStatusNormal').prop("checked", false); $('#SwitchStatusBreak').prop("checked", true); $('#SwitchStatusError').prop("checked", false);}
-		else if(status ==="Error"){ 
-$('#SwitchStatusNormal').prop("checked", false); $('#SwitchStatusBreak').prop("checked", false); $('#SwitchStatusError').prop("checked", true);}
-	
-		if(working === 'inactive'){ 
-			alert();
-			$('#SwitchWorking').prop("checked", true);
-			$('#SwitchStatusNormal').attr('disabled',true);
-			$('#SwitchStatusBreak').prop("disabled","");
-			$('#SwitchStatusError').attr('disabled');
-		}
+		if(status ==="Working"){ 
+$('#SwitchStatusWorking').prop("checked", true); $('#SwitchStatusError').prop("checked", false); $('#SwitchStatusNotUse').prop("checked", false);}
+		else if(status ==="Error"){
+$('#SwitchStatusWorking').prop("checked", false); $('#SwitchStatusError').prop("checked", true); $('#SwitchStatusNotUse').prop("checked", false);}
+		else if(status ==="Not Use"){ 
+$('#SwitchStatusWorking').prop("checked", false); $('#SwitchStatusError').prop("checked", false); $('#SwitchStatusNotUse').prop("checked", true);}
 
 	})
 	
- $('#sumitUpdate').click(function() {
-	   event.preventDefault();
-////	   event.addEventListener('click', swapper, false);
-	 var DetailInfo = $('#edit-detail-form').serializeJSON({parseBooleans: true});
-	 if(DetailInfo.statusB === "on"){ DetailInfo["status"] = 0;}
-	 else if(DetailInfo.statusN === "on"){DetailInfo["status"] = 1;}
-	 else {DetailInfo["status"] = 2;}
-	 alert(DetailInfo.productId);
-	 alert($('#productId').val());
-		var datajson = JSON.stringify(DetailInfo);
-		 alert(datajson);
-		$.ajax({
-			url : '/editdevicedetails',
-			  type: 'PUT',
-				contentType : "application/json; charset=utf-8",
-				data : datajson,
-				dataType : 'json',
-			success : function(value) {
-				console.log(value);
-			},
-			error : function(err) {
-				console.log(err);	 
-			}
-		});
-	 
-	 
-//	 var jsond["id"] = $('#id_Device').val();
-	 
+// $('#sumitUpdate1').click(function() {
+//	   event.preventDefault();
+//////	   event.addEventListener('click', swapper, false);
+//	 var DetailInfo = $('#edit-detail-form').serializeJSON({parseBooleans: true});
+//	 if(DetailInfo.statusB === "on"){ DetailInfo["status"] = 0;}
+//	 else if(DetailInfo.statusN === "on"){DetailInfo["status"] = 1;}
+//	 else {DetailInfo["status"] = 2;}
+////	 alert(DetailInfo.productId);
+////	 alert($('#productId').val());
+//		var datajson = JSON.stringify(DetailInfo);
+//	
+//		$.ajax({
+//			url : '/editdevicedetails',
+//			  type: 'PUT',
+//				contentType : "application/json; charset=utf-8",
+//				data : datajson,
+//				dataType : 'json',
+//			success : function(value) {
+//				console.log(value);
+//			},
+//			error : function(err) {
+//				console.log(err);	 
+//			}
+//		});
+//	 
+//	 
+////	 var jsond["id"] = $('#id_Device').val();
+//	 
+//	
+//
+//			    });
 	
-
+			 $('#SwitchStatusWorking').change(function() {
+				 $('#SwitchStatusError').prop("checked", false);
+				 $('#SwitchStatusNotUse').prop("checked", false);     
 			    });
-	
-			 $('#SwitchStatusNormal').change(function() {
-				 $('#SwitchStatusBreak').prop("checked", false);
-				 $('#SwitchStatusError').prop("checked", false);     
-			    });
-	 $('#SwitchStatusBreak').change(function() {
-		 $('#SwitchStatusNormal').prop("checked", false);
-		 $('#SwitchStatusError').prop("checked", false);     
-	    });	 
 	 $('#SwitchStatusError').change(function() {
-			 $('#SwitchStatusBreak').prop("checked", false);
-			 $('#SwitchStatusNormal').prop("checked", false);     
+		 $('#SwitchStatusWorking').prop("checked", false);
+		 $('#SwitchStatusNotUse').prop("checked", false);     
+	    });	 
+	 $('#SwitchStatusNotUse').change(function() {
+			 $('#SwitchStatusError').prop("checked", false);
+			 $('#SwitchStatusWorking').prop("checked", false);     
 		    });
 	
 	function convertToIconDevice(catalog){
@@ -176,8 +157,15 @@ $('#SwitchStatusNormal').prop("checked", false); $('#SwitchStatusBreak').prop("c
 		 else {$('.device_icon').addClass('icon-laptop_mac');}
 	}
 	function convertToIconDetail(catalog){
-		 if(catalog === "Laptop"){$('.detail-icon').addClass('icon-laptop_mac');}
-		 else if(catalog === "Keyboard"){$('.detail-icon').addClass('icon-keyboard');}
+		 $('.detail-icon').removeClass('icon-laptop_mac');
+		 $('.detail-icon').removeClass('icon-keyboard');
+		  $('.detail-icon').removeClass('icon-desktop_mac');
+		   $('.detail-icon').removeClass('icon-mouse');
+		 if(catalog === "Laptop"){
+//			 $('#detail-icon').addClass('icon-laptop_mac');
+			 $('.detail-icon').addClass('icon-laptop_mac');}
+		 else if(catalog === "Keyboard"){
+			 $('.detail-icon').addClass('icon-keyboard');}
 		 else if(catalog === "Monitor"){$('.detail-icon').addClass('icon-desktop_mac');}	
 		 else if(catalog === "Desktop Mac"){$('.detail-icon').addClass('icon-desktop_mac');}
 		 else if(catalog === "UPS"){$('.detail-icon').addClass('icon-laptop_mac');}

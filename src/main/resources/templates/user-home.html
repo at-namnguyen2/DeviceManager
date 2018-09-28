@@ -186,28 +186,26 @@
 							<ul class="nav navbar-nav">
 
 								<!-- notification -->
-								<li class="dropdown custom-dropdown notifications-menu">
-            <a href="#" class=" nav-link" data-toggle="dropdown" aria-expanded="false">
-                <i class="icon-notifications "></i>
-                <span class="count-notify badge badge-danger badge-mini rounded-circle">4</span>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="count-header header">You have 10 notifications</li>
-                <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                        <li class="count-content">
-                          
-                        </li>
-                    </ul>
-                </li>
-                <li class="footer p-2 text-center"><a href="#">View all</a></li>
-            </ul>
-        </li>
+								<li class="dropdown custom-dropdown notifications-menu"><a
+									href="#" class=" nav-link" data-toggle="dropdown"
+									aria-expanded="false"> <i class="icon-notifications "></i>
+										<span
+										class="count-notify badge badge-danger badge-mini rounded-circle"></span>
+								</a>
+									<ul class="dropdown-menu">
+										<li class="count-header header">You have 10 notifications</li>
+										<li>
+											<!-- inner menu: contains the actual data -->
+											<ul class="menu">
+												<li class="count-content"></li>
+											</ul>
+										</li>
+										<li class="footer p-2 text-center"><a href="#">View
+												all</a></li>
+									</ul></li>
 								<!-- User Account-->
 								<li class="dropdown custom-dropdown user user-menu"><a
 									href="#" class="nav-link" data-toggle="dropdown"> <img
-										
 										class="user-image data-avatar" alt="User Image"> <i
 										class="icon-more_vert "></i>
 								</a>
@@ -221,13 +219,13 @@
 												</a>
 											</div>
 											<div class="col">
-												<a href="#"> <i
+												<a id="change-pass"> <i
 													class="icon-security purple lighten-2 avatar  r-5"></i>
 													<div class="pt-1">Change Password</div>
 												</a>
 											</div>
 											<div class="col">
-												<a href="#"> <i
+												<a href="/logout"> <i
 													class="icon-perm_data_setting indigo lighten-2 avatar  r-5"></i>
 													<div class="pt-1">Logout</div>
 												</a>
@@ -249,7 +247,7 @@
 									<div class="pb-3">
 										<div class="image mr-3  float-left">
 											<img class="user_avatar no-b no-p data-avatar"
-												 alt="User Image">
+												alt="User Image">
 										</div>
 										<div>
 											<h6 id="fullname" class="p-t-10 fullname">Alexander
@@ -276,7 +274,7 @@
 										data-toggle="pill" href="#v-pills-timeline" role="tab"
 										aria-controls="v-pills-timeline" aria-selected="false"><i
 											class="icon icon-security"></i>Change Password</a></li>
-											<li><a class="nav-link" id="v-pills-request-tab"
+									<li><a class="nav-link" id="v-pills-request-tab"
 										data-toggle="pill" href="#v-pills-request" role="tab"
 										aria-controls="v-pills-request" aria-selected="false"><i
 											class="icon icon-history"></i>My Request</a></li>
@@ -330,7 +328,7 @@
 																333470963</span>
 													</a></li>
 												</ul>
-											
+
 												<div class="card-header bg-white">
 													<strong class="card-title">Other</strong>
 												</div>
@@ -415,7 +413,7 @@
 										<span class="badge badge-success">Allocation Device</span>
 
 									</a>
-								
+
 								</div>
 								<div class="tab-pane fade" id="v-pills-request" role="tabpanel"
 									aria-labelledby="v-pills-request-tab">
@@ -434,12 +432,12 @@
 																	<tr>
 																		<th>Type</th>
 																		<th>Content</th>
-																		<th>Date Update</th>										
+																		<th>Date Update</th>
 																		<th>Status</th>
 																	</tr>
 																</thead>
 																<tbody class="tablerequest">
-														<!-- 		"<tr><td>"+type+"</td><td><a href=\"#\">INV-281281</a></td><td>"+updateDate+"</td><td><span class=\"badge badge-success\">"+status+"</span></td></tr>" -->	
+																	<!-- 		"<tr><td>"+type+"</td><td><a href=\"#\">INV-281281</a></td><td>"+updateDate+"</td><td><span class=\"badge badge-success\">"+status+"</span></td></tr>" -->
 																</tbody>
 															</table>
 														</div>
@@ -452,41 +450,44 @@
 								</div>
 								<div class="tab-pane fade" id="v-pills-timeline" role="tabpanel"
 									aria-labelledby="v-pills-timeline-tab">
-									 <div class="container-fluid animatedParent animateOnce">
-        <div class="animated fadeInUpShort">
-            <div class="row my-3">
-                <div class="col-md-7  offset-md-2">
-                    <form action="#" id="demo-form2">
-                        <div class="card no-b  no-r">
-                            <div class="card-body">
-                             
-                                <div class="form-row">
-								   <div class="form-group col-md-8">
-                                        <label for="inputPassword4" class="col-form-label">Current Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4" name="passwordCurrent"
-                                               placeholder="Enter Current Password">
-                                               
-                                    </div>
-                                    
-									<div class="form-group col-md-8">
-                                        <label for="inputPassword5" class="col-form-label">New Password</label>
-                                        <input type="password" class="form-control" id="inputPassword5" name="newPassword"
-                                               placeholder="Enter New Password">
-                                               
-                                    </div>
-                                    <br>
-                                    
-									<div class="form-group col-md-8">
-                                        <label for="inputPassword7" class="col-form-label">Confirm Password</label>
-                                        <input type="password" class="form-control" id="inputPassword7" name="newMatchingPassword"
-                                               placeholder="Enter Confirm Password">
-                                             
-                                               
-                                    </div>
-                                    <div class="col-md-12 col-xs-12 btn msg-error" style="font-size: 13px">
-																</div>
-                                    
-                                    <!-- <div class="form-group">
+									<div class="container-fluid animatedParent animateOnce">
+										<div class="animated fadeInUpShort">
+											<div class="row my-3">
+												<div class="col-md-7  offset-md-2">
+													<form action="#" id="demo-form2">
+														<div class="card no-b  no-r">
+															<div class="card-body">
+
+																<div class="form-row">
+																	<div class="form-group col-md-8">
+																		<label for="inputPassword4" class="col-form-label">Current
+																			Password</label> <input type="password" class="form-control"
+																			id="inputPassword4" name="passwordCurrent"
+																			placeholder="Enter Current Password">
+
+																	</div>
+
+																	<div class="form-group col-md-8">
+																		<label for="inputPassword5" class="col-form-label">New
+																			Password</label> <input type="password" class="form-control"
+																			id="inputPassword5" name="newPassword"
+																			placeholder="Enter New Password">
+
+																	</div>
+																	<br>
+
+																	<div class="form-group col-md-8">
+																		<label for="inputPassword7" class="col-form-label">Confirm
+																			Password</label> <input type="password" class="form-control"
+																			id="inputPassword7" name="newMatchingPassword"
+																			placeholder="Enter Confirm Password">
+
+
+																	</div>
+																	<div class="col-md-12 col-xs-12 btn msg-error"
+																		style="font-size: 13px"></div>
+
+																	<!-- <div class="form-group">
 															<div class="col-md-3"></div>
 															<div class="col-md-6"
 																style="font-size: 13px">
@@ -494,28 +495,29 @@
 																</div>
 																</div>
 									</div> -->
-                                    
-                                   
-                                
-                                </div>
 
-                             
-                            </div>
-                            <hr>
-                       
-                            <div class="card-body">
-                               <button type="button" id="checkPassword" class="btn btn-success">Submit</button>
-																	
-												
-								
-                            </div>
-							
-                        </div>
-                    </form>
-                </div>
-            </div>
-    </div>
-    </div>
+
+
+																</div>
+
+
+															</div>
+															<hr>
+
+															<div class="card-body">
+																<button type="button" id="checkPassword"
+																	class="btn btn-success">Submit</button>
+
+
+
+															</div>
+
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
 
 								</div>
 								<div class="tab-pane fade" id="v-pills-edit" role="tabpanel"
@@ -594,7 +596,10 @@
 																				<div>You can also click to open file browser</div>
 																			</div>
 
-																		<div class="dz-image"><img class="data-avatar" data-dz-thumbnail="" alt="" src=""></div> 
+																			<div class="dz-image">
+																				<img class="data-avatar" data-dz-thumbnail="" alt=""
+																					src="">
+																			</div>
 																		</div>
 
 																	</div>
@@ -629,12 +634,14 @@
 															</div>
 															<hr>
 
-															<div class="card-body" >
+															<div class="card-body">
 																<span id="butonsave" type="submit"
-																	class="btn btn-primary btn-lg saveprofile" ><i
+																	class="btn btn-primary btn-lg saveprofile"><i
 																	class="icon-save mr-2 "></i>Save Profile</span>
-															<div role="alert" class="alert alert-warning warning-edit" hidden=""><strong>Warning!</strong>
-																	Your update info request is pending!
+																<div role="alert"
+																	class="alert alert-warning warning-edit" hidden="">
+																	<strong>Warning!</strong> Your update info request is
+																	pending!
 																</div>
 															</div>
 
@@ -652,121 +659,127 @@
 
 				</div>
 			</div>
-				<div class="modal fade show" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="modalRequest">
-	 	  <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content b-0">
-            <div class="modal-header r-0 bg-primary">
-                <h6 class="modal-title text-white" id="RequestLabel">New Devices</h6>
-                <a href="#" data-dismiss="modal" aria-label="Close" class="paper-nav-toggle paper-nav-white active"><i></i></a>
-            </div>
-            <div class="modal-body no-p no-b">
-				 <!-- <div class="animated fadeInUpShort"> -->
-            <div class="row my-3">
-                <div class="col-md-7  offset-md-2">
-                    <form id="form-request" action="#">
-                        <div class="card no-b  no-r">
-                            <div class="card-body catalog-body">
-                                <h5 class="card-title">CATALOG</h5>
-                                <div class="form-row">
-                                    <div class="form-group col-12 m-0">
-                                        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Select A Catalog Name</label>							
-                                        <select name="catalog" class="custom-select my-1 mr-sm-2 form-control r-0 col-5 light s-12" id="inlineFormCustomSelectPref">
-                                            <option selected="">Choose...</option>
-                                            <option value="Laptop">Laptop</option>
-                                            <option value="Monitor">Monitor</option>
-                                            <option value="Keyboard">Keyboard</option>
-											  <option value="Mouse">Mouse</option>
-                                        </select>
-                                    </div>
-                                </div>    
-                            </div>
-							<hr>
-                            <div class="card-body">                
-                                <div class="form-row">
-                                
-                                    <div class="form-group col-12 m-0">
-                                    <label for="decription" class="col-form-label s-12">Content</label>
-                                    <textarea name="content" class="form-control r-0 light s-12" id="content" rows="5"></textarea>
-                                </div>
-                                </div>
-              
-                            </div>                         
-                            <hr>
-                            <div class="card-body">
-                                <span  class="btn btn-primary btn-lg sendRequest"><i class="icon-save mr-2"></i>Send Request</span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-    <!-- </div>	 -->
-                 
-              
-		
-            </div>
-         
-        </div>
-    </div>
-	 	</div>  
+			<div class="modal fade show" id="modalRequest" tabindex="-1"
+				role="dialog" aria-labelledby="modalRequest">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content b-0">
+						<div class="modal-header r-0 bg-primary">
+							<h6 class="modal-title text-white" id="RequestLabel">New
+								Devices</h6>
+							<a href="#" data-dismiss="modal" aria-label="Close"
+								class="paper-nav-toggle paper-nav-white active"><i></i></a>
+						</div>
+						<div class="modal-body no-p no-b">
+							<!-- <div class="animated fadeInUpShort"> -->
+							<div class="row my-3">
+								<div class="col-md-7  offset-md-2">
+									<form id="form-request" action="#">
+										<div class="card no-b  no-r">
+											<div class="card-body catalog-body">
+												<h5 class="card-title">CATALOG</h5>
+												<div class="form-row">
+													<div class="form-group col-12 m-0">
+														<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Select
+															A Catalog Name</label> <select name="catalog"
+															class="custom-select my-1 mr-sm-2 form-control r-0 col-5 light s-12"
+															id="inlineFormCustomSelectPref">
+															<option selected="">Choose...</option>
+															<option value="Laptop">Laptop</option>
+															<option value="Monitor">Monitor</option>
+															<option value="Keyboard">Keyboard</option>
+															<option value="Mouse">Mouse</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<hr>
+											<div class="card-body">
+												<div class="form-row">
+
+													<div class="form-group col-12 m-0">
+														<label for="decription" class="col-form-label s-12">Content</label>
+														<textarea name="content"
+															class="form-control r-0 light s-12" id="content" rows="5"></textarea>
+													</div>
+												</div>
+
+											</div>
+											<hr>
+											<div class="card-body">
+												<span class="btn btn-primary btn-lg sendRequest"><i
+													class="icon-save mr-2"></i>Send Request</span>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- </div>	 -->
+
+
+
+						</div>
+
+					</div>
+				</div>
+			</div>
 		</div>
 
 
-	 
+
 		<!--/#app -->
 		<script th:src="@{/assets/js/app.js}"></script>
-		   <script
-    src="../static/js/change_password.js"
-    th:src="@{/assets/js/change_password.js}"></script>
-    
-    <script type="text/javascript" src="../static/js/jquery.serializejson.js" th:src="@{/js/jquery.serializejson.js}"></script>
-    <script>
-    	//to do change password
-    	
-    	$('#checkPassword').click(function() {
-		var URL = "/my-profile/change-password";
-		var passwordForm = $('#demo-form2').serializeJSON();
-		console.log(passwordForm);
-		console.log("tu duong");
-		
-		console.log("nguyen thi bai");
-		var jsonStringPassword = JSON.stringify(passwordForm);
-		console.log("///////////" + jsonStringPassword);
-		
-		$.ajax({
-			url : "/my-profile/change-password",
-			type : 'PUT',
-			contentType : "application/json; charset=utf-8",
-			data : jsonStringPassword,
-			dataType : 'json',
-			 complete : function(res) {
-				 console.log("tu viet van11111111111");
-				console.log(res.status);
-				 if (res.status === 200 || res.status ===201){
-					$('.msg-error').fadeIn(1000);
-					$('.msg-error').addClass('btn-success');
-					$('.msg-error').text('Update Password Success!');
-					$('.msg-error').css('background-color', 'green');
-					setTimeout(function() {
-						$('.msg-error').fadeOut(1000);
-					}, 8000);
-				}else if (res.status===409 || res.status===400){
-					console.log("van dep trai");
-					console.log(res.responseText);
-					$('.msg-error').fadeIn(1000);
-					$('.msg-error').addClass('btn-danger');
-					$('.msg-error').text(res.responseText);
-					$('.msg-error').css('background-color', '#2979ff')
-					setTimeout(function() {
-						$('.msg-error').fadeOut(1000);
-					}, 8000);
-				} 
-			}
-			
-		});
-		
-	});
-    </script>
-		
-		
+		<script src="../static/js/change_password.js"
+			th:src="@{/assets/js/change_password.js}"></script>
+
+		<script type="text/javascript"
+			src="../static/js/jquery.serializejson.js"
+			th:src="@{/js/jquery.serializejson.js}"></script>
+		<script>
+			//to do change password
+
+			$('#checkPassword').click(function() {
+				var URL = "/my-profile/change-password";
+				var passwordForm = $('#demo-form2').serializeJSON();
+				console.log(passwordForm);
+				console.log("tu duong");
+
+				console.log("nguyen thi bai");
+				var jsonStringPassword = JSON.stringify(passwordForm);
+				console.log("///////////" + jsonStringPassword);
+
+				$.ajax({
+					url : "/my-profile/change-password",
+					type : 'PUT',
+					contentType : "application/json; charset=utf-8",
+					data : jsonStringPassword,
+					dataType : 'json',
+					complete : function(res) {
+						console.log("tu viet van11111111111");
+						console.log(res.status);
+						if (res.status === 200 || res.status === 201) {
+							$('.msg-error').fadeIn(1000);
+							$('.msg-error').addClass('btn-success');
+							$('.msg-error').text('Update Password Success!');
+							$('.msg-error').css('background-color', 'green');
+							setTimeout(function() {
+								$('.msg-error').fadeOut(1000);
+							}, 8000);
+						} else if (res.status === 409 || res.status === 400) {
+							console.log("van dep trai");
+							console.log(res.responseText);
+							$('.msg-error').fadeIn(1000);
+							$('.msg-error').addClass('btn-danger');
+							$('.msg-error').text(res.responseText);
+							$('.msg-error').css('background-color', '#2979ff')
+							setTimeout(function() {
+								$('.msg-error').fadeOut(1000);
+							}, 8000);
+						}
+					}
+
+				});
+
+			});
+		</script>
 </body>
 </html>

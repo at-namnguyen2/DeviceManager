@@ -318,4 +318,10 @@ public class UserServiceImpl implements UserService {
 			return userResponse2;
 		}
 
+		@Override
+		public List<UserResponse2> showUserStateNonDel2() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 }

@@ -25,7 +25,7 @@ public interface DeviceDetailService {
 	 * @param  deviceDetail
 	 * @return DeviceDetail
 	 **/
-	DeviceDetail editDeviceDetails(DeviceDetail deviceDetail);
+	DeviceDetail editDeviceDetails(DetailDTO deviceDetail);
 	
 	/**
 	 * @summary del devicedetails via id
@@ -43,7 +43,7 @@ public interface DeviceDetailService {
 	 * @param  working, status, name, catalog
 	 * @return List<DetailResponse>
 	 **/
-	List<DetailResponse> filterDetails(Boolean working, long status, String name, String catalog);
+	List<DetailResponse> filterDetails(long status, String key);
 	
 	/**
 	 * @summary add new device detail

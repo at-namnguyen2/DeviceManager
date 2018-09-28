@@ -1,6 +1,7 @@
 package device.management.demo.api;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,8 +50,8 @@ public class UserApi {
    	* @return user
    	**/
 	@GetMapping(path = "/userapi/myprofile")
-	public ResponseEntity<Object> ViewCurrentUser() {
-		String email = "namnguyen2@gmail.com";
+	public ResponseEntity<Object> ViewCurrentUser(Principal p) {
+		String email = p.getName();
 	UserResponse user = userService.findUserByEmail(email);
 	return new ResponseEntity<>(user, HttpStatus.OK);		
 }
@@ -63,8 +64,9 @@ public class UserApi {
 	* @return String message
    	**/
 	@PostMapping(path = "/userapi/editmyprofile", consumes = "multipart/form-data")
-	public ResponseEntity<Object> EditCurrentUser(@RequestPart("userdto") String userdto, @RequestPart("file") MultipartFile file) {
-		String email = "namnguyen2@gmail.com";
+	public ResponseEntity<Object> EditCurrentUser(@RequestPart("userdto") String userdto, @RequestPart("file") MultipartFile file, Principal p) {
+		
+		String email = p.getName();
 		ObjectMapper mapper = new ObjectMapper();
 		UserDTO useredit = new UserDTO();
 		try {

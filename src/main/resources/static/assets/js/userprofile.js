@@ -17,6 +17,11 @@ $(document).ready(function() {
                       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
               return fmt;
 	}
+	
+	$('#change-pass').click(function() {
+//		alert();
+		$('#v-pills-timeline-tab').click();
+	})
 		$.ajax({
 			url : '/userapi/myprofile',
 			type : 'get',
@@ -47,7 +52,7 @@ $(document).ready(function() {
 			},
 			error : function(err) {
 				console.log(err);
-				alert(JSON.stringify(err));
+//				alert(JSON.stringify(err));
 			}
 		})
 		
@@ -68,7 +73,7 @@ $(document).ready(function() {
 			},
 			error : function(err) {
 				console.log(err);
-				alert(JSON.stringify(err));
+//				alert(JSON.stringify(err));
 			}
 		})
 		
@@ -89,14 +94,14 @@ $(document).ready(function() {
 			},
 			error : function(err) {
 				console.log(err);
-				alert(JSON.stringify(err));
+//				alert(JSON.stringify(err));
 			}
 		})
 		
 		// edit profile
 	$('.saveprofile').click(function() {
 		var profile = $('#form-profile').serializeArray();	
-		alert("hihi");
+//		alert("hihi");
 		formData = new FormData(1);
 		files = [];
 		json = {};
@@ -146,7 +151,7 @@ $(document).ready(function() {
 				},
 				error : function(err) {
 					console.log(err);
-					alert(JSON.stringify(err));
+//					alert(JSON.stringify(err));
 				}
 			})
 
@@ -164,7 +169,7 @@ $(document).ready(function() {
 			},
 			error : function(err) {
 				console.log(err);
-				alert(JSON.stringify(err));
+//				alert(JSON.stringify(err));
 			}
 		})
 	
@@ -290,7 +295,7 @@ $(document).ready(function() {
 			},
 			error : function(err) {
 				console.log(err);
-				alert(JSON.stringify(err));
+				
 			}
 		})
 
@@ -307,7 +312,7 @@ $(document).ready(function() {
 			},
 			error : function(err) {
 				console.log(err);
-				alert(JSON.stringify(err));
+//				alert(JSON.stringify(err));
 			}
 		})
 		}

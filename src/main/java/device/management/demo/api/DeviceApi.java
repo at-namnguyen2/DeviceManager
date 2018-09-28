@@ -113,6 +113,7 @@ public class DeviceApi {
 	//xuat danh sach tat ca cac thiet bi.
 	@GetMapping("/listAllDevice")
 	public ResponseEntity<Object> listAllDevice() {
+//		System.err.println("hihi");
 	 List<Device> device = deviceRepository.findAll();
 	 if(device.size() == 0) {
 		 return new ResponseEntity<Object>("Khong co thiet bi nao", HttpStatus.NOT_FOUND);

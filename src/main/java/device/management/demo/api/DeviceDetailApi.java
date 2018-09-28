@@ -58,7 +58,7 @@ public class DeviceDetailApi {
 	 * @return List<DeviceDetail> deviceDetail
 	 **/
 	@PutMapping(path = "/editdevicedetails")
-	public ResponseEntity<Object> editDeviceDetails(@RequestBody DeviceDetail deviceDetail) {
+	public ResponseEntity<Object> editDeviceDetails(@RequestBody DetailDTO deviceDetail) {
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetailService.editDeviceDetails(deviceDetail), HttpStatus.OK);
 	}
@@ -92,10 +92,9 @@ public class DeviceDetailApi {
 	 **/
 	// filter devicedetails not used and normal for allocation
 	@PostMapping(path = "/filterdetailsnotused")
-	public ResponseEntity<Object> GetDetailsNotUsed(@RequestParam String filter) {
-		System.out.println("check:"+filter);
-		List<DetailResponse> deviceDetail = deviceDetailService.filterDetails(detailConst.NOTUSED, detailConst.NORMAL,
-				filter, filter);
+	public ResponseEntity<Object> GetDetailsNotUsed(@RequestParam String key) {
+		System.out.println("check:"+key);
+		List<DetailResponse> deviceDetail = deviceDetailService.filterDetails(detailConst.NOTUSED, key);
 		if(deviceDetail.size() == 0) {
 			return new ResponseEntity<>("Device Not Found!", HttpStatus.NOT_FOUND);
 		}

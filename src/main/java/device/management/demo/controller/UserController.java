@@ -3,9 +3,10 @@ package device.management.demo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Controller
-@RequestMapping("/user")
+//@RequestMapping("/home")
 public class UserController {
 	
 //	@GetMapping(path="/myprofile")
@@ -13,7 +14,7 @@ public class UserController {
 //		return "page-user";
 //	}
 	
-	@GetMapping("myprofile")
+	@GetMapping(path = {"/", "/home"})
 	public String showUserProfile() {
 		return "user-home";
 	}

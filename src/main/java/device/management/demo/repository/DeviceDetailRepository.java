@@ -28,13 +28,15 @@ public interface DeviceDetailRepository extends JpaRepository<DeviceDetail, Long
 	DeviceDetail findByProductId(String productId);
 	
 	/**
-	 * @summary filter devicedetails not used and normal for allocation
+	 * @summary filter devicedetails not used  for allocation
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
 	 * @param  working, status, name, catalog
 	 * @return List<DeviceDetail>
 	 **/
-	List<DeviceDetail> findByWorkingAndStatusAndDeviceNameContainingOrWorkingAndStatusAndDeviceDeviceCatalogNameContaining(Boolean working,
-			long status, String name, Boolean working2,long status2, String catalog);
+	List<DeviceDetail> findByStatusAndDeviceNameContainingOrStatusAndDeviceDeviceCatalogNameContaining(
+			long status, String name, long status2, String catalog);
 //	List<DeviceDetail> findByStatusAndWorkingAndD
+	
+	Long countById(Long id);
 }

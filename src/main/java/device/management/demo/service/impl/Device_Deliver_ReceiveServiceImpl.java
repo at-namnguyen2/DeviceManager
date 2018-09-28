@@ -135,7 +135,7 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 			ddr.get().setDateReturn(date);	
 			device_Deliver_ReceiveRepository.save(ddr.get());
 			DeviceDetail dd = deviceDetailRepository.findByProductId(edr.getProductId());
-			dd.setWorking(detailConst.NOTUSED);
+			dd.setStatus(detailConst.NOTUSED);
 			deviceDetailRepository.save(dd);
 			return null;
 		}
@@ -209,15 +209,22 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 	@Override
 	public countResponse countQuantity(String email) {
 		countResponse cr = new countResponse();
+		System.out.println("show count");
 		cr.setQuantity(device_Deliver_ReceiveRepository.countByEmployeeUserEmail(email));
 		cr.setWorking(device_Deliver_ReceiveRepository.countByEmployeeUserEmailAndDateReturnNull(email));
 		Device_Deliver_Receive ddr = device_Deliver_ReceiveRepository.findTop1ByEmployeeUserEmail(email);
-		if(ddr.getDateReturn().equals(null)) {
+		System.out.println("show count2"+ddr);
+		
+		if(ddr.getDateReturn() == null) {
+			System.out.println("show count2"+ddr.getDateReturn());
 			cr.setLastUpdate(ddr.getDateDeliverReceive());
+		
 		}
 		else {
 			cr.setLastUpdate(ddr.getDateReturn());
+			System.out.println("show count2"+cr);
 		}
+		
 		return cr;
 	}
 

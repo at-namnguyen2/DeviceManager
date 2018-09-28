@@ -1,5 +1,6 @@
 package device.management.demo.api;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -45,9 +46,9 @@ public class Device_Deliver_ReceiveApi {
 	 * @return listDevDeRe
 	 **/
 	@GetMapping(path = "/empdevapi/getuserdevdere")
-	public ResponseEntity<Object> getUserDevDeRe() {
+	public ResponseEntity<Object> getUserDevDeRe(Principal p) {
 		System.out.println("checklog");
-		String emailprincipal = "namnguyen2@gmail.com";
+		String emailprincipal = p.getName();
 		List<DetailResponse> listDevDeRe = device_Deliver_ReceiveService.getDevByMail(emailprincipal);
 		System.out.println("show"+ emailprincipal);
 		return new ResponseEntity<>(listDevDeRe, HttpStatus.OK);
@@ -142,9 +143,11 @@ public class Device_Deliver_ReceiveApi {
 	}
 	
 	@GetMapping(path = "/empdevapi/countdevice")
-	public ResponseEntity<Object> countQuantity(){
-		String principal = "namnguyen2@gmail.com";
+	public ResponseEntity<Object> countQuantity(Principal p){
+		String principal = p.getName();
+	
 		countResponse cr = device_Deliver_ReceiveService.countQuantity(principal);
+		System.out.println("count1"+cr);
 		return new ResponseEntity<>(cr, HttpStatus.OK);
 	}
 }

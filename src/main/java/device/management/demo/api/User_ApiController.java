@@ -73,6 +73,15 @@ public class User_ApiController {
 		 
 	}
 	
+	//lay tat ca cac user.
+		@GetMapping("/get-all-user1")
+		public ResponseEntity<Object> getAllUser1() {
+			
+			List<UserResponse2> listUser = userService.showUserStateNonDel();
+			 return new ResponseEntity<Object>(listUser, HttpStatus.OK);
+			 
+		}
+	
 	//lay user theo id.
 	@GetMapping(path = "/getUser/{id}")
 	public ResponseEntity<Object> getUserById(@PathVariable("id") long id) {

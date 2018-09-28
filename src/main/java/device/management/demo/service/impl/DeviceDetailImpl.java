@@ -56,12 +56,11 @@ public class DeviceDetailImpl implements DeviceDetailService {
 	 * @return DeviceDetail
 	 **/
 	@Override
-	public DeviceDetail editDeviceDetails(DeviceDetail d) {
+	public DeviceDetail editDeviceDetails(DetailDTO d) {
 		DeviceDetail Detailobj = deviceDetailRepository.findById(d.getId()).get();
-		Detailobj.setDescriptionDeviceDetail(d.getDescriptionDeviceDetail());
-		Detailobj.setProductId(d.getProductId());
+		Detailobj.setDescriptionDeviceDetail(d.getDecription());
+		Detailobj.setProductId(d.getProductid());
 		Detailobj.setStatus(d.getStatus());
-		Detailobj.setWorking(d.getWorking());
 //		Detailobj.setUpdateDate(d.getUpdateDate());
 		return deviceDetailRepository.save(Detailobj);
 	}
@@ -87,8 +86,8 @@ public class DeviceDetailImpl implements DeviceDetailService {
 	 * @return List<DetailResponse>
 	 **/
 	@Override
-	public List<DetailResponse> filterDetails(Boolean working, long status, String name, String catalog) {
-		List<DeviceDetail> detail = deviceDetailRepository.findByWorkingAndStatusAndDeviceNameContainingOrWorkingAndStatusAndDeviceDeviceCatalogNameContaining(working, status, name, working, status, catalog);
+	public List<DetailResponse> filterDetails(long status, String key) {
+		List<DeviceDetail> detail = deviceDetailRepository.findByStatusAndDeviceNameContainingOrStatusAndDeviceDeviceCatalogNameContaining(status, key, status, key);
 		List<DetailResponse> detailRes = new ArrayList<>();
 		for (DeviceDetail d : detail) {
 			DetailResponse res = ConverttoDetailRes(d);
@@ -115,16 +114,16 @@ public class DeviceDetailImpl implements DeviceDetailService {
 			catalog = deviceCatalogRepository.save(catalog);
 		}
 		Optional<Device> deviceObj = deviceRepository.findByName(d.getDevicename());
-		long quantity = deviceDetailRepository.count() + 1;
-		Device device = new Device(catalog, d.getDevicename(), quantity, d.getPrice(), d.getDecription());
+		
+		Device device = new Device(catalog, d.getDevicename(), 1L, d.getPrice(), d.getDecription());
 		if (deviceObj.isPresent()) {
 			device = deviceObj.get();
+			device.setQuantity(device.getQuantity()+1);
 		} else {
 			device = deviceRepository.save(device);
 		}
 
-		DeviceDetail deviceDetail = new DeviceDetail(device, d.getProductid(), d.getStatus(), d.getUpdatedate(),
-				detailConst.NOTUSED);
+		DeviceDetail deviceDetail = new DeviceDetail(device, d.getProductid(), detailConst.NOTUSED, d.getUpdatedate());
 		return deviceDetailRepository.save(deviceDetail);
 	}
 
@@ -138,7 +137,7 @@ public class DeviceDetailImpl implements DeviceDetailService {
 	@Override
 	public DeviceDetail setWorking(Long id) {
 		DeviceDetail Detailobj = deviceDetailRepository.findById(id).get();
-		Detailobj.setWorking(detailConst.WORKING);
+		Detailobj.setStatus(detailConst.WORKING);
 		return deviceDetailRepository.save(Detailobj);
 	}
 	
@@ -159,7 +158,6 @@ public class DeviceDetailImpl implements DeviceDetailService {
 		res.setProductid(d.getProductId());
 		res.setUpdatedate(d.getUpdateDate());
 		res.setStatus(d.getStatus());
-		res.setWorking(d.getWorking());
 		return res;
 	}
 	

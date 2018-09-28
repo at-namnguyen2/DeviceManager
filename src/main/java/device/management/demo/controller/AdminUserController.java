@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminUserController {
 	
+	@GetMapping
+	public String adminHome() {
+		return "admin-home";
+	}
+	
 	@GetMapping("adduser")
 	public String showUserProfile() {
 		return "add-user";
@@ -20,5 +25,20 @@ public class AdminUserController {
 	@GetMapping("device")
 	public String showDevice() {
 		return "device";
+	}
+	
+	@GetMapping("report")
+	public String showreport() {
+		return "report";
+	}
+	
+	@GetMapping("left-container")
+	public String showLeftBar() {
+		return "/common/left-container";
+	}
+	
+	@GetMapping("topbar")
+	public String showTopBar() {
+		return "/common/topbar";
 	}
 }

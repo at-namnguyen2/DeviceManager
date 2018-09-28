@@ -80,7 +80,7 @@ public class RegistrationController {
 	@GetMapping(path="/register")
 	public String showRegisterPage() {	
 		
-		return "signup";
+		return "register";
 	}
 	
 //	@GetMapping(path = "/registerAccount") 
