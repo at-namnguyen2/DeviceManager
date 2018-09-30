@@ -92,6 +92,7 @@ public class DeviceDetailImpl implements DeviceDetailService {
 		for (DeviceDetail d : detail) {
 			DetailResponse res = ConverttoDetailRes(d);
 			detailRes.add(res);
+			System.out.println(res);
 		}
 		return detailRes;
 	}

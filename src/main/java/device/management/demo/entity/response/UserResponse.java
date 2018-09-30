@@ -9,7 +9,7 @@ public class UserResponse implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Long id;
+	private Long 	;
 	private String email;
 	private String name;
 	private String address;

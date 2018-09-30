@@ -1,34 +1,59 @@
 $(document).ready(function() {
-	listDevice(); //function1
+	getPageAllo();
 	
-	 $("#modaldetails").on("hidden.bs.modal", function(){
-		    $(".detail-table").html("");		    
-		    $(".Step1").click();
-		});
-	
-	
-	//function1
-	function listDevice(){
-		 $(".Step1").click();
+	function getPageAllo(){
 		$.ajax({
-			url : '/listAllDevice',
+			url : '/getPageAllo',
+			data:{
+				size:5
+			},
 			type : 'get',
 			success : function(value) {
 				console.log(value);
-				 $.each(value, function (key, device) {
-					 $(".device-table").append("<tr><td class =\"deviceId\" hidden=\"\" >"+device.id+"</td>" 
-					 		+"<td><div class=\"custom-control custom-checkbox\">"
- +"<input type=\"checkbox\" name=\"device_id\" class=\"custom-control-input checkSingle\" required>"
- +"<label class=\"custom-control-label\" for=\"device_id\"></label></div></td>"
- +"<td><div class=\"device_icon icon  s-36 mr-3 mt-1 float-left\"><span class=\"circle\"></span></div>"
- +"<div><div class=\"pt-2\"><strong class=\"deviceName\">"+device.name+"</strong></div></div></td>"
- +"<td class=\"quantity\">"+device.quantity+"</td>"
- +"<td class=\"price (USD)\">"+device.price+"</td>"
- +"<td><a class=\"\" href=\"modaldetails\"data-toggle=\"modal\" data-target=\"#modaldetails\">"
- +"<span class=\"badge badge-primary viewDetail\">Details</span></a></td></tr>");	
-					 convertToIconDevice(device.catalog);
-	                    })
+				$('#pagination-allo').twbsPagination({
+			        totalPages: value,
+			        visiblePages: 3,
+			        next: 'Next',
+			        prev: 'Prev',
+			        onPageClick: function (event, page) {
+			        	$("#tbAllo").html("");
+			        	listaAllocation(page-1);
+			        }
+			    });
+				 },
+			error : function(err) {
+				console.log(err);
+			
+			}
+		})
+			
+	}
+	//function1
+	function listaAllocation(p){
+//		 $(".Step1").click();
+
+		$.ajax({
+			url : '/getdevallo',
+			data:{
+				page: p,
+				size: 5
+				
 			},
+			type : 'get',
+			success : function(value) {
+				console.log(value);
+				 $.each(value, function (key, all) {
+					 $("#tbAllo").append("<tr><td><div class=\"custom-control custom-checkbox\">"
++"<input type=\"checkbox\" class=\"custom-control-input checkSingle\" id=\"user_id_1\" required>" 
++"<label class=\"custom-control-label\" for=\"user_id_1\"></label>\</div></td>"
++"<td><a href=\"panel-page-profile.html\" class=\"avatar avatar-lg\">" 
++"<img class=\"avatar1\" src=\""+all.avatar+"\" alt=\"\"></a></td>"
++"<td><h6>"+all.employeeName+"</h6><small class=\"text-muted\">"+all.email+"</small></td>"
++"<td>"+all.team+"</td><td>"+all.deviceName+"</td><td>"+all.productId+"</td><td>"+all.dateDeliverReceive+"</td>"
++"<td><a href=\"panel-page-profile.html\"><i class=\"icon-eye mr-3\"></i></a>"
++"<a href=\"#step-22\"><i class=\"font-weight-bold\">return</i></a></td></tr>");	
+	                    })
+				 },
 			error : function(err) {
 				console.log(err);
 			
@@ -36,6 +61,79 @@ $(document).ready(function() {
 		})
 	}
 
+	
+	
+	
+	function getPageHistory(){
+		$.ajax({
+			url : '/getPageHistory',
+			data:{
+				size:5
+			},
+			type : 'get',
+			success : function(value) {
+				console.log(value);
+				alert("huhu");
+				var l = 3;
+				if(value =1 ){
+					$("#table-history").html("");
+					listHistory(0);
+				}
+				$('#pagination-return').twbsPagination({
+			        totalPages: value,
+			        visiblePages: 3,
+			        next: 'Next',
+			        prev: 'Prev',
+			
+			        onPageClick: function (event, page) {
+			        	alert();
+			        	$("#table-history").html("");
+			        	listHistory(page-1);
+			        }
+			    });
+				 },
+			error : function(err) {
+				console.log(err);
+			
+			}
+		})
+			
+	}
+	//function1
+	function listHistory(p){
+//		 $(".Step1").click();
+		alert("hihi");
+		$.ajax({
+			url : '/getdevhistory',
+			data:{
+				page: p,
+				size: 5
+				
+			},
+			type : 'get',
+			success : function(value) {
+				console.log(value);
+				 $.each(value, function (key, all) {
+					 $("#table-history").append("<tr><td><div class=\"custom-control custom-checkbox\">"
++"<input type=\"checkbox\" class=\"custom-control-input checkSingle\" id=\"user_id_2\" required>" 
++"<label class=\"custom-control-label\" for=\"user_id_2\"></label>\</div></td>"
++"<td><a href=\"panel-page-profile.html\" class=\"avatar avatar-lg\">" 
++"<img class=\"avatar1\" src=\""+all.avatar+"\" alt=\"\"></a></td>"
++"<td><h6>"+all.employeeName+"</h6><small class=\"text-muted\">"+all.email+"</small></td>"
++"<td>"+all.team+"</td><td>"+all.deviceName+"</td><td>"+all.productId+"</td><td>"+all.dateReturn+"</td>"
++"</td><td><a href=\"panel-page-profile.html\"><i class=\"icon-eye mr-3\"></i></a><a href=\"#modaladddevicesdr\">"
++"<i class=\"icon-pencil mr-3\"></i></a> <a href=\"#step-22\"><i class=\"icon-delete\"></i></a></td></tr>");	
+	                    })
+				 },
+			error : function(err) {
+				console.log(err);
+			
+			}
+		})
+	}
+	
+	
+	
 	//refurn devicedetails by device
 	$(".device-table").on('click','.viewDetail',function(e) {	
 		var $row = $(this).closest("tr");
@@ -69,42 +167,15 @@ $('#SwitchStatusWorking').prop("checked", false); $('#SwitchStatusError').prop("
 
 	})
 	
-// $('#sumitUpdate1').click(function() {
-//	   event.preventDefault();
-//////	   event.addEventListener('click', swapper, false);
-//	 var DetailInfo = $('#edit-detail-form').serializeJSON({parseBooleans: true});
-//	 if(DetailInfo.statusB === "on"){ DetailInfo["status"] = 0;}
-//	 else if(DetailInfo.statusN === "on"){DetailInfo["status"] = 1;}
-//	 else {DetailInfo["status"] = 2;}
-////	 alert(DetailInfo.productId);
-////	 alert($('#productId').val());
-//		var datajson = JSON.stringify(DetailInfo);
-//	
-//		$.ajax({
-//			url : '/editdevicedetails',
-//			  type: 'PUT',
-//				contentType : "application/json; charset=utf-8",
-//				data : datajson,
-//				dataType : 'json',
-//			success : function(value) {
-//				console.log(value);
-//			},
-//			error : function(err) {
-//				console.log(err);	 
-//			}
-//		});
-//	 
-//	 
-////	 var jsond["id"] = $('#id_Device').val();
-//	 
-//	
-//
-//			    });
+
 	
-			 $('#SwitchStatusWorking').change(function() {
-				 $('#SwitchStatusError').prop("checked", false);
-				 $('#SwitchStatusNotUse').prop("checked", false);     
+			 $('#devices-history').click(function() {
+				 alert();
+				 getPageHistory();
 			    });
+
+	
+	
 	 $('#SwitchStatusError').change(function() {
 		 $('#SwitchStatusWorking').prop("checked", false);
 		 $('#SwitchStatusNotUse').prop("checked", false);     
@@ -199,4 +270,43 @@ $('#SwitchStatusWorking').prop("checked", false); $('#SwitchStatusError').prop("
 			}
 		})
 	}
+	
+	  $('#auto-search-employee').typeahead({
+          source: function (query, result) {
+        	  console.log(query);
+    		  $('.alertEmployee').attr('hidden',"");
+              $.ajax({
+                  url: "/filteremployee",
+					data: 'key=' + query,            
+                  dataType: "json",
+                  type: "POST",
+                  success: function (data) {
+                	    //var table = $('#tablefilter').DataTable();
+                        //able.clear();
+                        $('.tablefilter-emp').html("");
+                        $('#tablefilter-emp').removeAttr('hidden',"");
+                        
+                	  console.log("hihi"+data);
+                	  $.each(data, function (key, device) {
+//     					 var datetime =new Date(device.updatedate).Format("dd/MM/yyyy:hh:mm:ss");
+//     					 console.log(datetime);
+//     					SetTableAllo(device);
+     					 console.log(device);
+     	                
+     	                    })
+                	  
+//						result($.map(data, function (item) {
+//							return item;
+//                      }));
+                  },
+          	error : function(err) {
+                $('.tablefilter').html("");
+                $('#tablefilter').attr('hidden',"");
+          		 $('.alertdevice').removeAttr('hidden',"");
+          
+    		}
+              });
+          }
+      });
+
 });

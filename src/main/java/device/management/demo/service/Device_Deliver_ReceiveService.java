@@ -2,6 +2,9 @@ package device.management.demo.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import device.management.demo.entity.DeviceDetail;
 import device.management.demo.entity.Device_Deliver_Receive;
 import device.management.demo.entity.dto.EmpDeviceDTO;
@@ -37,7 +40,7 @@ public interface Device_Deliver_ReceiveService {
 	 * @param  
 	 * @return List<EmpDeviceResponse>
 	 **/
-	List<EmpDeviceResponse> getDevAllocation();
+	List<EmpDeviceResponse> getDevAllocation(Pageable page);
 
 	/**
 	 * @summary filter record return
@@ -46,7 +49,7 @@ public interface Device_Deliver_ReceiveService {
 	 * @param  team,name,email
 	 * @return List<EmpDeviceResponse>
 	 **/
-	List<EmpDeviceResponse> getDevHistory();	
+	List<EmpDeviceResponse> getDevHistory(Pageable page);	
 
 	/**
 	 * @summary add new record allocation device
@@ -85,4 +88,8 @@ public interface Device_Deliver_ReceiveService {
 	Device_Deliver_Receive getDevDeRe(DeviceDetail deviceDetail);
 	
 	countResponse countQuantity(String email);
+
+	int getPageAllocation(Pageable page);
+
+	int getPageHistory(Pageable page);
 }

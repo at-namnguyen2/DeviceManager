@@ -20,7 +20,7 @@
         <ul class="sidebar-menu">
             <li class="header"><strong></strong></li>
             <li class="treeview">
-            <a href="#">
+            <a th:href="@{/admin}">
                 <i class="icon icon-sailing-boat-water purple-text s-18"></i> <span>Report</span> 
             </a>
              
@@ -38,7 +38,7 @@
                 </ul>
             </li>
             
-              <li class="treeview"><a href="admin/device">
+              <li class="treeview"><a th:href="@{/admin/device}">
                 <i class="icon icon icon-package blue-text s-18"></i>
                 <span>Devices</span>
                 <span class="badge r-3 badge-primary pull-right"></span>
@@ -52,30 +52,30 @@
                 </ul>   --> 
             </li>
             
-              <li class="treeview"><a href="#">
+              <li class="treeview"><a th:href="@{/admin/allocationreturn}">
                 <i class="icon icon icon-package blue-text s-18"></i>
                 <span>Allocation - Return Devices</span>
                 <span class="badge r-3 badge-primary pull-right"></span>
             </a>
-                <ul class="treeview-menu">
+             <!--   <ul class="treeview-menu">
                     <li><a href="panel-page-products.html"><i class="icon icon-circle-o"></i>All Products</a>
                     </li>
                     <li><a href="panel-page-products-create.html"><i class="icon icon-add"></i>Add
                         New </a>
                     </li>
-                </ul>
+                </ul> -->	
             </li>
-            <li class="treeview no-b"><a href="#">
+            <li class="treeview no-b"><a th:href="@{/admin/notify}">
                 <i class="icon icon-package light-green-text s-18"></i>
                 <span>Request</span>
                 <span class="badge r-3 badge-success pull-right"></span>
             </a>
-                <ul class="treeview-menu">
+             <!--   <ul class="treeview-menu">
                     <li><a href="panel-page-inbox.html"><i class="icon icon-circle-o"></i>All Messages</a>
                     </li>
                     <li><a href="panel-page-inbox-create.html"><i class="icon icon-add"></i>Compose</a>
                     </li>
-                </ul>
+                </ul> -->
             </li>
             <li class="header light mt-3"><strong></strong></li>
         </ul>

@@ -1236,7 +1236,7 @@
                    class="paper-nav-toggle paper-nav-white active"><i></i></a>
             </div>
             <div class="modal-body no-p no-b">
-           
+           		
                  
                     <div class="">
                         <div class="stepper sw-main"
@@ -1259,6 +1259,10 @@
                                 <div id="step-11" >
                                     <!-- <div class="tab-pane animated fadeInUpShort show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab"> -->
                 <div class="row my-3">
+                
+            
+        
+       
                     <div class="col-md-12">
                         <div class="card r-0 shadow">
                             <div class="table-responsive">
@@ -1288,8 +1292,8 @@
                         </div>
                     </div>
                 </div>
-
-                <nav class="my-3" aria-label="Page navigation">
+				<div class="row">
+                <nav class="my-3 ml-3" aria-label="Page navigation">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Previous</a>
                         </li>
@@ -1303,7 +1307,47 @@
                         </li>
                     </ul>
                 </nav>
-           
+           		
+           	    	<div class="pt-3 row col-md-8 no-gutters no-m shadow">
+            <div class="col-lg-3 mr-4">
+                <div class="text-success counter-box h-50 p-20">
+                 
+                    <div class="float-right">
+                      <div id="workinglb" class="sc-counter s-24 counter-animated"></div>
+                   <h6 class="counter-title"></h6>
+                    </div>
+                     <span class="icon icon-cogs s-36"></span>
+                    
+                </div>
+            </div>
+            <div class="col-lg-3 mr-4">
+                <div class="text-secondary counter-box h-50 p-20">
+                 <span class="icon icon-insert_drive_file s-36"></span>
+                    <div class="float-right">
+                      <div id="notuselb" class="sc-counter s-24 counter-animated"></div>
+                     <h6 class="counter-title"></h6>
+                      
+                    </div>
+                   
+                    
+                </div>
+            </div>
+            <div class="col-lg-3 mr-4">
+                <div class="text-danger counter-box h-50 p-20">
+                 <span class="mt-2 icon icon-times-circle  s-36"></span>
+                     <div class="float-right">
+                       <div id="errorlb" class="sc-counter s-24 counter-animated"></div>
+                    <h6 class="counter-title"></h6>
+                      
+                    </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+           		</div>
+        
+        
                               
                                 </div>
                                 <div id="step-22" class="card-body text-center p-5">
@@ -1314,6 +1358,8 @@
                         <div class="row">
                             <div class="col-md-9 mb-3">   
                             <input type="text" hidden="" class="form-control" name="id" id="id_detaildevice" placeholder=""
+                                       required>
+                                        <input type="text" hidden="" class="form-control" name="iddevice" id="id_device" placeholder=""
                                        required>
                             
                                 <label for="deviceName">Device Name</label>
@@ -1354,7 +1400,7 @@
                                     Not Use
                                     <div class="material-switch float-right">
                                         <input id="SwitchStatusNotUse" name="statusN" type="checkbox">
-                                        <label for="SwitchStatusNotUse" class="bg-warning"></label>
+                                        <label for="SwitchStatusNotUse" class="bg-dark"></label>
                                     </div>
                                 </li>
                                 <li class="list-group-item 2.50rem font-weight-bold text-danger">
@@ -1383,17 +1429,13 @@
                                             event.preventDefault();
                                             event.stopPropagation();
                                         }else {
-                                        	alert();
+
 ////                                        		   event.addEventListener('click', swapper, false);
                                         		 var DetailInfo = $('#edit-detail-form').serializeJSON({parseBooleans: true});
                                         		 if(DetailInfo.statusN === "on"){ DetailInfo["status"] = 0;}
                                         		 else if(DetailInfo.statusW === "on"){DetailInfo["status"] = 1;}
                                         		 else {DetailInfo["status"] = 2;}
-									       		
-//                                        		 alert($('#productId').val());
                                         			var datajson = JSON.stringify(DetailInfo);
-                                        			 alert(datajson);                                        			
-                                        			 $('.Step1').click();
                                         				$.ajax({
                                         					url : '/editdevicedetails',
                                         					  type: 'PUT',
@@ -1402,6 +1444,7 @@
                                         						dataType : 'json',
                                         					success : function(value) {
                                         						console.log(value);
+                                        						 $('.Step1').click();
                                         					},
                                         					error : function(err) {
                                         						console.log(err);	 
@@ -1579,6 +1622,7 @@
                                     var form = document.getElementById("needs-validation");
                                     form.addEventListener("submit", function (event) {
                                         if (form.checkValidity() == false) {
+                                        	alert();
                                             event.preventDefault();
                                             event.stopPropagation();
                                         } else{

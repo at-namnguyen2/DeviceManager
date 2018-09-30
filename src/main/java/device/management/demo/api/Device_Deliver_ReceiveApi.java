@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -81,9 +82,9 @@ public class Device_Deliver_ReceiveApi {
 	 * @return List<EmpDeviceResponse>
 	 **/
 	@GetMapping(path = "/getdevallo")
-	public ResponseEntity<Object> getDevAllo(){
-		
-		return new ResponseEntity<>(device_Deliver_ReceiveService.getDevAllocation(), HttpStatus.OK);
+	public ResponseEntity<Object> getDevAllo(Pageable page){
+		System.out.println("test"+page);
+		return new ResponseEntity<>(device_Deliver_ReceiveService.getDevAllocation(page), HttpStatus.OK);
 	}
 	
 	/**
@@ -94,9 +95,9 @@ public class Device_Deliver_ReceiveApi {
 	 * @return List<EmpDeviceResponse>
 	 **/	
 	@GetMapping(path = "/getdevhistory")
-	public ResponseEntity<Object> getDevHistory(){
+	public ResponseEntity<Object> getDevHistory(Pageable page){
 		
-		return new ResponseEntity<>(device_Deliver_ReceiveService.getDevHistory(), HttpStatus.OK);
+		return new ResponseEntity<>(device_Deliver_ReceiveService.getDevHistory(page), HttpStatus.OK);
 	}
 	
 	/**
@@ -149,5 +150,22 @@ public class Device_Deliver_ReceiveApi {
 		countResponse cr = device_Deliver_ReceiveService.countQuantity(principal);
 		System.out.println("count1"+cr);
 		return new ResponseEntity<>(cr, HttpStatus.OK);
+	}
+	@GetMapping(path = "/getPageAllo")
+	public ResponseEntity<Object> getPageAllocation(Pageable page){
+		int totalpage = device_Deliver_ReceiveService.getPageAllocation(page);
+		return new ResponseEntity<>(totalpage, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/getPageHistory")
+	public ResponseEntity<Object> getPageHistory(Pageable page){
+		System.out.println("hihi"+page);
+		int totalpage = device_Deliver_ReceiveService.getPageHistory(page);
+		return new ResponseEntity<>(totalpage, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/getDevicesAllocationReturnToday")
+	public ResponseEntity<Object> getDevicesAllocationReturnToday(){
+		return new ResponseEntity<>("", HttpStatus.OK);
 	}
 }

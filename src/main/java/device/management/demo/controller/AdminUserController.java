@@ -29,7 +29,12 @@ public class AdminUserController {
 	
 	@GetMapping("report")
 	public String showreport() {
-		return "report";
+		return "admin-home";
+	}
+	
+	@GetMapping("allocationreturn")
+	public String showAllocationReturn() {
+		return "allocation-return";
 	}
 	
 	@GetMapping("left-container")

@@ -15,7 +15,7 @@ public interface EmployeeService {
    	* @param email, name, team
    	* @return List<UserResponse> emp
    	**/
-	List<UserResponse> listEmployeeByFilter(String name, String team, String email);
+	List<UserResponse> listEmployeeByFilter(String key);
 	
 	//van
 		public Boolean existsByEmployee(long userId);

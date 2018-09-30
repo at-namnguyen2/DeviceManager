@@ -14,10 +14,11 @@ $(document).ready(function() {
 	
 	  $('#txtdevice').typeahead({
           source: function (query, result) {
+        	  console.log(query);
     		  $('.alertdevice').attr('hidden',"");
               $.ajax({
                   url: "/filterdetailsnotused",
-					data: 'filter=' + query,            
+					data: 'key=' + query,            
                   dataType: "json",
                   type: "POST",
                   success: function (data) {
@@ -40,7 +41,10 @@ $(document).ready(function() {
 //                      }));
                   },
           	error : function(err) {
+                $('.tablefilter').html("");
+                $('#tablefilter').attr('hidden',"");
           		 $('.alertdevice').removeAttr('hidden',"");
+          
     		}
               });
           }

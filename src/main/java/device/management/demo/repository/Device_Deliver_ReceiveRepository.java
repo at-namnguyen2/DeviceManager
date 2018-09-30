@@ -3,6 +3,8 @@ package device.management.demo.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import device.management.demo.entity.DeviceDetail;
@@ -59,5 +61,8 @@ public interface Device_Deliver_ReceiveRepository extends JpaRepository<Device_D
 	 * @param  
 	 * @return List<Device_Deliver_Receive>
 	 **/
-	List<Device_Deliver_Receive> findTop50ByDateReturnNotNullOrderByIdDesc();
+	Page<Device_Deliver_Receive> findByDateReturnNotNullOrderByIdDesc(Pageable page);
+	
+	Page<Device_Deliver_Receive> findByDateReturnNullOrderByIdDesc(Pageable page);
+
 }

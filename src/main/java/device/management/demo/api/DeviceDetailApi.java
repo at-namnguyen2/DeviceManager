@@ -96,6 +96,7 @@ public class DeviceDetailApi {
 		System.out.println("check:"+key);
 		List<DetailResponse> deviceDetail = deviceDetailService.filterDetails(detailConst.NOTUSED, key);
 		if(deviceDetail.size() == 0) {
+			System.out.println("no");
 			return new ResponseEntity<>("Device Not Found!", HttpStatus.NOT_FOUND);
 		}
 		System.out.println("show devicedetails:" + deviceDetail);
