@@ -109,6 +109,7 @@ public class Device_Deliver_ReceiveApi {
 	 **/
 	@PostMapping(path = "/adddevdere")
 	public ResponseEntity<Object> addDevDeRe(@RequestBody EmpDeviceDTO ddr){
+		System.out.println("ddr:"+ddr);
 		Device_Deliver_Receive Res = device_Deliver_ReceiveService.addDevDeRe(ddr);
 		if(Res.equals(null)) {
 			new ResponseEntity<>("Allocation fail", HttpStatus.OK);

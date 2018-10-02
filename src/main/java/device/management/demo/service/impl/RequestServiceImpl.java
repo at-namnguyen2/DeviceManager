@@ -148,5 +148,12 @@ public class RequestServiceImpl implements RequestService{
 		return requestRepository.findById(id).get();
 	}
 
+	@Override
+	public List<Request> filterRequestByUser(User user) {
+		List<Request> list = requestRepository.findByUserAndTypeAndStatusOrderByUpdateDateDesc(user, requestconst.Allocation, requestconst.Pending);
+		System.out.println(list);
+		return list;
+	}
+
 
 }

@@ -36,5 +36,5 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
    	* @return listRequest
    	**/	
 	List<Request> findByStatusNotLike(String status);
-
+	List<Request> findByUserAndTypeAndStatusOrderByUpdateDateDesc(User user, String type, String status);
 }

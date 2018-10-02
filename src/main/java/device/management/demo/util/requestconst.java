@@ -2,7 +2,7 @@ package device.management.demo.util;
 
 public interface requestconst {
 	String Update_Info = "Update Info";
-	String Allocation = "Alocation";
+	String Allocation = "Allocation";
 	String Return = "Return";
 	String Pending = "Pending";
 	String Canceled = "Canceled";

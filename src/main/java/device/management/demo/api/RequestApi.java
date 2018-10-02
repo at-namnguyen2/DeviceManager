@@ -136,5 +136,22 @@ public class RequestApi {
 //		}
 		return new ResponseEntity<>("ok2", HttpStatus.OK);
 	}
+	
+	/**
+	 * @summary show requests allocation pending sof user 
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param user
+	 * @return listrequest
+	 **/
+	@PostMapping(path = "/filterrequest")
+	public ResponseEntity<Object> filterRequest(@RequestBody User user) {
+		List<Request> listRequest = requestService.filterRequestByUser(user);
+		System.out.println("test"+listRequest);
+		if (listRequest.size() == 0) {
+			return new ResponseEntity<>(listRequest, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(listRequest, HttpStatus.OK);
+	}
 
 }

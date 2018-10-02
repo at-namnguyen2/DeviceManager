@@ -672,7 +672,7 @@
                 <li><a href="#step-1">Select Employee<br /><small></small></a></li>
                 <li><a href="#step-2">Select Deivce<br /><small></small></a></li>
                 <li><a href="#step-3">Select Request<br /><small></small></a></li>
-                <li><a href="#step-4">Terms and Conditions<br /><small></small></a></li>
+                <li><a href="#step-4">Confirm<br /><small></small></a></li>
             </ul>
 
             <div>
@@ -682,7 +682,7 @@
                         <div class="form-group">
                        
                             <input type="text" class="form-control typeahead" name="search" id="auto-search-employee" placeholder="search with info: email, name, team" required>
-                            <div class="help-block with-errors"></div>
+                            <div class="help-block with-errors text-danger"></div>
                         </div>
                     </div>
 
@@ -694,69 +694,73 @@
                                     <table id="tablefilter-emp" class="table table-striped table-hover r-0" hidden="">
                                         <thead>
                                         <tr class="no-b">
-                                            <th style="width: 30px">
-                                                <div class="custom-control custom-checkbox">
-                                           
-                                                    <input name="idDetail" type="checkbox" id="checkedAll" class="custom-control-input" required><label class="custom-control-label" for="checkedAll"></label>
-                                             
-                                                </div>
-                                            </th>
-                                            <th>Device Name</th>
-                                            <th>Product Id</th>
-                                            <th>Update Date</th>       
-											<th>Choose</th>  											
-                                       
+											<th></th>                                        
+                                            <th>USER NAME</th>
+                                            <th>TEAM</th>
+                                            <th>PHONE</th>       
                                         </tr>
                                         </thead>
 
                                         <tbody class="tablefilter-emp">
-											
-                                      <!--   		<tr>
-                                           		 <td>  
-                                           		                                       
-                                                   <input type="checkbox" class="custom-control-input checkSingle" id="idDetail" required=""><label class="custom-control-label" for="user_id_1"></label>                                
-                                           		 
-                                           		 </td>
-
-                                           		 <td>
-                                                	<div class="icon icon-laptop_mac s-36 mr-3 mt-1 float-left">    
-                                               		 </div>                                         
-                                                    <div>
-                                                        <strong class ="nameDevice">Dell Vostro</strong>
-                                                    </div>
-                                            	</td>
-                                           		 <td class ="productId">2</td>										
-												<td>	
-												<a href="#step-3y"><span class="badge badge-success">Details</span></a></td>
-                                       		 </tr>
-                                       		 --> 
-                                        
+											                           
 
                                         </tbody>
                                     </table>
                               
                             </div>
-                        </div>
+                        </div>                
                 </div>
                 <div id="step-2">
-                    <h2>Your Name</h2>
+                    <h2>Search Device</h2>
                     <div id="form-step-1" role="form" data-toggle="validator">
                         <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" name="name" id="email" placeholder="Write your name" required>
-                            <div class="help-block with-errors"></div>
+                            <input type="text" class="form-control typeahead" name="search" id="auto-search-device" placeholder="search with info: device name or catalog" required>
+                            <div class="help-block with-errors text-danger"></div>
                         </div>
                     </div>
+                      	<div class="card r-0 shadow">
+                            <div class="table-responsive">
+                          
+                                <div role="alert" class="alertEmployee alert alert-warning" hidden=""><strong>Warning!</strong> ------Not found device!--------
+            </div>
+                                    <table id="tablefilter-device" class="table table-striped table-hover r-0" hidden="">
+                                        <thead>
+                                        <tr class="no-b">
+											<th></th>                                        
+                                            <th>Device Name</th>
+                                            <th>Product ID</th>
+                                            <th>Update Date</th>       
+                                        </tr>
+                                        </thead>
+
+                                        <tbody class="tablefilter-device">
+
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>        
                 </div>
                 <div id="step-3">
-                    <h2>Your Address</h2>
-                    <div id="form-step-2" role="form" data-toggle="validator">
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <textarea class="form-control" name="address" id="address" rows="3" placeholder="Write your address..." required></textarea>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
+                    	<div class="card r-0 shadow">
+                            <div class="table-responsive">
+                          
+                              
+                                    <table id="tablefilter-request" class="table table-striped table-hover r-0">
+                                        <thead>
+                                        <tr class="no-b">    
+                                                <th></th>                                  
+                                            <th>DATE UPDATE</th>
+                                            <th>CONTENT</th>                                         
+                                        </tr>
+                                        </thead>
+
+                                        <tbody class="tablefilter-request">
+
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div> 
+                    
                 </div>
                 <div id="step-4" class="">
                     <h2>Confirm Allocation Device </h2>
@@ -767,7 +771,7 @@
                         <div class="form-group">
                             <label for="terms">I agree with the T&C</label>
                             <input type="checkbox" id="terms" data-error="Please accept the Terms and Conditions" required>
-                            <div class="help-block with-errors"></div>
+                            <div class="help-block with-errors text-danger"></div>
                         </div>
                     </div>
 
@@ -776,14 +780,13 @@
             </div>
         </div>
 
-        </form>
-
+        </form>       
             </div>
  
           </div>
         </div>
       </div>
-
+    
 
 
 		<!--Message Modal add devices -->
@@ -966,6 +969,7 @@
 
                                         </tbody>
                                     </table>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -1005,8 +1009,18 @@
 			</div>
 		</div>
 		<!-- end modal add device -->
-
-	
+		<!-- start toast -->
+		  			<button class="toastEmp btn btn-danger btn-lg toast-action" data-title="Please select a employee !"
+                         data-message="" 
+                         data-type="error" data-position-class="toast-bottom-left"
+                         hidden="">Error Toast
+            </button>
+            <button class="toastDevice btn btn-danger btn-lg toast-action" data-title="Please select a device!"
+                         data-message="" 
+                         data-type="error" data-position-class="toast-bottom-left"
+                         hidden="">Error Toast
+            </button>
+		<!-- end toast -->
 		<!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
 		<div class="control-sidebar-bg shadow white fixed"></div>
@@ -1040,9 +1054,18 @@
                                                                 return false;
                                                             }else{
                                                                 alert('Great! we are ready to submit form');
-                                                                elmForm.submit();
+                                                                var idEmp = getidEmployee();
+                                                                var idDevice = getIdDevice();
+                                                                var dateDeliverReceive = moment(dateDeliverReceive).format('YYYY-MM-DDThh:mm:ss.000+0000');
+                                                            	   	
+                                                         	
+                                                         		
+                                                         		  
+                                                         		
+                                                                   callApiAddAlocation(idEmp, idDevice, dateDeliverReceive);
                                                                 return false;
                                                             }
+                                                          
                                                         }
                                                     }
                                                 });
@@ -1075,6 +1098,7 @@
                 var elmForm = $("#form-step-" + stepNumber);
                 // stepDirection === 'forward' :- this condition allows to do the form validation
                 // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
+
                 if(stepDirection === 'forward' && elmForm){
                     elmForm.validator('validate');
                     var elmErr = elmForm.children('.has-error');
@@ -1082,18 +1106,119 @@
                         // Form validation failed
                         return false;
                     }
+                  		
+                    if(stepNumber === 0){
+                    	 var idEmp = getidEmployee();
+                    	 if(typeof idEmp != 'undefined'){
+                    		 return true;
+                    	 }
+                    } else if(stepNumber === 1){
+                    	 var idDevice = getIdDevice();
+                    	 if(typeof idDevice != 'undefined'){
+                    		 return true;
+                    	 }                            	
+                    }  else {
+                    	return true;
+                    }
+                    $('.toastDevice').click();
+                    return false;
                 }
                 return true;
             });
 
             $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
                 // Enable finish button only on last step
-                if(stepNumber == 3){
+                if(stepNumber == 2){
+                	var idEmp = getidEmployee();
+                	callApiGetRequest(idEmp);
+                } else if(stepNumber == 3){
                     $('.btn-finish').removeAttr('disabled');
                 }else{
                
                 }
-            });
+            });	
+  
+            
+            function getidEmployee(){
+            	var idEmployee;
+      		  $('#tablefilter-emp').find('input[type="checkbox"]:checked').each(function () {
+                	var $row = $(this).closest("tr");
+                	idEmployee = $row.find(".idEmp").text();
+                	
+                 });
+      		return idEmployee;
+      	  }   
+            function getIdDevice(){
+            	var idDevice;
+      		  $('#tablefilter-device').find('input[type="checkbox"]:checked').each(function () {
+                	var $row = $(this).closest("tr");
+                	idDevice = $row.find(".idDevice").text();
+                	
+                 });
+      		return idDevice;
+      	  }
+            
+            function callApiGetRequest(id){
+            	json = {};
+            	json['id'] = id;
+            	
+            	   $.ajax({
+                       url: "/filterrequest",
+     					data: JSON.stringify(json),           
+                       dataType: "json",
+               		contentType : "application/json; charset=utf-8",
+                       type: "POST",
+                       success: function (data) {
+                    	   $('.tablefilter-request').html("");
+                           $('#tablefilter-request').removeAttr('hidden',"");
+                		console.log(JSON.stringify(data));
+                		  $.each(data, function (key, request) {
+                    		  var datetime = moment(request.updateDate).format('DD-MM-YYYY , HH:mm:ss');
+                    		  $('.tablefilter-request').append("<tr>" +
+                    				"<td class=\"idDevice\" hidden=\"\">"+request.id+"</td>" +
+                    		  		"<td><div class=\"custom-control custom-checkbox\">" +
+                    		  		"<input type=\"checkbox\" class=\"custom-control-input checkSingle-request\" id=\"checkbox-request"+key+"\">" +
+                    		  		"<label class=\"custom-control-label\" for=\"checkbox-request"+key+"\"></label></div></td>" +
+                    		  		"<td>"+datetime+"</td>" +
+                    		  		"<td>"+request.content+"</td>" +
+                    		  		"</tr>");
+         	                    });
+                		  return false;
+                       },
+               	error : function(err) {
+        
+               
+         		}
+                   });
+            }
+            
+            function callApiAddAlocation(idEmp, idDevice, dateDeliverReceive){
+            	var json = {};              
+            	json["employeeId"] = idEmp;
+            	json["detailId"] = idDevice;
+            	json["dateDeliverReceive"] = dateDeliverReceive;              	
+         		alert("data:"+idEmp + "data2" + idDevice +"data3"+ dateDeliverReceive);
+         			var dataadd = JSON.stringify(json);
+         			 alert(dataadd);   
+         			$.ajax({
+     					url : '/adddevdere',
+     					  type: 'POST',
+     						contentType : "application/json; charset=utf-8",
+     						data : dataadd,
+     						dataType : 'json',
+     						success : function(value) {
+     						console.log(value);
+     						$("#customControlValidation1").prop( "checked", false );
+     						
+     					},
+     					success : function(value) {
+     						return true;
+     					},
+     					error : function(err) {
+     						console.log(err);	 
+     					}
+     				});
+            }
         });
     </script>
 </body>

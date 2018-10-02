@@ -159,6 +159,8 @@ public class DeviceDetailImpl implements DeviceDetailService {
 		res.setProductid(d.getProductId());
 		res.setUpdatedate(d.getUpdateDate());
 		res.setStatus(d.getStatus());
+		res.setIconCatalog(d.getDevice().getDeviceCatalog().getDescription());
+		System.out.println(res.getIconCatalog());
 		return res;
 	}
 	

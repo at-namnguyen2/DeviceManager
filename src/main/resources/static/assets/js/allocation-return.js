@@ -190,7 +190,7 @@ $('#SwitchStatusWorking').prop("checked", false); $('#SwitchStatusError').prop("
 			$(".detail-table").html("");
 		 callApiGetDetail(iddevice);    
 	    });
-	 
+	 	
 	function convertToIconDevice(catalog){
 		 if(catalog === "Laptop"){$('.device_icon').addClass('icon-laptop_mac');}
 		 else if(catalog === "Keyboard"){$('.device_icon').addClass('icon-keyboard');}
@@ -285,14 +285,30 @@ $('#SwitchStatusWorking').prop("checked", false); $('#SwitchStatusError').prop("
                         //able.clear();
                         $('.tablefilter-emp').html("");
                         $('#tablefilter-emp').removeAttr('hidden',"");
-                        
+                       
                 	  console.log("hihi"+data);
-                	  $.each(data, function (key, device) {
+                	  $.each(data, function (key, emp) {
 //     					 var datetime =new Date(device.updatedate).Format("dd/MM/yyyy:hh:mm:ss");
 //     					 console.log(datetime);
 //     					SetTableAllo(device);
-     					 console.log(device);
-     	                
+                		  $('.tablefilter-emp').append("<tr>" +
+                				"<td class=\"idEmp\" hidden=\"\">"+emp.id+"</td>" +
+                		  		"<td><div class=\"custom-control custom-checkbox\">" +
+                		  		"<input type=\"checkbox\" class=\"custom-control-input checkSingle-emp\" id=\"tableDefaultCheck"+key+"\">" +
+                		  		"<label class=\"custom-control-label\" for=\"tableDefaultCheck"+key+"\"></label></div></td>" +
+
+                		  		"<td><div class=\"avatar avatar-md mr-3 mt-1 float-left\">" +
+                		  		"<img class=\"avatar1\" src=\""+emp.avatar+"\" alt=\"\">" +
+                		  		"</div><div><div><strong>"+emp.name+"</strong></div>" +
+                		  		"<small>"+emp.email+"</small></div></td>" +
+                		  		"<td>"+emp.team+"</td>" +
+                		  		"<td>"+emp.phone+"</td>" +
+                		  		"</tr>");
+//                		  <div class="custom-control custom-checkbox">
+//                          <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1">
+//                          <label class="custom-control-label" for="tableDefaultCheck1">Check 1</label>
+//                      </div>
+  
      	                    })
                 	  
 //						result($.map(data, function (item) {
@@ -308,5 +324,93 @@ $('#SwitchStatusWorking').prop("checked", false); $('#SwitchStatusError').prop("
               });
           }
       });
+	  
+	  $('#auto-search-device').typeahead({
+          source: function (query, result) {
+        	  console.log(query);
+    		  $('.alertEmployee').attr('hidden',"");
+              $.ajax({
+                  url: "/filterdetailsnotused",
+					data: 'key=' + query,            
+                  dataType: "json",
+                  type: "POST",
+                  success: function (data) {
+                	    //var table = $('#tablefilter').DataTable();
+                        //able.clear();
+                        $('.tablefilter-device').html("");
+                        $('#tablefilter-device').removeAttr('hidden',"");
+                       
+                	  console.log("hihi"+data);
+                	  $.each(data, function (key, device) {
+                		  var datetime = moment(device.updatedate).format('DD-MM-YYYY , HH:mm:ss');
+
+                		  console.log("hihi"+device.iconCatalog);
+                		  $('.tablefilter-device').append("<tr>" +
+                				"<td class=\"idDevice\" hidden=\"\">"+device.id+"</td>" +
+                		  		"<td><div class=\"custom-control custom-checkbox\">" +
+                		  		"<input type=\"checkbox\" class=\"custom-control-input checkSingle-device\" id=\"checkbox-device"+key+"\">" +
+                		  		"<label class=\"custom-control-label\" for=\"checkbox-device"+key+"\"></label></div></td>" +
+                		  		"<td><div class=\"device_icon icon s-36 mr-3 mt-1 float-left "+device.iconCatalog+" \"><span class=\"circle\"></span></div>"+	
+                		  		"<div><strong>"+device.devicename+"</strong></div>" +
+//                		  		"<small>"+device.email+"</small></div></td>" +
+                		  		"<td>"+device.productid+"</td>" +
+                		  		"<td>"+datetime+"</td>" +
+                		  		"</tr>");
+     	                    })
+                	  
+                  },
+          	error : function(err) {
+          		console.log(err.responseText);
+                $('.tablefilter').html("");
+                $('#tablefilter').attr('hidden',"");
+          		 $('.alertdevice').removeAttr('hidden',"");
+          
+    		}
+              });
+          }
+      });
+	  
+
+	  tablefilterEmp();
+	  function tablefilterEmp(){
+		  $(".tablefilter-emp").on('click','.checkSingle-emp',function(e) {	
+			    if ($(this).is(":checked")) {
+					$('.checkSingle-emp').prop("checked", false);
+			        $(this).prop("checked", true);
+			    } else {
+			        $(this).prop("checked", false);
+			    }
+			});
+	  }
+	  $(".tablefilter-device").on('click','.checkSingle-device',function(e) {	
+		    if ($(this).is(":checked")) {
+				$('.checkSingle-device').prop("checked", false);
+		        $(this).prop("checked", true);
+		    } else {
+		        $(this).prop("checked", false);
+		    }
+		});
+	
+	  $(".tablefilter-request").on('click','.checkSingle-request',function(e) {	
+		    if ($(this).is(":checked")) {
+				$('.checkSingle-request').prop("checked", false);
+		        $(this).prop("checked", true);
+		    } else {
+		        $(this).prop("checked", false);
+		    }
+		});
+	  
+	  $('.btn-finish').click(function(event) {
+		  alert();
+		   event.preventDefault();
+           event.stopPropagation();
+           	alert("2");
+	   
+		    });
+	  
+	  function onFinishCallback(){
+		  alert();
+	        $('#wizard').smartWizard('showMessage','Finish Clicked');
+	    } 
 
 });
