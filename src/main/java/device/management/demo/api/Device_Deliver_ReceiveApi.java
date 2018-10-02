@@ -52,7 +52,7 @@ public class Device_Deliver_ReceiveApi {
 		String emailprincipal = p.getName();
 		List<DetailResponse> listDevDeRe = device_Deliver_ReceiveService.getDevByMail(emailprincipal);
 		System.out.println("show"+ emailprincipal);
-		return new ResponseEntity<>(listDevDeRe, HttpStatus.OK);
+	   	return new ResponseEntity<>(listDevDeRe, HttpStatus.OK);
 		
 	}
 	
