@@ -11,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 import javax.persistence.PrimaryKeyJoinColumn;
+
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,7 +33,7 @@ public class User implements Serializable{
     
     @Column(name = "password", nullable = false)
     private String password;
-    
+
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) default 0")
     private Boolean active = false;
     
@@ -41,6 +43,7 @@ public class User implements Serializable{
     @Column(name = "non_locked", nullable = false, columnDefinition = "TINYINT(1) default 1")
     private Boolean nonLocked = true;
     
+
     @Column(name = "description", nullable = true)
     private String description;
     
@@ -59,16 +62,17 @@ public class User implements Serializable{
     @JsonIgnoreProperties(value = "user")
 	//@OneToOne(mappedBy = "user",cascade=CascadeType.ALL, orphanRemoval=true)
     @OneToOne(mappedBy = "user",cascade=CascadeType.ALL, orphanRemoval=true)
+
 //	private Employee employee;
     
 //    @OneToOne(cascade = {CascadeType.ALL})
 //   // @PrimaryKeyJoinColumn
     private Employee employee;
-    
+
     @JsonIgnore
     //@JsonIgnoreProperties(value = "user")
     //@OneToMany(mappedBy = "user",orphanRemoval=true)
-	@OneToMany(mappedBy = "user", orphanRemoval = true)
+	@OneToMany(mappedBy = "user")
 	private List<UserRole> userRoles;
     
     public User() {
@@ -79,13 +83,22 @@ public class User implements Serializable{
     	this.email = email;
     	this.password = password;
     }
+
+    
+	public User(String email) {
+		super();
+		this.email = email;
+	}
 	public User(Long id, String email, String password, Boolean active, Boolean nonDel, Boolean nonLocked,
+
 			String description, Employee employee, BlockUser blockUser, TokenVerifition tokenVeriftion, List<UserRole> userRoles) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;
+
 		this.active = active;
+
 		this.nonDel = nonDel;
 		this.nonLocked = nonLocked;
 		this.description = description;
@@ -112,12 +125,14 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	
 	public Boolean getActive() {
 		return active;
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+
 	}
 	public Boolean getNonDel() {
 		return nonDel;
@@ -166,15 +181,19 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
+
 		return "User [id=" + id + ", email=" + email + ", password=" + password + ", enable=" + active + ", nonDel="
+
 				+ nonDel + ", nonLocked=" + nonLocked + ", description=" + description + ", tokenVerifition="
 				+ tokenVerifition + ", blockUser=" + blockUser + ", employee=" + employee + ", userRoles=" + userRoles
 				+ "]";
 	}
+
 	public User (String mota, String email, Boolean active, Boolean nonDel) {
 		this.description = mota;
 		this.email = email;
 		this.active = active;
+
 		this.nonDel = nonDel;
 	}
 	

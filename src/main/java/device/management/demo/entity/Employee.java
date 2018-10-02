@@ -3,7 +3,9 @@ package device.management.demo.entity;
 import java.util.Date;
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -13,12 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 import javax.persistence.PrimaryKeyJoinColumn;
+
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,10 +40,11 @@ public class Employee {
 	@JoinColumn(name = "user_id", nullable = false,foreignKey=@ForeignKey(name="ref_user_employee"))
 	private User user;
     
+
    // @OneToOne(mappedBy = "employee")
     //@PrimaryKeyJoinColumn
    	//private User user;
-    
+
     @Column(name = "employee_name", nullable = false)
     private String employeeName;
     
@@ -51,7 +57,8 @@ public class Employee {
     @Column(name = "gender", nullable = false, columnDefinition = "TINYINT(1) default 1")
     private Boolean gender = true;
     
-    @Temporal(TemporalType.TIMESTAMP)
+
+    @Temporal(TemporalType.DATE)
 	@Column(name = "date_of_birth", nullable = true)
 	@CreationTimestamp
 	private Date dateOfBirth;

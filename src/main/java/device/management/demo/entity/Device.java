@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -43,12 +44,26 @@ public class Device {
 	private String description;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "device", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "device", cascade=CascadeType.ALL)
 	private List<DeviceDetail> deviceDetail;
 
 	public Device() {
 		super();
 	}
+
+	public Device(Long id) {
+		this.id = id;
+	}
+	
+	public Device(DeviceCatalog deviceCatalog, String name, Long quantity, Double price, String description) {
+		super();
+		this.deviceCatalog = deviceCatalog;
+		this.name = name;
+		this.quantity = quantity;
+		this.price = price;
+		this.description = description;
+	}
+
 
 	public Device(Long id, DeviceCatalog deviceCatalog, String name, Long quantity, Double price, String description,
 			List<DeviceDetail> deviceDetail) {
