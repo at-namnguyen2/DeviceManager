@@ -28,7 +28,7 @@ public class Device_Deliver_Receive {
     private Long id;
     
     //@JsonIgnoreProperties("employee_device_detail")
-    @JsonIgnore
+
     @ManyToOne
 	@JoinColumn(name = "employee_id", nullable = false,foreignKey=@ForeignKey(name="ref_employee_device_detail"))
 	private Employee employee;
@@ -46,7 +46,6 @@ public class Device_Deliver_Receive {
     
     @Column(name = "date_return")
 	@Temporal(TemporalType.TIMESTAMP)
-	@CreationTimestamp
 	private Date dateReturn;
 
 	public Device_Deliver_Receive() {
@@ -105,5 +104,10 @@ public class Device_Deliver_Receive {
 	public void setDateReturn(Date dateReturn) {
 		this.dateReturn = dateReturn;
 	}
+	
+	@Override
+	public String toString() {
 
+		return "DevDeRe [id=" + id + ", deviceDetail=" + deviceDetail + ", dateDeliverReceive=" + dateDeliverReceive + ", dateReturn=" + dateReturn  + ", employee=" + employee + "]";
+	}
 }
