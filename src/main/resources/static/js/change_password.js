@@ -6,6 +6,7 @@ $(document).ready(function() {
 		console.log("tu viet van");
 		var URL = "/my-profile/change-password";
 		var passwordForm = $('#demo-form2').serializeJSON();
+		
 		console.log(passwordForm);
 		var jsonStringPassword = JSON.stringify(passwordForm);
 		console.log(jsonStringPassword);
@@ -30,7 +31,7 @@ $(document).ready(function() {
 					$('.msg-error').text(res.responseText);
 					setTimeout(function() {
 						$('.msg-error').fadeOut(1000);
-					}, 8000);
+					}, 7000);
 				}
 			}
 		});
