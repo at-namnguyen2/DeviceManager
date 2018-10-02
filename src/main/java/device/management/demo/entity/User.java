@@ -33,11 +33,9 @@ public class User implements Serializable{
     
     @Column(name = "password", nullable = false)
     private String password;
-    
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) default 0")
     private Boolean active = false;
-
     
     @Column(name = "non_del", nullable = false, columnDefinition = "TINYINT(1) default 1")
     private Boolean nonDel = true;
@@ -86,6 +84,11 @@ public class User implements Serializable{
     	this.password = password;
     }
 
+    
+	public User(String email) {
+		super();
+		this.email = email;
+	}
 	public User(Long id, String email, String password, Boolean active, Boolean nonDel, Boolean nonLocked,
 
 			String description, Employee employee, BlockUser blockUser, TokenVerifition tokenVeriftion, List<UserRole> userRoles) {

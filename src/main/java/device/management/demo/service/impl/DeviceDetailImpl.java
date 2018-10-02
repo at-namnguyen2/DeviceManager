@@ -30,59 +30,81 @@ public class DeviceDetailImpl implements DeviceDetailService {
 	@Autowired
 	DeviceRepository deviceRepository;
 
+	/**
+	 * @summary return list devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return List<DeviceDetail>
+	 **/
 	@Override
-	public List<DeviceDetail> getDeviceDetails(Device device) {
-		// TODO Auto-generated method stub
-		return deviceDetailRepository.findByDevice(device);
+	public List<DetailResponse> getDeviceDetails(Device device) {
+		List<DeviceDetail> ldd = deviceDetailRepository.findByDevice(device);
+		List<DetailResponse> ldr = new ArrayList<>();
+		for (DeviceDetail dd : ldd) {
+			DetailResponse dr = ConverttoDetailRes(dd);
+			ldr.add(dr);
+		}
+		return ldr; 
 	}
 
+	/**
+	 * @summary edit devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  deviceDetail
+	 * @return DeviceDetail
+	 **/
 	@Override
-	public DeviceDetail getDeviceDetailById(long id) {
-		// TODO Auto-generated method stub
-		return deviceDetailRepository.findById(id).get();
-	}
-
-	@Override
-	public DeviceDetail editDeviceDetails(DeviceDetail deviceDetail) {
-		DeviceDetail Detailobj = getDeviceDetailById(deviceDetail.getId());
-		Detailobj.setDescriptionDeviceDetail(deviceDetail.getDescriptionDeviceDetail());
-		Detailobj.setProductId(deviceDetail.getProductId());
-		Detailobj.setStatus(deviceDetail.getStatus());
-		Detailobj.setWorking(deviceDetail.getWorking());
-		Detailobj.setUpdateDate(deviceDetail.getUpdateDate());
+	public DeviceDetail editDeviceDetails(DetailDTO d) {
+		DeviceDetail Detailobj = deviceDetailRepository.findById(d.getId()).get();
+		Detailobj.setDescriptionDeviceDetail(d.getDecription());
+		Detailobj.setProductId(d.getProductid());
+		Detailobj.setStatus(d.getStatus());
+//		Detailobj.setUpdateDate(d.getUpdateDate());
 		return deviceDetailRepository.save(Detailobj);
 	}
-
-	@Override
-	public DeviceDetail setWorking(Long id) {
-		DeviceDetail Detailobj = getDeviceDetailById(id);
-		Detailobj.setWorking(detailConst.WORKING);
-		return deviceDetailRepository.save(Detailobj);
-	}
-	@Override
-	public Boolean DelDevDetails(List<DeviceDetail> deviceDetail) {
-		deviceDetailRepository.deleteAll(deviceDetail);
-		return true;
-	}
-
+	
+	/**
+	 * @summary del devicedetails via id
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  long id)
+	 * @return true, false
+	 **/
 	@Override
 	public Boolean DelDevDetailById(long id) {
 		deviceDetailRepository.deleteById(id);
 		return true;
 	}
-
+	
+	/**
+	 * @summary filter devicedetails not used and normal for allocation
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  working, status, name, catalog
+	 * @return List<DetailResponse>
+	 **/
 	@Override
-	public List<DetailResponse> filterDetails(Boolean working, long status, String name, String catalog) {
-		List<DeviceDetail> detail = deviceDetailRepository.findByWorkingAndStatusAndDeviceNameContainingAndDeviceDeviceCatalogNameContaining(
-				working, status, name, catalog);
+	public List<DetailResponse> filterDetails(long status, String key) {
+		List<DeviceDetail> detail = deviceDetailRepository.findByStatusAndDeviceNameContainingOrStatusAndDeviceDeviceCatalogNameContaining(status, key, status, key);
 		List<DetailResponse> detailRes = new ArrayList<>();
 		for (DeviceDetail d : detail) {
 			DetailResponse res = ConverttoDetailRes(d);
 			detailRes.add(res);
+			System.out.println(res);
 		}
 		return detailRes;
 	}
+	
 
+	/**
+	 * @summary add new device detail
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  DetailDTO d
+	 * @return DetailObj
+	 **/
 	@Override
 	public DeviceDetail addDeviceDetail(DetailDTO d) {
 		Optional<DeviceCatalog> catalogObj = deviceCatalogRepository.findByName(d.getCatalogname());
@@ -93,19 +115,40 @@ public class DeviceDetailImpl implements DeviceDetailService {
 			catalog = deviceCatalogRepository.save(catalog);
 		}
 		Optional<Device> deviceObj = deviceRepository.findByName(d.getDevicename());
-		long quantity = deviceDetailRepository.count() + 1;
-		Device device = new Device(catalog, d.getDevicename(), quantity, d.getPrice(), d.getDecription());
+		
+		Device device = new Device(catalog, d.getDevicename(), 1L, d.getPrice(), d.getDecription());
 		if (deviceObj.isPresent()) {
 			device = deviceObj.get();
+			device.setQuantity(device.getQuantity()+1);
 		} else {
 			device = deviceRepository.save(device);
 		}
 
-		DeviceDetail deviceDetail = new DeviceDetail(device, d.getProductid(), d.getStatus(), d.getUpdatedate(),
-				detailConst.NOTUSED);
+		DeviceDetail deviceDetail = new DeviceDetail(device, d.getProductid(), detailConst.NOTUSED, d.getUpdatedate());
 		return deviceDetailRepository.save(deviceDetail);
 	}
 
+	/**
+	 * @summary edit field working true via id
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Long id
+	 * @return DeviceDetail
+	 **/
+	@Override
+	public DeviceDetail setWorking(Long id) {
+		DeviceDetail Detailobj = deviceDetailRepository.findById(id).get();
+		Detailobj.setStatus(detailConst.WORKING);
+		return deviceDetailRepository.save(Detailobj);
+	}
+	
+	/**
+	 * @summary convert form DeviceDetail to DetailResponse
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  DeviceDetail
+	 * @return DetailResponse
+	 **/
 	public DetailResponse ConverttoDetailRes(DeviceDetail d){
 		DetailResponse res = new DetailResponse();
 		res.setId(d.getId());
@@ -115,8 +158,17 @@ public class DeviceDetailImpl implements DeviceDetailService {
 		res.setPrice(d.getDevice().getPrice());
 		res.setProductid(d.getProductId());
 		res.setUpdatedate(d.getUpdateDate());
+		res.setStatus(d.getStatus());
+		res.setIconCatalog(d.getDevice().getDeviceCatalog().getDescription());
+		System.out.println(res.getIconCatalog());
 		return res;
 	}
+	
+
+
+
+
+
 
 
 }

@@ -1,11 +1,8 @@
 package device.management.demo.validation;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-/**
- * @summary validate phone number
- * @author THAILE
- */
 public class PasswordValidator implements ConstraintValidator<Password, String>{
 
 	public void initialize(Password paramA) {
@@ -19,4 +16,3 @@ public class PasswordValidator implements ConstraintValidator<Password, String>{
 	}
 	
 }
-

@@ -3,8 +3,12 @@ package device.management.demo.entity.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,6 +34,7 @@ public class UserDTO implements Serializable{
     private String phone;
     
     @NotNull(message = "Birthday must not be null")
+    @Temporal(TemporalType.DATE)
     private Date birthDay;
     
     
@@ -50,7 +55,27 @@ public class UserDTO implements Serializable{
     
 	private String matchingPassword;
 	
+    private String description;
 	
+	@NotBlank(message = "Employee Name must not be blank")
+	private String employeeName;
+	
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -131,10 +156,12 @@ public class UserDTO implements Serializable{
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	
+
 
 	@Override
 	public String toString() {
-		return "{\"email\": \"" + email + "\",\"fullname\": \"" + fullname + "\",\"phone\": \"" + phone + "\",\"birthDay\": \"" + birthDay
+		return "{\"id\":"+ id +",\"email\": \"" + email + "\",\"fullname\": \"" + fullname + "\",\"phone\": \"" + phone + "\",\"birthDay\": \"" + birthDay
 				+ "\",\"address\": \"" + address + "\",\"gender\": " + gender + ",\"team\": \"" + team + "\",\"avatar\": \""
 				+ avatar + "\"}";
 	}

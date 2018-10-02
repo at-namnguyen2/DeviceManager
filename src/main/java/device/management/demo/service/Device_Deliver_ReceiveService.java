@@ -2,10 +2,15 @@ package device.management.demo.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import device.management.demo.entity.DeviceDetail;
 import device.management.demo.entity.Device_Deliver_Receive;
 import device.management.demo.entity.dto.EmpDeviceDTO;
+import device.management.demo.entity.response.DetailResponse;
 import device.management.demo.entity.response.EmpDeviceResponse;
+import device.management.demo.entity.response.countResponse;
 
 public interface Device_Deliver_ReceiveService {
 
@@ -16,7 +21,17 @@ public interface Device_Deliver_ReceiveService {
 	 * @param team,name,email
 	 * @return listDevDeRe
 	 **/
-	List<Device_Deliver_Receive> filterDevDeRe(String team, String name, String email);
+	List<DetailResponse> filterDevDeRe(String filter);
+	
+	/**
+	 * @summary return list DetailResponse via email
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  email
+	 * @return List<EmpDeviceResponse>
+	 **/
+	
+	List<DetailResponse> getDevByMail(String email);
 	
 	/**
 	 * @summary filter record aloction
@@ -25,7 +40,7 @@ public interface Device_Deliver_ReceiveService {
 	 * @param  
 	 * @return List<EmpDeviceResponse>
 	 **/
-	List<EmpDeviceResponse> getDevAllocation();
+	List<EmpDeviceResponse> getDevAllocation(Pageable page);
 
 	/**
 	 * @summary filter record return
@@ -34,7 +49,7 @@ public interface Device_Deliver_ReceiveService {
 	 * @param  team,name,email
 	 * @return List<EmpDeviceResponse>
 	 **/
-	List<EmpDeviceResponse> getDevHistory();	
+	List<EmpDeviceResponse> getDevHistory(Pageable page);	
 
 	/**
 	 * @summary add new record allocation device
@@ -63,5 +78,18 @@ public interface Device_Deliver_ReceiveService {
 	 **/
 	EmpDeviceResponse setReturn(EmpDeviceResponse edr);
 	
+	/**
+	 * @summary return device deliver receive
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return Device_Deliver_Receive
+	 **/
 	Device_Deliver_Receive getDevDeRe(DeviceDetail deviceDetail);
+	
+	countResponse countQuantity(String email);
+
+	int getPageAllocation(Pageable page);
+
+	int getPageHistory(Pageable page);
 }

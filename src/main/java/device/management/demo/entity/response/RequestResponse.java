@@ -17,7 +17,27 @@ public class RequestResponse implements Serializable{
 	private String type;
 	private String status;
 	private String content;
+	private String contentReply;
+	private long empId;
 	
+	
+	
+	public String getContentReply() {
+		return contentReply;
+	}
+
+	public void setContentReply(String contentReply) {
+		this.contentReply = contentReply;
+	}
+
+	public Long getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Long empId) {
+		this.empId = empId;
+	}
+
 	public RequestResponse() {
 		super();
 	}

@@ -1,7 +1,9 @@
 package device.management.demo.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
    	* @return List<UserResponse> empObj
    	**/
 	@Override
-	public List<UserResponse> listEmployeeByFilter(String name, String team, String email) {
-		List<Employee> emp = employeeRepository
-	.findByEmployeeNameContainingAndTeamContainingAndUserEmailContainingAndUserNonDelAndUserActive(name,
-						team, email, UserConst.NonDel, UserConst.Actice);
+	public List<UserResponse> listEmployeeByFilter(String key) {
+		List<Employee> emp = employeeRepository.findByEmployeeNameContainingAndUserNonDelAndUserActiveOrTeamContainingAndUserNonDelAndUserActiveOrUserEmailContainingAndUserNonDelAndUserActive(key, UserConst.NonDel, UserConst.Actice, key, UserConst.NonDel, UserConst.Actice, key, UserConst.NonDel, UserConst.Actice);
 
 		List<UserResponse> empObj = new ArrayList<>();
 		for (Employee employee : emp) {
@@ -57,4 +57,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return empObj;
 	}
 
-}
+	@Override
+	public Boolean existsByEmployee(long userId) {
+		Optional<Employee> exist = employeeRepository.findById(userId);
+		if(!exist.isPresent()) {
+			return false;
+		}
+		return true;
+		
+	}
+
+	@Override
+	public void addEmployeeFunction(String address, Date birthDate, String employeeName, Boolean gender,
+			String phone, String team, Long user_id) {
+		employeeRepository.addEmployeeFunction(address, birthDate, employeeName, gender,
+			phone, team, user_id);	
+	}
+		
+	}

@@ -56,4 +56,5 @@ public interface RequestService {
 	
 	Request getRequestbyid(long id);
 	Request editRequest(Request request);
+	List<Request> filterRequestByUser(User user);
 }

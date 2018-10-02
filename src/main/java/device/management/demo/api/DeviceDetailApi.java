@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import device.management.demo.entity.Device;
@@ -33,19 +35,41 @@ public class DeviceDetailApi {
 	@Autowired
 	DeviceService deviceService;
 
+	/**
+	 * @summary get list devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return List<DeviceDetail> deviceDetail
+	 **/
 	@PostMapping(path = "/Getdevicedetails")
 	public ResponseEntity<Object> GetDeviceDetails(@RequestBody Device device) {
-		List<DeviceDetail> deviceDetail = deviceDetailService.getDeviceDetails(device);
+		System.out.println(device);
+		List<DetailResponse> deviceDetail = deviceDetailService.getDeviceDetails(device);
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetail, HttpStatus.OK);
 	}
-
+	
+	/**
+	 * @summary edit devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return List<DeviceDetail> deviceDetail
+	 **/
 	@PutMapping(path = "/editdevicedetails")
-	public ResponseEntity<Object> editDeviceDetails(@RequestBody DeviceDetail deviceDetail) {
+	public ResponseEntity<Object> editDeviceDetails(@RequestBody DetailDTO deviceDetail) {
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetailService.editDeviceDetails(deviceDetail), HttpStatus.OK);
 	}
 
+	/**
+	 * @summary del devicedetails
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return String message
+	 **/
 	// only delete device if record in device_Deliver_Receive have field date return
 	// not null validation return field form font end
 	@DeleteMapping(path = "/deldevicedetails")
@@ -59,15 +83,33 @@ public class DeviceDetailApi {
 		return new ResponseEntity<>("delete Device Successed", HttpStatus.OK);
 	}
 
-	// filter devicedetails not user and normal for allocation
+	/**
+	 * @summary filter devicedetails not used and normal for allocation via name or catalog
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  Device
+	 * @return String message
+	 **/
+	// filter devicedetails not used and normal for allocation
 	@PostMapping(path = "/filterdetailsnotused")
-	public ResponseEntity<Object> GetDetailsNotUsed(@RequestBody FilterDetailDTO filter) {
-		List<DetailResponse> deviceDetail = deviceDetailService.filterDetails(detailConst.NOTUSED, detailConst.NORMAL,
-				filter.getName(), filter.getCatalog());
+	public ResponseEntity<Object> GetDetailsNotUsed(@RequestParam String key) {
+		System.out.println("check:"+key);
+		List<DetailResponse> deviceDetail = deviceDetailService.filterDetails(detailConst.NOTUSED, key);
+		if(deviceDetail.size() == 0) {
+			System.out.println("no");
+			return new ResponseEntity<>("Device Not Found!", HttpStatus.NOT_FOUND);
+		}
 		System.out.println("show devicedetails:" + deviceDetail);
 		return new ResponseEntity<>(deviceDetail, HttpStatus.OK);
 	}
-
+	
+	/**
+	 * @summary add new device detail
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  DetailDTO d
+	 * @return DetailObj
+	 **/
 	// add devicedetails
 	@PostMapping(path = "/adddetail")
 	public ResponseEntity<Object> AddDetail(@RequestBody DetailDTO d) {

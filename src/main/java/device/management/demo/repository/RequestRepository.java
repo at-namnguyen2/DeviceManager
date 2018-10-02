@@ -17,7 +17,7 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
    	* @param user
    	* @return listrequest
    	**/	
-	List<Request> findByUser(User user);
+	List<Request> findTop10ByUserOrderByIdDesc(User user);
 	
 	/**
    	* @summary return list requests via status pending
@@ -36,5 +36,5 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
    	* @return listRequest
    	**/	
 	List<Request> findByStatusNotLike(String status);
-
+	List<Request> findByUserAndTypeAndStatusOrderByUpdateDateDesc(User user, String type, String status);
 }

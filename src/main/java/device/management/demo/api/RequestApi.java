@@ -1,5 +1,7 @@
 package device.management.demo.api;
 
+import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,9 @@ public class RequestApi {
 	 * @return Request
 	 **/
 	@PostMapping(path = "/createrequest")
-	public ResponseEntity<Object> CreateRequest(@RequestBody RequestResponse request) {
+	public ResponseEntity<Object> CreateRequest(@RequestBody RequestResponse request, Principal p) {
 		System.out.println("get request");
-		String principalemail = "namnguyen2@gmail.com";
+		String principalemail = p.getName();
 		request.setEmail(principalemail);
 		request.setStatus(requestconst.Pending);
 		return new ResponseEntity<>(requestService.createRequest(request), HttpStatus.OK);
@@ -50,8 +52,8 @@ public class RequestApi {
 	 * @return listrequest
 	 **/
 	@GetMapping(path = "/myrequest")
-	public ResponseEntity<Object> ViewRequestUser() {
-		String principalemail = "namnguyen2@gmail.com";
+	public ResponseEntity<Object> ViewRequestUser(Principal p) {
+		String principalemail = p.getName();
 		User user = userService.getUserByEmail(principalemail);
 		List<Request> listRequest = requestService.listRequestbyuser(user);
 		if (listRequest.size() == 0) {
@@ -69,6 +71,7 @@ public class RequestApi {
 	 **/
 	@GetMapping(path = "/requestpending")
 	public ResponseEntity<Object> viewRequestPending() {
+	
 		List<RequestResponse> listRequestr = requestService.listRequestpending();
 		if (listRequestr.equals(null)) {
 			return new ResponseEntity<>(listRequestr, HttpStatus.NOT_FOUND);
@@ -105,17 +108,50 @@ public class RequestApi {
 		if (request.getStatus().equals(requestconst.Approved)) {
 			if (request.getType().equals(requestconst.Update_Info)) {
 				userService.updateUser(request);
-				RequestResponse rr = requestService.editRequest(request);
-				return new ResponseEntity<>(rr, HttpStatus.OK);
+
 			}
-		} else if (request.getStatus().equals(requestconst.Reply)) {
-			return new ResponseEntity<>(requestService.createRequest(request), HttpStatus.OK);
-		} else {
-			userService.updateUser(request);
-			RequestResponse rr = requestService.editRequest(request);
-			return new ResponseEntity<>(rr, HttpStatus.OK);
 		}
+		
+		if (!request.getStatus().equals(requestconst.Reply_Pending)) {
+			requestService.editRequest(request);
+		}
+		Date date = new Date();
+		RequestResponse rr = new RequestResponse();
+		rr.setContent(request.getContentReply());
+		rr.setUpdatedate(date);
+		rr.setType(request.getType());
+		rr.setStatus(requestconst.Reply);
+		rr.setEmail(request.getEmail());
+		rr = requestService.createRequest(rr);
+
+//			else {
+//
+//			}
+//		} else if (request.getStatus().equals(requestconst.Reply)) {
+//			return new ResponseEntity<>(requestService.createRequest(request), HttpStatus.OK);
+//		} else {
+//			userService.updateUser(request);
+//			RequestResponse rr = requestService.editRequest(request);
+//			return new ResponseEntity<>(rr, HttpStatus.OK);
+//		}
 		return new ResponseEntity<>("ok2", HttpStatus.OK);
+	}
+	
+	/**
+	 * @summary show requests allocation pending sof user 
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param user
+	 * @return listrequest
+	 **/
+	@PostMapping(path = "/filterrequest")
+	public ResponseEntity<Object> filterRequest(@RequestBody User user) {
+		List<Request> listRequest = requestService.filterRequestByUser(user);
+		System.out.println("test"+listRequest);
+		if (listRequest.size() == 0) {
+			return new ResponseEntity<>(listRequest, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(listRequest, HttpStatus.OK);
 	}
 
 }

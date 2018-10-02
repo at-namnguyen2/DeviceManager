@@ -1,5 +1,6 @@
 package device.management.demo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import device.management.demo.entity.Employee;
@@ -14,5 +15,11 @@ public interface EmployeeService {
    	* @param email, name, team
    	* @return List<UserResponse> emp
    	**/
-	List<UserResponse> listEmployeeByFilter(String name, String team, String email);
+	List<UserResponse> listEmployeeByFilter(String key);
+	
+	//van
+		public Boolean existsByEmployee(long userId);
+
+		public void addEmployeeFunction(String address, Date birthDate, String employeeName, Boolean gender,
+				String phone, String team, Long user_id);
 }
