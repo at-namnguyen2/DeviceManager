@@ -77,5 +77,7 @@ public interface UserService {
 
 	UserResponse2 showInfoUser(User user);
 
+	List<UserResponse2> getAllUserNotAdmin();
+
 	
 }

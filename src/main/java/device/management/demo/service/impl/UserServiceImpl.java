@@ -318,5 +318,18 @@ public class UserServiceImpl implements UserService {
 		return userResponse2;
 	}
 
+	@Override
+	public List<UserResponse2> getAllUserNotAdmin() {
+		
+		List<User> list = userRepository.findByUserRolesRoleRoleNameAndNonDelIsTrueAndActiveIsTrue(RoleConst.USER);
+		List<UserResponse2> list1 = new ArrayList<>();
+		for (User u : list) {
+			
+			UserResponse2 ur = convertTOResponse(u);
+			list1.add(ur);
+		}
+		return list1;
+	}
+
 	
 }

@@ -104,6 +104,12 @@ public class User_ApiController {
 		List<UserResponse2> listUser = userService.getUserAdmin();
 		return new ResponseEntity<Object>(listUser, HttpStatus.OK);		
 	}
+	//lay tat ca thong tin user khong phai la admin
+	@GetMapping("/get-all-userNotAdmin")
+	public ResponseEntity<Object> getAllUserNotAdmin() {
+		List<UserResponse2> list = userService.getAllUserNotAdmin();
+		return new ResponseEntity<Object>(list, HttpStatus.OK);
+	}
 	//xoa tat ca cac user
 	@DeleteMapping(path = "/deleteAll") 
 		public ResponseEntity<Object> deleteAllUser() {
