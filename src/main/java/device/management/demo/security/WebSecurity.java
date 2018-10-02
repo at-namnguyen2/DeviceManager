@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 
 @Configuration
@@ -33,45 +35,55 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
 	}
-
+    
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// disable csrf
 		http.csrf().disable();
 
 		http.headers().frameOptions().sameOrigin();
-		 //all request to /login, /registerAccount, /activeAccount, /forget-passowrd,
-		// /change-password auto permit
-		 //and request to url other must authen
 		
 //		http.authorizeRequests()
 //				.antMatchers("/forget-password**", "/h2-console/**", "/login**", "/registerAccount**",
 //						"/activeAccount**", "/change-password**")
 //				.permitAll();
-////		
-//		http.authorizeRequests().antMatchers("/home").authenticated().antMatchers("/admin/**").hasAuthority("ADMIN").and().authorizeRequests().anyRequest().authenticated();
-//
-//		http.authorizeRequests().antMatchers("/user/**").authenticated();
-//
-//		// add filter for check time to unblock user
-//		http.authorizeRequests().and().formLogin()
-//				//.addFilterBefore(unBlockUserFilter, UsernamePasswordAuthenticationFilter.class).formLogin()
-//				.loginPage("/login").permitAll().usernameParameter("email").passwordParameter("password")
-//				.loginProcessingUrl("/login").successHandler(successLoginHandle).failureHandler(failLoginHandle)
-//				// setting remember me
-//				.and().rememberMe().rememberMeParameter("remember-me")
-//				// setting logout
-//				.and().logout().logoutUrl("/logout").permitAll()
-//				// delete cookies when logout
-//				.deleteCookies("JSESSIONID", "remember-me").logoutSuccessUrl("/login?logout").permitAll().and()
-//				.httpBasic();
+//		
+//           //http.authorizeRequests().antMatchers("/user").authenticated().antMatchers("/admin/**").hasAuthority("ADMIN").and().authorizeRequests().anyRequest().authenticated();
+//           
+//		    http.authorizeRequests().antMatchers("/admin1/**").hasAuthority("ADMIN");
+//           
+//		    http.authorizeRequests().antMatchers("/user/**").hasAuthority("USER");
+		    
+	        //http.authorizeRequests().antMatchers("/trang-chung/**").authenticated();
+		http.authorizeRequests()
+		.antMatchers("/forget-password**", "/h2-console/**", "/login**", "/register**",
+				"/activeAccount**", "/change-password**")
+		.permitAll();
 
-		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+http.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN").and().authorizeRequests().anyRequest().authenticated();
+
+http.authorizeRequests().antMatchers("/home/**").hasAuthority("USER").and().authorizeRequests().anyRequest().authenticated();
+			
+		    http.authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests().and().formLogin()
+				//.loginPage("/login").permitAll().usernameParameter("email").passwordParameter("password")
+		         .loginPage("/login").usernameParameter("email").passwordParameter("password")
+				.loginProcessingUrl("/login").successHandler(successLoginHandle).failureHandler(failLoginHandle)
+				// setting remember me
+				.and().rememberMe().rememberMeParameter("remember-me")
+				// setting logout
+				.and().logout().logoutUrl("/logout").permitAll()
+				// delete cookies when logout
+				.deleteCookies("JSESSIONID", "remember-me").logoutSuccessUrl("/login?logout").permitAll().and()
+				.httpBasic();
+
+		//http.csrf().disable().authorizeRequests().anyRequest().permitAll();
 	}
 
 	@Override
 	public void configure(org.springframework.security.config.annotation.web.builders.WebSecurity web)
 			throws Exception {
-		web.ignoring().antMatchers("/css/**", "/util/**", "/images/**", "/js/**","/fonts/**","/vendor/**");
+		web.ignoring().antMatchers("/css/**", "/util/**", "/images/**", "/js/**","/fonts/**","/vendor/**","/assets/**");
 	}
 }

@@ -16,10 +16,39 @@ public class DetailResponse implements Serializable {
 	private String decription;
 	private String productid;
 	private Date updatedate;
+	private Long status;
+	private String iconCatalog;
 	public DetailResponse() {
 		super();
 	}
 	
+	
+
+
+	public String getIconCatalog() {
+		return iconCatalog;
+	}
+
+
+
+
+	public void setIconCatalog(String iconCatalog) {
+		this.iconCatalog = iconCatalog;
+	}
+
+
+
+
+	public Long getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Long status) {
+		this.status = status;
+	}
+
+
 	public Long getId() {
 		return id;
 	}

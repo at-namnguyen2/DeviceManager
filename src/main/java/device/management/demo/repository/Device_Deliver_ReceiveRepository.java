@@ -3,6 +3,8 @@ package device.management.demo.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import device.management.demo.entity.DeviceDetail;
@@ -28,9 +30,21 @@ public interface Device_Deliver_ReceiveRepository extends JpaRepository<Device_D
 	 * @param team,name,email
 	 * @return List<Device_Deliver_Receive>
 	 **/
-	List<Device_Deliver_Receive> findByEmployeeTeamContainingAndEmployeeEmployeeNameContainingAndEmployeeUserEmailContaining(
+	List<Device_Deliver_Receive> findByEmployeeTeamContainingOrEmployeeEmployeeNameContainingOrEmployeeUserEmailContaining(
 			String team, String name, String email);
 	
+	/**
+	 * @summary find detail allocation via email
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param email
+	 * @return List<Device_Deliver_Receive>
+	 **/
+	List<Device_Deliver_Receive> findByEmployeeUserEmailAndDateReturnNull(String email);
+//	findByEmployeeUserEmail
+	Long countByEmployeeUserEmail(String email);
+	Long countByEmployeeUserEmailAndDateReturnNull(String email);
+	Device_Deliver_Receive findTop1ByEmployeeUserEmail(String email);
 	/**
 	 * @summary filter record aloction
 	 * @date sep 12, 2018
@@ -47,5 +61,8 @@ public interface Device_Deliver_ReceiveRepository extends JpaRepository<Device_D
 	 * @param  
 	 * @return List<Device_Deliver_Receive>
 	 **/
-	List<Device_Deliver_Receive> findTop50ByDateReturnNotNullOrderByIdDesc();
+	Page<Device_Deliver_Receive> findByDateReturnNotNullOrderByIdDesc(Pageable page);
+	
+	Page<Device_Deliver_Receive> findByDateReturnNullOrderByIdDesc(Pageable page);
+
 }

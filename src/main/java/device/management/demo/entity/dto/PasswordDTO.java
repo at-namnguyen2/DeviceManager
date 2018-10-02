@@ -9,13 +9,14 @@ public class PasswordDTO {
 	private String token;
 	private String email;
 	
-	@NotBlank
+	@NotBlank(message = "passCurrent must not blank")
 	private String passwordCurrent;
 	
-	@NotBlank
+	@NotBlank(message = "newPassword must not blank")
 	@Password(message="Password has at least one number, one special character, one uppecase character and has from 6 to 10 character")
 	private String newPassword;	
 	
+	@NotBlank(message = "newMatchingPassword mut not blank")
 	private String newMatchingPassword;
 	public PasswordDTO() {
 		super();

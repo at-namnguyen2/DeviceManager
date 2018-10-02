@@ -21,7 +21,13 @@ public interface DeviceRepository extends JpaRepository<Device, Long>{
 	 **/
 	Optional<Device> findByName(String devicename);
 	
-	
+	/**
+	 * @summary find device via name
+	 * @date sep 12, 2018
+	 * @author Nam.Nguyen2
+	 * @param  String devicename
+	 * @return Optional<Device>
+	 **/
 	
 	@Transactional
 	@Modifying

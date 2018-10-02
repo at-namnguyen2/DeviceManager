@@ -10,18 +10,29 @@ public class DetailDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private Long id; 
 	private String catalogname;
 	private String devicename;
 	private Double price;
 	private String decription;
 	private String productid;
 	private long status;
-	private Boolean working;
 	private Date updatedate;
 
 	public DetailDTO() {
 		super();
 	}
+
+	
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 	public String getCatalogname() {
 		return catalogname;
@@ -71,14 +82,6 @@ public class DetailDTO implements Serializable {
 		this.status = status;
 	}
 
-	public Boolean getWorking() {
-		return working;
-	}
-
-	public void setWorking(Boolean working) {
-		this.working = working;
-	}
-
 	public Date getUpdatedate() {
 		return updatedate;
 	}
@@ -91,8 +94,7 @@ public class DetailDTO implements Serializable {
 	public String toString() {
 
 		return "details [catalogname=" + catalogname + ", devicename=" + devicename + ", price=" + price
-				+ ", decription=" + decription + ", productid=" + productid + ", status=" + status + ", working="
-				+ working + ", updatedate="
+				+ ", decription=" + decription + ", productid=" + productid + ", status=" + status + ", updatedate="
 						+ updatedate + "]";
 	}
 

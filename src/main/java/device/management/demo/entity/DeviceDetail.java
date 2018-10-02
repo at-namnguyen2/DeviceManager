@@ -61,30 +61,26 @@ public class DeviceDetail {
 	@Cascade({ CascadeType.ALL})
 	private List<Device_Deliver_Receive> deviceDeliverReceive;
 
-	@Column(name = "working", columnDefinition = "TINYINT(1) default 0", nullable = false)
-	private Boolean working = false;
 
 	public DeviceDetail() {
 		super();
 	}
 	
-	public DeviceDetail(Device device, String productId, long status, Date updateDate, Boolean working) {
+	public DeviceDetail(Device device, String productId, long status, Date updateDate) {
 		super();
 		this.device = device;
 		this.productId = productId;
 		this.status = status;
 		this.updateDate = updateDate;
-		this.working = working;
 	}
 
-	public DeviceDetail(Long id, Device device, String productId, long status, Date updateDate, Boolean working, List<Device_Deliver_Receive> deviceDeliverReceive) {
+	public DeviceDetail(Long id, Device device, String productId, long status, Date updateDate, List<Device_Deliver_Receive> deviceDeliverReceive) {
 		super();
 		this.id = id;
 		this.device = device;
 		this.productId = productId;
 		this.status = status;
 		this.updateDate = updateDate;
-		this.working = working;
 		this.deviceDeliverReceive = deviceDeliverReceive;
 	}
 
@@ -131,13 +127,6 @@ public class DeviceDetail {
 		this.updateDate = updateDate;
 	}
 
-	public Boolean getWorking() {
-		return working;
-	}
-
-	public void setWorking(Boolean working) {
-		this.working = working;
-	}
 	public String getDescriptionDeviceDetail() {
 		return descriptionDeviceDetail;
 	}

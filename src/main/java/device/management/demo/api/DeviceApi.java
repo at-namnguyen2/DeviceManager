@@ -34,7 +34,9 @@ import device.management.demo.entity.dto.CatalogDTO;
 import device.management.demo.entity.dto.DeviceDTO;
 import device.management.demo.entity.dto.EditDeviceDTO;
 import device.management.demo.entity.response.CatalogDTOResponse;
+import device.management.demo.entity.response.DetailResponse;
 import device.management.demo.entity.response.DeviceDTOResponse;
+import device.management.demo.entity.response.DeviceResponse;
 import device.management.demo.entity.response.EditCatalogDTOResponse;
 import device.management.demo.entity.response.EditDeviceDTOResponse;
 import device.management.demo.entity.response.UserResponse2;
@@ -55,13 +57,9 @@ import device.management.demo.service.EmployeeService;
 @RequestMapping("/")
 
 public class DeviceApi {
-	@Autowired
-	
-	private Device_Deliver_ReceiveRepository device_deliver_receive_repository;
+
 	@Autowired
 	private EmployeeRepository employeeRepository;
-	@Autowired
-	private EmployeeService employeeService;
 	
 	@Autowired
 	private UserRepsository userRepository;
@@ -69,8 +67,6 @@ public class DeviceApi {
 	@Autowired
 	private DeviceRepository deviceRepository;
 	
-	@Autowired
-	private DeviceDetailRepository deviceDetailRepository;
 	@Autowired
 	private DeviceCatalogRepository deviceCatalogRepository;
 	@Autowired
@@ -117,11 +113,17 @@ public class DeviceApi {
 	//xuat danh sach tat ca cac thiet bi.
 	@GetMapping("/listAllDevice")
 	public ResponseEntity<Object> listAllDevice() {
+//		System.err.println("hihi");
 	 List<Device> device = deviceRepository.findAll();
 	 if(device.size() == 0) {
 		 return new ResponseEntity<Object>("Khong co thiet bi nao", HttpStatus.NOT_FOUND);
 	 }
-	 return new ResponseEntity<Object>(device, HttpStatus.OK);
+	 List<DeviceResponse> ldr = new ArrayList<>();	
+	 for (Device d : device) {
+		 DeviceResponse dr = ConverttoDeviceResponse(d);
+		 ldr.add(dr);
+	}
+	 return new ResponseEntity<Object>(ldr, HttpStatus.OK);
 	}
 	
 //	//Tim kiem chi tiet thiet bi boi ten(thu nghiem).
@@ -350,5 +352,17 @@ public class DeviceApi {
 			}
 			
 			return new ResponseEntity<Object>(list, HttpStatus.OK);
+		}
+	    
+	    
+	    public DeviceResponse ConverttoDeviceResponse(Device d){
+	    	DeviceResponse ds = new DeviceResponse();
+			ds.setId(d.getId());
+			ds.setName(d.getName());
+			ds.setPrice(d.getPrice());
+			ds.setQuantity(d.getQuantity());
+			ds.setDescription(d.getDescription());
+			ds.setCatalog(d.getDeviceCatalog().getName());
+			return ds;
 		}
 }

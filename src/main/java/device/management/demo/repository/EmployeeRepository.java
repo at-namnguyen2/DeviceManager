@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import device.management.demo.entity.Employee;
+import java.lang.String;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
@@ -23,8 +24,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
    	* @param email, name, team, nondel, active
    	* @return List<Employee>
    	**/
-	List<Employee> findByEmployeeNameContainingAndTeamContainingAndUserEmailContainingAndUserNonDelAndUserActive(
-			String name, String team, String email, Boolean nondel, Boolean active);
+	List<Employee> findByEmployeeNameContainingAndUserNonDelAndUserActiveOrTeamContainingAndUserNonDelAndUserActiveOrUserEmailContainingAndUserNonDelAndUserActive(String name, Boolean nondel, Boolean active, String team, Boolean nondel2, Boolean active2, String email,Boolean nondel3, Boolean active3);
 	
 	@Transactional
 	@Modifying
@@ -33,8 +33,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query(value = "insert into employee values(0 ,?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)", nativeQuery = true)
-	int addEmployeeFunction(String address, String avatar, Date birthDate, String employeeName, Boolean gender,
+	@Query(value = "insert into employee values(0 ,?1, null, ?2, ?3, ?4, ?5, ?6, ?7)", nativeQuery = true)
+	int addEmployeeFunction(String address,  Date birthDate, String employeeName, Boolean gender,
 			String phone, String team, Long user_id);
     
 	
@@ -43,4 +43,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	@Query(value = "insert into employee values(0 ,?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)", nativeQuery = true)
 	int addEmployee1(String address, String avatar, Date birthDate, String employee1, Boolean gender, String phone,
 			String team, Long user_id);	
+	
+
 }

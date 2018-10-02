@@ -40,7 +40,7 @@ public interface UserService {
 	* @param userdto
 	* @return true
    	**/
-    Boolean editProfileUser(UserDTO userdto);
+    Boolean editProfileUser(String email, String userdto);
     
     /**
 	* @summary list SA contact: phone via rolename Admin
@@ -72,6 +72,9 @@ public interface UserService {
 	User getUserById1(long id);
 	boolean deleteUserById(long id);
 	List<UserResponse2> showUserStateNonDel();
+	List<UserResponse2> showUserStateNonDel2();
 	List<UserResponse2> getUserAdmin();
 	List<UserResponse2> filterUser(String search);
+
+	UserResponse2 showInfoUser(User user);
 }

@@ -21,4 +21,6 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
 	@Modifying
 	@Query(value = "insert into user_role values(0, ?2, ?1)", nativeQuery = true)
 	int addUserRole1(Long user_id, Long role_id);
+	
+
 }
