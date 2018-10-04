@@ -18,6 +18,7 @@ public class EmpDeviceResponse implements Serializable{
 	private String productId;
 	private Date dateDeliverReceive;
 	private Date dateReturn;
+	private String iconCatalog;
 	public EmpDeviceResponse() {
 		super();
 	}
@@ -26,6 +27,13 @@ public class EmpDeviceResponse implements Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getIconCatalog() {
+		return iconCatalog;
+	}
+	public void setIconCatalog(String iconCatalog) {
+		this.iconCatalog = iconCatalog;
 	}
 	public String getEmployeeName() {
 		return employeeName;

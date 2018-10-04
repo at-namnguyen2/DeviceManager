@@ -67,7 +67,7 @@ public class User_ApiController {
 	//lay tat ca cac user.
 	@GetMapping("/get-all-user")
 	public ResponseEntity<Object> getAllUser() {
-		
+		System.out.println("testuser");
 		List<UserResponse2> listUser = userService.showUserStateNonDel();
 		 return new ResponseEntity<Object>(listUser, HttpStatus.OK);
 		 

@@ -19,6 +19,7 @@ import device.management.demo.entity.Device_Deliver_Receive;
 import device.management.demo.entity.dto.DetailDTO;
 import device.management.demo.entity.dto.FilterDetailDTO;
 import device.management.demo.entity.response.DetailResponse;
+import device.management.demo.entity.response.DeviceQuantityResponse;
 import device.management.demo.service.DeviceDetailService;
 import device.management.demo.service.DeviceService;
 import device.management.demo.service.Device_Deliver_ReceiveService;
@@ -118,4 +119,9 @@ public class DeviceDetailApi {
 		return new ResponseEntity<>(DetailObj, HttpStatus.OK);
 	}
 
+	@GetMapping(path = "/getquantitydevice")
+	public ResponseEntity<Object> getQuantityDevice(){
+		List<DeviceQuantityResponse> ldqr = deviceDetailService.getQuantityDevice();
+		return new ResponseEntity<>(ldqr, HttpStatus.OK);
+	}
 }

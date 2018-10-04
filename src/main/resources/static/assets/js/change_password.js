@@ -35,10 +35,5 @@ $(document).ready(function() {
 			}
 		});
 	})
-
- 
- 
- 
- 
  
 });

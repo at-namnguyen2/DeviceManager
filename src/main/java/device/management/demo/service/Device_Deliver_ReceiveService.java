@@ -1,5 +1,6 @@
 package device.management.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public interface Device_Deliver_ReceiveService {
 	 * @param team,name,email
 	 * @return listDevDeRe
 	 **/
-	List<DetailResponse> filterDevDeRe(String filter);
+	Page<EmpDeviceResponse> filterDevDeRe(String filter, Pageable page);
 	
 	/**
 	 * @summary return list DetailResponse via email
@@ -67,7 +68,7 @@ public interface Device_Deliver_ReceiveService {
 	 * @param  Long id
 	 * @return void
 	 **/
-	void delDevDeRe(Long id);
+	boolean delDevDeRe(ArrayList<Long> listId);
 
 	/**
 	 * @summary set record to return
@@ -92,4 +93,6 @@ public interface Device_Deliver_ReceiveService {
 	int getPageAllocation(Pageable page);
 
 	int getPageHistory(Pageable page);
+
+	List<EmpDeviceResponse> getAllocationReturnToday();
 }

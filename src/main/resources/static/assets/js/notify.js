@@ -1,15 +1,7 @@
 
 $(document).ready(function() {
-//	  $('#send-form').validator().on('submit', function (e) {
-//		    if (e.isDefaultPrevented()) {
-//		        alert('form is not valid');
-//		    } else {
-//		        // everything looks good!
-//		        e.preventDefault();
-//		        alert('form is valid');
-//		        // your ajax
-//		    }
-//		});
+	$(".title-top").text("Request");
+	getPagePending();
 	
 	
 	  $('#txtdevice').typeahead({
@@ -36,9 +28,6 @@ $(document).ready(function() {
      	                
      	                    })
                 	  
-//						result($.map(data, function (item) {
-//							return item;
-//                      }));
                   },
           	error : function(err) {
                 $('.tablefilter').html("");
@@ -61,28 +50,47 @@ $(document).ready(function() {
 			$('.denya').attr('href',"#step-2y");
 //		    $(".modal-body").html("");
 		});
-		PendingRequest();
-//    $("#txtSearch").autocomplete({
-//        source: function (request, response) {
-//            $.ajax({
-//                type: "POST",
-//                contentType: "application/json; charset=utf-8",
-//                url: "WebService.asmx/GetData",
-//                data: "{'DName':'" + document.getElementById('txtSearch').value + "'}",
-//                dataType: "json",
-//                success: function (data) {
-//                    response(data.d);
-//                },
-//                error: function (result) {
-//                    alert("Error......");
-//                }
-//            });
-//        }
-//    });
-	
-	function PendingRequest (){
+	  
+
+	  	function getPagePending(){
+			$.ajax({
+				url : '/getpagepending',
+				data:{
+					size:5
+				},
+				type : 'get',
+				success : function(value) {
+					if(value == 1){
+						$(".tablerequest").html("");
+			        	PendingRequest(0);
+					}
+					console.log("pending"+value);
+					$('#pagination-pending').twbsPagination({
+				        totalPages: value,
+				        visiblePages: 3,
+				        next: 'Next',
+				        prev: 'Prev',
+				        onPageClick: function (event, page) {
+				        	$(".tablerequest").html("");
+				        	PendingRequest(page-1);
+				        }
+				    });
+					 },
+				error : function(err) {
+					console.log(err);
+				
+				}
+			})
+				
+		}	  
+	  
+	function PendingRequest (p){
 	$.ajax({
 		url : '/requestpending',
+		data:{
+			page: p,
+			size: 5			
+		},
 		type : 'get',
 		success : function(value) {
 			var count = 0;
@@ -95,33 +103,38 @@ $(document).ready(function() {
 				 var dayago = $.timeago(request.updatedate);
 				 console.log("hihi"+datetime)
 				 console.log("hihi"+dayago);
-				 $(".tablerequest").append("<tr>"
-                                            +"<td>"
-                                               +" <div class=\"avatar avatar-md mr-3 mt-1 float-left\">"
-                                                +    "<span class=\"avatar-letter avatar-letter-a  avatar-md circle\"></span>"
-                                                +"</div>"
-                                               + "<div class=\"email0\"><div class=\"fullname\"><strong>"+request.fullname+"</strong>"
-                                                  +  "</div ><small class=\"email\">"+request.email+"</small></div>"
-                                            +"</td> "       
-                                            +"<td class=\"team\">"+request.team+"</td><td><span>"
-                                    +"<i class=\"icon icon-data_usage\"></i>"+dayago+"</span><br><span class=\"datetime\">"
-                                   +" <i class=\"icon icon-timer datetime\"></i>"+datetime+"</span>"
-                                      + " </td>"
-                                          +"  <td> <a class=\"detail-info\" href=\"#modalCreateMessage\" data-toggle=\"modal\" data-target=\"#modalCreateMessage\" >"
-                                          	+	"<span class=\"r-3 badge badge-info type \">"+request.type+"</span></a></td>"
-                                        +  "<td hidden=\"\" class=\"id\">"+request.id+"</td>"
-                                          +" <td hidden=\"\"class=\"content1\">"+block[0]+"</td>"
-                                          +" <td hidden=\"\" class=\"content2\">"+block[1]+"</td>"
-                                          +" <td hidden=\"\" class=\"empId\">"+request.empId+"</td>"
-                                        +"</tr>");	
-
-	
+				 var Allocation = "Allocation";
+				 var Return = "Return";
+				 var UpdateInfo = "Update Info";
+				 $(".tablerequest").append("<tr class=\""+key+"\"></tr>");
+				 $("."+key+"").append("<td>"
+                 +" <div class=\"avatar avatar-md mr-3 mt-1 float-left\">"
+                 +"<span class=\"avatar-letter avatar-letter-a  avatar-md circle\"></span></div>"
+                 +"<div class=\"email0\"><div class=\"fullname\"><strong>"+request.fullname+"</strong></div>"
+                 +"<small class=\"email\">"+request.email+"</small></div></td>"       
+                 +"<td class=\"team\">"+request.team+"</td><td><span>"
+                 +"<i class=\"icon icon-data_usage\"></i>"+dayago+"</span><br><span class=\"datetime\">"
+                 +"<i class=\"icon icon-timer datetime\"></i>"+datetime+"</span></td>");
+            	 if(request.type == Allocation){
+    					 $("."+key+"").append("<td><a class=\"detail-info\" href=\"#modalCreateMessage\" data-toggle=\"modal\" data-target=\"#modalCreateMessage\" >"
+    							 +"<span class=\"r-3 badge badge-success type \">"+request.type+"</span></a></td>");
+                       } else if(request.type == Return){
+                    	 $("."+key+"").append("<td><a class=\"detail-info\" href=\"#modalCreateMessage\" data-toggle=\"modal\" data-target=\"#modalCreateMessage\" >"
+      							 +"<span class=\"r-3 badge badge-danger type \">"+request.type+"</span></a></td>");
+                       } else {
+                    	 $("."+key+"").append("<td><a class=\"detail-info\" href=\"#modalCreateMessage\" data-toggle=\"modal\" data-target=\"#modalCreateMessage\" >"
+      							 +"<span class=\"r-3 badge badge-warning type \">"+request.type+"</span></a></td>");
+                       }	
+                 $("."+key+"").append("<td hidden=\"\" class=\"id\">"+request.id+"</td>"
+                 +"<td hidden=\"\"class=\"content1\">"+block[0]+"</td>"
+                 +"<td hidden=\"\" class=\"content2\">"+block[1]+"</td>"
+                 +"<td hidden=\"\" class=\"empId\">"+request.empId+"</td>");
+                    			
                     })
                     $(".count-pending").text(count);
 		},
 		error : function(err) {
-			console.log(err);
-		
+			console.log(err);	
 		}
 	})
 
@@ -223,13 +236,7 @@ $(document).ready(function() {
 			$('.row-type').removeAttr('hidden',"");
 		
 	})
-	
-	
-
-
-	
-	
-	
+		
 		$(".tablefilter").on('click','.allocate',function(e) {	
 		var $row = $(this).closest("tr");
 		var json = {}
@@ -270,6 +277,9 @@ $(document).ready(function() {
 					data : datajson,
 					dataType : 'json',
 				success : function(value) {
+					alert();
+					$('.tablerequest').html("");
+					getPagePending();
 				},
 				error : function(err) {
 					console.log(err);
@@ -293,44 +303,101 @@ $(document).ready(function() {
 	
 			}
 		})
+		} else if(type === "Return" && status == "Approved") {
+			$.ajax({
+				url : '/setreturn',
+				  type: 'POST',
+					contentType : "application/json; charset=utf-8",
+					data : jsondevice,
+					dataType : 'json',
+				success : function(value) {
+					console.log(value);
+				},
+				error : function(err) {
+					console.log(err);
+		
+				}
+			})
 		}
+				$('.tablerequest').html("");
+				getPagePending();	
 				$('.contentarea').attr('hidden',"");
 				 $('.modaldevice').modal('toggle');
 	})
 	
+	$('#v-pills-history-tab').click(function(){
+//		getPageHistory();
+	})
+	getPageHistory();
+	function getPageHistory(){
+		$.ajax({
+			url : '/getpagehistory',
+			data:{
+				size:5
+			},
+			type : 'get',
+			success : function(value) {
+				console.log("history"+value);
+				$('#pagination-history').twbsPagination({
+			        totalPages: value,
+			        visiblePages: 3,
+			        next: 'Next',
+			        prev: 'Prev',
+			        onPageClick: function (event, page) {
+			        	$(".tablehistory").html("");
+			        	historyRequest(page-1);
+			        }
+			    });
+				 },
+			error : function(err) {
+				console.log(err);
+			
+			}
+		})
+			
+	}	
 	
 //request history	
+	function historyRequest (p){
 		$.ajax({
 			url : '/requesthistory',
+			data:{
+				page: p,
+				size: 5	
+			},		
 			type : 'get',
 			success : function(value) {
 				var count = 0;
 				console.log(value);
 				 $.each(value, function (key, request) {
+					 var Allocation = "Allocation";
+					 var Return = "Return";
+					 var UpdateInfo = "Update Info";
 					 var datetime =new Date(request.updatedate).Format("dd/MM/yyyy:hh:mm:ss");
-				
-//					 var block = request.content.split("content:");
-//					 console.log(block[1]);
 					 var dayago = $.timeago(request.updatedate);
 					 console.log("hihi"+datetime)
 					 console.log("hihi"+dayago);
-					 $(".tablehistory").append("<tr>"
-	                                            +"<td>"
-	                                               +" <div class=\"avatar avatar-md mr-3 mt-1 float-left\">"
-	                                                +    "<span class=\"avatar-letter avatar-letter-a  avatar-md circle\"></span>"
-	                                                +"</div>"
-	                                               + "<div><div><strong>"+request.fullname+"</strong>"
-	                                                  +  "</div><small>"+request.email+"</small></div>"
-	                                            +"</td> "       
-	                                            +"<td>"+request.email+"</td><td><span>"
-	                                    +"<i class=\"icon icon-data_usage\"></i>"+dayago+"</span><br><span>"
-	                                   +" <i class=\"icon icon-timer\"></i>"+datetime+"</span>"
-	                                      + " </td>"
-	                                          +"  <td> <a href=\"#modalCreateMessage\" data-toggle=\"modal\" data-target=\"#modalCreateMessage\" >"
-	                                          	+	"<span class=\"r-3 badge badge-info \">"+request.type+"</span></a></td>"
-	                                        +  "<td hidden=\"\">"+request.id+"</td>"
-	                                          +" <td hidden=\"\">"+request.content+"</td>"
-	                                        +"</tr>");	
+					 $(".tablehistory").append("<tr class=\"history"+key+"\"></tr>");
+					 $(".history"+key+"").append("<td>"
+	               +"<div class=\"avatar avatar-md mr-3 mt-1 float-left\">"
+	               +"<span class=\"avatar-letter avatar-letter-a  avatar-md circle\"></span></div>"
+	               + "<div><div><strong>"+request.fullname+"</strong></div>" 
+	               +"<small>"+request.email+"</small></div></td>"       
+	               +"<td>"+request.email+"</td><td><span>"
+	               +"<i class=\"icon icon-data_usage\"></i>"+dayago+"</span><br><span>"
+	               +"<i class=\"icon icon-timer\"></i>"+datetime+"</span></td>");
+			if(request.type == Allocation){
+    		$(".history"+key+"").append("<td> <a href=\"#\" data-toggle=\"modal\" data-target=\"#\" >"
+	        +"<span class=\"r-3 badge badge-success \">"+request.type+"</span></a></td>");
+                       } else if(request.type == Return){
+            $(".history"+key+"").append("<td> <a href=\"#\" data-toggle=\"modal\" data-target=\"#\" >"
+            +"<span class=\"r-3 badge badge-danger \">"+request.type+"</span></a></td>");
+                       } else {
+            $(".history"+key+"").append("<td> <a href=\"#\" data-toggle=\"modal\" data-target=\"#\" >"
+            +"<span class=\"r-3 badge badge-warning \">"+request.type+"</span></a></td>");
+                       }	
+			$(".history"+key+"").append("<td hidden=\"\">"+request.id+"</td>"
+	               +"<td hidden=\"\">"+request.content+"</td>");
 					
 					 $('.count-notify').text(count);
 					 $('.count-header').text("You have "+count+" notifications");
@@ -342,7 +409,7 @@ $(document).ready(function() {
 			
 			}
 		})
-		
+	}		
 
 	
 	//set profile edit

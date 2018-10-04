@@ -13,10 +13,6 @@ public class AdminUserController {
 		return "admin-home";
 	}
 	
-	@GetMapping("adduser")
-	public String showUserProfile() {
-		return "add-user";
-	}
 	@GetMapping("notify")
 	public String showNotify() {
 		return "notify";
@@ -45,5 +41,14 @@ public class AdminUserController {
 	@GetMapping("topbar")
 	public String showTopBar() {
 		return "/common/topbar";
+	}
+	
+	@GetMapping("adduser")
+	public String showUserProfile() {
+		return "add-user";
+	}
+	@GetMapping("userall")
+	public String showUserAll() {
+		return "user_all";
 	}
 }

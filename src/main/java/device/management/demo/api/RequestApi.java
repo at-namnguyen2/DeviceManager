@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,9 +71,9 @@ public class RequestApi {
 	 * @return listRequestr
 	 **/
 	@GetMapping(path = "/requestpending")
-	public ResponseEntity<Object> viewRequestPending() {
+	public ResponseEntity<Object> viewRequestPending(Pageable page) {
 	
-		List<RequestResponse> listRequestr = requestService.listRequestpending();
+		List<RequestResponse> listRequestr = requestService.listRequestpending(page);
 		if (listRequestr.equals(null)) {
 			return new ResponseEntity<>(listRequestr, HttpStatus.NOT_FOUND);
 		}
@@ -87,8 +88,8 @@ public class RequestApi {
 	 * @return listRequestr
 	 **/
 	@GetMapping(path = "/requesthistory")
-	public ResponseEntity<Object> viewOldRequest() {
-		List<RequestResponse> listRequestr = requestService.listOldRequest();
+	public ResponseEntity<Object> viewOldRequest(Pageable page) {
+		List<RequestResponse> listRequestr = requestService.listOldRequest(page);
 		if (listRequestr.equals(null)) {
 			return new ResponseEntity<>(listRequestr, HttpStatus.NOT_FOUND);
 		}
@@ -154,4 +155,27 @@ public class RequestApi {
 		return new ResponseEntity<>(listRequest, HttpStatus.OK);
 	}
 
+	@GetMapping(path = "/listrequesttoday")
+	public ResponseEntity<Object> listRequestToday(){
+		List<RequestResponse> listRequestr = requestService.listRequestToday();
+		System.out.println("result"+listRequestr);
+		if (listRequestr.equals(null)) {
+			
+			return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(listRequestr, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/getpagepending")
+	public ResponseEntity<Object> getPagePending(Pageable page){
+		int totalpage = requestService.getPagePending(page);
+		return new ResponseEntity<>(totalpage, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/getpagehistory")
+	public ResponseEntity<Object> getPageHistory(Pageable page){
+		System.out.println("history"+page);
+		int totalpage = requestService.getPageHistory(page);
+		return new ResponseEntity<>(totalpage, HttpStatus.OK);
+	}
 }

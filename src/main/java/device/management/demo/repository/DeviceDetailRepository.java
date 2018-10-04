@@ -37,6 +37,10 @@ public interface DeviceDetailRepository extends JpaRepository<DeviceDetail, Long
 	List<DeviceDetail> findByStatusAndDeviceNameContainingOrStatusAndDeviceDeviceCatalogNameContaining(
 			long status, String name, long status2, String catalog);
 //	List<DeviceDetail> findByStatusAndWorkingAndD
+	Long countByStatus(Long status);
+	Long countByDeviceDeviceCatalogNameAndStatus(String name, Long status);
 	
+
 	Long countById(Long id);
+
 }

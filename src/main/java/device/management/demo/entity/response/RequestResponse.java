@@ -18,6 +18,7 @@ public class RequestResponse implements Serializable{
 	private String status;
 	private String content;
 	private String contentReply;
+	private String avatar;
 	private long empId;
 	
 	
@@ -29,7 +30,7 @@ public class RequestResponse implements Serializable{
 	public void setContentReply(String contentReply) {
 		this.contentReply = contentReply;
 	}
-
+	
 	public Long getEmpId() {
 		return empId;
 	}
@@ -105,4 +106,13 @@ public class RequestResponse implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	
 }

@@ -1,4 +1,3 @@
-
 console.log("fhffgfhfhfhf");
 
 
@@ -271,7 +270,7 @@ function editInfoProfile(m) {
 }
 function deleteUser(idDelete) {
 	
-	alert(idDelete);
+	//alert(idDelete);
 	var test = confirm("Ban co muon xoa khong???");
 	console.log(test);
 	if(test === true) {

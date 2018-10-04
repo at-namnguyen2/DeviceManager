@@ -1,10 +1,12 @@
 package device.management.demo.api;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,14 +65,14 @@ public class Device_Deliver_ReceiveApi {
 	 * @param  team,name,email
 	 * @return listDevDeRe
 	 **/
-	@PostMapping(path = "/filterdevdere")
-	public ResponseEntity<Object> filterDevDeRe(@RequestParam String filter) {
+	@GetMapping(path = "/filterdevdere")
+	public ResponseEntity<Object> filterDevDeRe(@RequestParam String filter, Pageable page) {
 		if(filter.isEmpty()) {
 			return new ResponseEntity<>("fill to search", HttpStatus.OK);
 		}
-		List<DetailResponse> listDevDeRe = device_Deliver_ReceiveService.filterDevDeRe(filter);
-		System.out.println("show"+ filter);
-		return new ResponseEntity<>(listDevDeRe, HttpStatus.OK);
+		Page<EmpDeviceResponse> pageDevDeRe = device_Deliver_ReceiveService.filterDevDeRe(filter, page);
+		System.out.println("show"+ page.getPageSize());
+		return new ResponseEntity<>(pageDevDeRe, HttpStatus.OK);
 		
 	}
 
@@ -126,8 +128,8 @@ public class Device_Deliver_ReceiveApi {
 	 * @return String message
 	 **/
 	@DeleteMapping(path = "/delallocation")
-	public ResponseEntity<String> dellAllocation(@RequestBody Device_Deliver_Receive dl){
-		device_Deliver_ReceiveService.delDevDeRe(dl.getId());
+	public ResponseEntity<String> dellAllocation(@RequestBody ArrayList<Long> listId){
+		device_Deliver_ReceiveService.delDevDeRe(listId);
 		return new ResponseEntity<>("Delete Success", HttpStatus.OK);
 	}
 	
@@ -165,8 +167,12 @@ public class Device_Deliver_ReceiveApi {
 		return new ResponseEntity<>(totalpage, HttpStatus.OK);
 	}
 	
-	@GetMapping(path = "/getDevicesAllocationReturnToday")
+	@GetMapping(path = "/listDevicesAllocationReturnToday")
 	public ResponseEntity<Object> getDevicesAllocationReturnToday(){
-		return new ResponseEntity<>("", HttpStatus.OK);
+		List<EmpDeviceResponse> listddr = device_Deliver_ReceiveService.getAllocationReturnToday();
+		if(listddr.size() == 0) {
+			return new ResponseEntity<>("Not Found Device", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(listddr, HttpStatus.OK);
 	}
 }

@@ -12,6 +12,7 @@ import device.management.demo.entity.DeviceCatalog;
 import device.management.demo.entity.DeviceDetail;
 import device.management.demo.entity.dto.DetailDTO;
 import device.management.demo.entity.response.DetailResponse;
+import device.management.demo.entity.response.DeviceQuantityResponse;
 import device.management.demo.repository.DeviceCatalogRepository;
 import device.management.demo.repository.DeviceDetailRepository;
 import device.management.demo.repository.DeviceRepository;
@@ -162,6 +163,40 @@ public class DeviceDetailImpl implements DeviceDetailService {
 		res.setIconCatalog(d.getDevice().getDeviceCatalog().getDescription());
 		System.out.println(res.getIconCatalog());
 		return res;
+	}
+
+	@Override
+	public List<DeviceQuantityResponse> getQuantityDevice() {
+		Long totalAll = 0L;
+		Long wokingAll = 0L;
+		Long notUseAll = 0L;
+		Long errorAll = 0L;
+		List<DeviceCatalog> listName = deviceCatalogRepository.findAll();
+		List<DeviceQuantityResponse> ldqr = new ArrayList<>();
+		for (DeviceCatalog dc : listName) {	
+
+			Long woking = deviceDetailRepository.countByDeviceDeviceCatalogNameAndStatus(dc.getName()
+					, detailConst.WORKING);
+			
+			Long notUse = deviceDetailRepository.countByDeviceDeviceCatalogNameAndStatus(dc.getName(), detailConst.NOTUSED);
+			
+			Long error = deviceDetailRepository.countByDeviceDeviceCatalogNameAndStatus(dc.getName(), detailConst.ERROR);
+			
+			Long total = error + woking + notUse;
+			
+			DeviceQuantityResponse dqr = new DeviceQuantityResponse(dc.getName(), dc.getDescription(), total, woking, error, notUse);
+			ldqr.add(dqr);
+			totalAll = totalAll + total;
+			wokingAll = wokingAll + woking;
+			notUseAll = notUseAll + notUse;
+			errorAll =  errorAll + error;
+		
+		}
+		String allDevice = "All Devices";
+		String catalogIcon = "icon-devices_other";
+		DeviceQuantityResponse dqr = new DeviceQuantityResponse(allDevice, catalogIcon, totalAll, wokingAll, errorAll, notUseAll);
+		ldqr.add(dqr);
+		return ldqr;
 	}
 	
 

@@ -3,6 +3,8 @@ package device.management.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
+
 import device.management.demo.entity.Request;
 import device.management.demo.entity.User;
 import device.management.demo.entity.response.RequestResponse;
@@ -34,7 +36,7 @@ public interface RequestService {
    	* @param 
    	* @return listRequestResponse
    	**/	
-	List<RequestResponse> listRequestpending();
+	List<RequestResponse> listRequestpending(Pageable page);
 	
 	/**
    	* @summary return list requests via status pending
@@ -43,7 +45,7 @@ public interface RequestService {
    	* @param status
    	* @return listRequest
    	**/	
-	List<RequestResponse> listOldRequest();
+	List<RequestResponse> listOldRequest(Pageable page);
 	
 	/**
    	* @summary edit status request
@@ -57,4 +59,10 @@ public interface RequestService {
 	Request getRequestbyid(long id);
 	Request editRequest(Request request);
 	List<Request> filterRequestByUser(User user);
+
+	List<RequestResponse> listRequestToday();
+
+	int getPagePending(Pageable page);
+
+	int getPageHistory(Pageable page);
 }

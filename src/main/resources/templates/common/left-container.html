@@ -21,7 +21,7 @@
             <li class="header"><strong></strong></li>
             <li class="treeview">
             <a th:href="@{/admin}">
-                <i class="icon icon-sailing-boat-water purple-text s-18"></i> <span>Report</span> 
+                <i class="icon icon-sailing-boat-water purple-text s-18"></i> <span>Summary</span> 
             </a>
              
             </li>
@@ -29,7 +29,7 @@
             <li class="treeview"><a href="#"><i class="icon icon-account_box light-green-text s-18"></i>Users<i
                     class="icon icon-angle-left s-18 pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="panel-page-users.html"><i class="icon icon-circle-o"></i>All Users</a>
+                    <li><a th:href="@{/admin/userall}"><i class="icon icon-circle-o"></i>All Users</a>
                     </li>
                     <li><a href="panel-page-users-create.html"><i class="icon icon-add"></i>Add User</a>
                     </li>
@@ -70,12 +70,7 @@
                 <span>Request</span>
                 <span class="badge r-3 badge-success pull-right"></span>
             </a>
-             <!--   <ul class="treeview-menu">
-                    <li><a href="panel-page-inbox.html"><i class="icon icon-circle-o"></i>All Messages</a>
-                    </li>
-                    <li><a href="panel-page-inbox-create.html"><i class="icon icon-add"></i>Compose</a>
-                    </li>
-                </ul> -->
+
             </li>
             <li class="header light mt-3"><strong></strong></li>
         </ul>

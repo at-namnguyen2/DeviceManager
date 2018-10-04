@@ -6,6 +6,7 @@ import device.management.demo.entity.Device;
 import device.management.demo.entity.DeviceDetail;
 import device.management.demo.entity.dto.DetailDTO;
 import device.management.demo.entity.response.DetailResponse;
+import device.management.demo.entity.response.DeviceQuantityResponse;
 
 public interface DeviceDetailService {
 	
@@ -62,6 +63,8 @@ public interface DeviceDetailService {
 	 * @return DeviceDetail
 	 **/
 	DeviceDetail setWorking(Long id);
+
+	List<DeviceQuantityResponse> getQuantityDevice();
 
 
 

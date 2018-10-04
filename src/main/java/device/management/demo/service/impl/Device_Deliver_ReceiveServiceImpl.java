@@ -2,13 +2,17 @@ package device.management.demo.service.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.h2.util.New;
+import org.hibernate.query.criteria.internal.predicate.NegatedPredicateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -43,27 +47,30 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 	 * @return listDevDeRe
 	 **/
 	@Override
-	public List<DetailResponse> filterDevDeRe(String filter) {
-		List<Device_Deliver_Receive> listddr = device_Deliver_ReceiveRepository.findByEmployeeTeamContainingOrEmployeeEmployeeNameContainingOrEmployeeUserEmailContaining(filter, filter, filter);
-		List<DetailResponse> listdr = new ArrayList<>();
-		for (Device_Deliver_Receive ddr : listddr) {
-			DetailResponse dr = convertToDetailRes(ddr);
+	public Page<EmpDeviceResponse> filterDevDeRe(String filter, Pageable page) {
+		Page<Device_Deliver_Receive> pageDdr = device_Deliver_ReceiveRepository
+				.findByEmployeeTeamContainingOrEmployeeEmployeeNameContainingOrEmployeeUserEmailContainingOrDeviceDetailDeviceNameContainingOrDeviceDetailDeviceDeviceCatalogNameContaining(
+						filter, filter, filter, filter, filter, page);
+		List<Device_Deliver_Receive> listDdr = pageDdr.getContent();		
+		List<EmpDeviceResponse> listdr = new ArrayList<>();
+		for (Device_Deliver_Receive ddr : listDdr) {
+			EmpDeviceResponse dr = convertToEmpDevRes(ddr);
 			listdr.add(dr);
 		}
-		return listdr;
-			
+		return new PageImpl<>(listdr, page, pageDdr.getTotalElements());
+
 	}
 
 	/**
 	 * @summary add new record allocation device
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  EmpDeviceDTO empdev
+	 * @param EmpDeviceDTO empdev
 	 * @return Device_Deliver_Receive obj
 	 **/
 	@Override
 	public Device_Deliver_Receive addDevDeRe(EmpDeviceDTO empdev) {
-		System.out.println(empdev.getEmployeeId()+ empdev.getDetailId());
+		System.out.println(empdev.getEmployeeId() + empdev.getDetailId());
 		System.out.println("checkdate");
 		Employee e = new Employee();
 		e.setId(empdev.getEmployeeId());
@@ -75,28 +82,35 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 		ddr.setDeviceDetail(dd);
 		return device_Deliver_ReceiveRepository.save(ddr);
 	}
+
 	/**
 	 * @summary del a record allocation device
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  Long id
+	 * @param Long id
 	 * @return void
 	 **/
 	@Override
-	public void delDevDeRe(Long id) {
-		device_Deliver_ReceiveRepository.deleteById(id);
+	public boolean delDevDeRe(ArrayList<Long> listId) {
+		for (Long id : listId) {
+			device_Deliver_ReceiveRepository.deleteById(id);
+		}
+//		for (Long id : listId) {
+//			device_Deliver_ReceiveRepository.deleteById(id);
+//		}
+		return true;
 	}
 
 	/**
 	 * @summary filter record aloction
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  
+	 * @param
 	 * @return Page<EmpDeviceResponse>
 	 **/
 	@Override
 	public List<EmpDeviceResponse> getDevAllocation(Pageable page) {
-		Page<Device_Deliver_Receive> pddr =  device_Deliver_ReceiveRepository.findByDateReturnNullOrderByIdDesc(page);
+		Page<Device_Deliver_Receive> pddr = device_Deliver_ReceiveRepository.findByDateReturnNullOrderByIdDesc(page);
 		List<Device_Deliver_Receive> lddr = pddr.getContent();
 		List<EmpDeviceResponse> ledr = new ArrayList<>();
 		for (Device_Deliver_Receive ddr : lddr) {
@@ -109,9 +123,9 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 	 * @summary filter record return
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  
+	 * @param
 	 * @return List<EmpDeviceResponse> ledr
-	 **/	
+	 **/
 	@Override
 	public List<EmpDeviceResponse> getDevHistory(Pageable page) {
 		Page<Device_Deliver_Receive> pddr = device_Deliver_ReceiveRepository.findByDateReturnNotNullOrderByIdDesc(page);
@@ -127,16 +141,16 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 	 * @summary set record to return
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  
+	 * @param
 	 * @return
 	 **/
 	@Override
 	public EmpDeviceResponse setReturn(EmpDeviceResponse edr) {
-		Optional<Device_Deliver_Receive> ddr= device_Deliver_ReceiveRepository.findById(edr.getId());
-		if(ddr.isPresent()) {
+		Optional<Device_Deliver_Receive> ddr = device_Deliver_ReceiveRepository.findById(edr.getId());
+		if (ddr.isPresent()) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
-			ddr.get().setDateReturn(date);	
+			ddr.get().setDateReturn(date);
 			device_Deliver_ReceiveRepository.save(ddr.get());
 			DeviceDetail dd = deviceDetailRepository.findByProductId(edr.getProductId());
 			dd.setStatus(detailConst.NOTUSED);
@@ -150,7 +164,7 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 	 * @summary convert from Device_Deliver_Receive to EmpDeviceResponse
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  Device_Deliver_Receive ddr
+	 * @param Device_Deliver_Receive ddr
 	 * @return EmpDeviceResponse edr
 	 **/
 	public EmpDeviceResponse convertToEmpDevRes(Device_Deliver_Receive ddr) {
@@ -164,14 +178,15 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 		edr.setDeviceName(ddr.getDeviceDetail().getDevice().getName());
 		edr.setProductId(ddr.getDeviceDetail().getProductId());
 		edr.setTeam(ddr.getEmployee().getTeam());
+		edr.setIconCatalog(ddr.getDeviceDetail().getDevice().getDeviceCatalog().getDescription());
 		return edr;
-	}	
-	
+	}
+
 	/**
 	 * @summary convert from Device_Deliver_Receive to DetailResponse
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  Device_Deliver_Receive ddr
+	 * @param Device_Deliver_Receive ddr
 	 * @return EmpDeviceResponse edr
 	 **/
 	public DetailResponse convertToDetailRes(Device_Deliver_Receive ddr) {
@@ -183,14 +198,15 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 		dr.setPrice(ddr.getDeviceDetail().getDevice().getPrice());
 		dr.setProductid(ddr.getDeviceDetail().getProductId());
 		dr.setUpdatedate(ddr.getDateDeliverReceive());
+		dr.setIconCatalog(ddr.getDeviceDetail().getDevice().getDeviceCatalog().getDescription());
 		return dr;
-	}	
-	
+	}
+
 	/**
 	 * @summary return device deliver receive
 	 * @date sep 12, 2018
 	 * @author Nam.Nguyen2
-	 * @param  Device
+	 * @param Device
 	 * @return Device_Deliver_Receive
 	 **/
 	@Override
@@ -201,7 +217,8 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 
 	@Override
 	public List<DetailResponse> getDevByMail(String email) {
-		List<Device_Deliver_Receive> listddr = device_Deliver_ReceiveRepository.findByEmployeeUserEmailAndDateReturnNull(email);
+		List<Device_Deliver_Receive> listddr = device_Deliver_ReceiveRepository
+				.findByEmployeeUserEmailAndDateReturnNull(email);
 		List<DetailResponse> listdr = new ArrayList<>();
 		for (Device_Deliver_Receive ddr : listddr) {
 			DetailResponse dr = convertToDetailRes(ddr);
@@ -217,18 +234,17 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 		cr.setQuantity(device_Deliver_ReceiveRepository.countByEmployeeUserEmail(email));
 		cr.setWorking(device_Deliver_ReceiveRepository.countByEmployeeUserEmailAndDateReturnNull(email));
 		Device_Deliver_Receive ddr = device_Deliver_ReceiveRepository.findTop1ByEmployeeUserEmail(email);
-		System.out.println("show count2"+ddr);
-		
-		if(ddr.getDateReturn() == null) {
-			System.out.println("show count2"+ddr.getDateReturn());
+		System.out.println("show count2" + ddr);
+
+		if (ddr.getDateReturn() == null) {
+			System.out.println("show count2" + ddr.getDateReturn());
 			cr.setLastUpdate(ddr.getDateDeliverReceive());
-		
-		}
-		else {
+
+		} else {
 			cr.setLastUpdate(ddr.getDateReturn());
-			System.out.println("show count2"+cr);
+			System.out.println("show count2" + cr);
 		}
-		
+
 		return cr;
 	}
 
@@ -243,6 +259,33 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 		Page<Device_Deliver_Receive> p = device_Deliver_ReceiveRepository.findByDateReturnNotNullOrderByIdDesc(page);
 		return p.getTotalPages();
 	}
-	
-	
+
+	@Override
+	public List<EmpDeviceResponse> getAllocationReturnToday() {
+		LocalDate now = LocalDate.now();
+		Date dateStart = null;
+		Date dateEnd = null;
+		try {
+			dateStart = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(now + " 00:00:00");
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			dateEnd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(now + " 23:59:59");
+
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<Device_Deliver_Receive> lddr = device_Deliver_ReceiveRepository
+				.findByDateDeliverReceiveBetweenOrDateReturnBetween(dateStart, dateEnd, dateStart, dateEnd);
+		List<EmpDeviceResponse> listdr = new ArrayList<>();
+		for (Device_Deliver_Receive ddr : lddr) {
+			EmpDeviceResponse dr = convertToEmpDevRes(ddr);
+			listdr.add(dr);
+		}
+		return listdr;
+	}
+
 }

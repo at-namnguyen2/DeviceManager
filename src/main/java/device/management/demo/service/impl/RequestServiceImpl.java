@@ -2,12 +2,17 @@ package device.management.demo.service.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,7 @@ import device.management.demo.repository.RequestRepository;
 import device.management.demo.repository.UserRepsository;
 import device.management.demo.service.RequestService;
 import device.management.demo.util.requestconst;
+import freemarker.core.ParseException;
 
 @Service
 public class RequestServiceImpl implements RequestService{
@@ -72,8 +78,9 @@ public class RequestServiceImpl implements RequestService{
    	* @return listRequestr
    	**/	
 	@Override
-	public List<RequestResponse> listRequestpending() {
-		List<Request> lr = requestRepository.findByStatus(requestconst.Pending);
+	public List<RequestResponse> listRequestpending(Pageable page) {
+		Page<Request> p = requestRepository.findByStatus(requestconst.Pending, page);
+		List<Request> lr = p.getContent();
 		if (lr.size() == 0) {
 			return null;
 		}
@@ -93,8 +100,9 @@ public class RequestServiceImpl implements RequestService{
    	* @return listRequestr
    	**/	
 	@Override
-	public List<RequestResponse> listOldRequest() {
-		List<Request> lr = requestRepository.findByStatusNotLike("Pending");
+	public List<RequestResponse> listOldRequest(Pageable page) {
+		Page<Request> p = requestRepository.findByStatusNotLike(requestconst.Pending, page);
+		List<Request> lr = p.getContent();
 		if (lr.size() == 0) {
 			return null;
 		}
@@ -133,6 +141,7 @@ public class RequestServiceImpl implements RequestService{
 		rr.setTeam(r.getUser().getEmployee().getTeam());
 		rr.setType(r.getType());
 		rr.setUpdatedate(r.getUpdateDate());
+		rr.setAvatar(r.getUser().getEmployee().getAvatar());
 		return rr;
 	}
 	
@@ -153,6 +162,54 @@ public class RequestServiceImpl implements RequestService{
 		List<Request> list = requestRepository.findByUserAndTypeAndStatusOrderByUpdateDateDesc(user, requestconst.Allocation, requestconst.Pending);
 		System.out.println(list);
 		return list;
+	}
+
+	@Override
+	public List<RequestResponse> listRequestToday() {	
+		   LocalDate now = LocalDate.now();
+		   Date dateStart = null;
+		   Date dateEnd = null;
+		
+		try {
+			dateStart = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(now+" 00:00:00");
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			dateEnd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(now+" 23:59:59");
+			
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		   System.out.println("start"+dateStart);
+		   System.out.println("end"+dateEnd);
+		   List<Request> lr = requestRepository.findByStatusAndUpdateDateBetween(requestconst.Pending, dateStart, dateEnd);
+		   System.out.println("end"+lr);
+		   if (lr.size() == 0) {
+				return null;
+			}
+		   List<RequestResponse> listRequestr = new ArrayList<>();
+			for (Request r : lr) {
+				RequestResponse rr = ConverToRequestRes(r);
+				listRequestr.add(rr);
+			}
+		return listRequestr;
+	}
+
+	@Override
+	public int getPagePending(Pageable page) {
+		Page<Request> p = requestRepository.findByStatus(requestconst.Pending, page);
+		return p.getTotalPages();
+	}
+
+	@Override
+	public int getPageHistory(Pageable page) {
+		Page<Request> p = requestRepository.findByStatusNotLike(requestconst.Pending, page);
+		return p.getTotalPages();
 	}
 
 
