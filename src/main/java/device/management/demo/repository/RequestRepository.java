@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -54,4 +55,6 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
 //	List<Request> findByUpdateDateBetween(Date dateStart,Date dateEnd);
 
 	List<Request> findByStatusAndUpdateDateBetween(String Status, Date dateStart, Date dateEnd);
+	
+	Optional<Request> findByUserAndType(User user, String type);
 }

@@ -123,8 +123,11 @@ public class RequestServiceImpl implements RequestService{
    	**/
 	@Override
 	public RequestResponse editRequest(RequestResponse request) {
+		Date date = new Date();
 		Request editrequest = requestRepository.findById(request.getId()).get();
 		editrequest.setStatus(request.getStatus());
+		editrequest.setUpdateDate(date);
+		editrequest.setContentReply(request.getContentReply());
 		editrequest = requestRepository.save(editrequest);
 		RequestResponse rr = ConverToRequestRes(editrequest);
 		return rr;

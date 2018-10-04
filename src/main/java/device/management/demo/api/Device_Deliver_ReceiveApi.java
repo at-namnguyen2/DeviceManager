@@ -142,6 +142,7 @@ public class Device_Deliver_ReceiveApi {
 	 **/
 	@PostMapping(path = "/setreturn")
 	public ResponseEntity<Object> setReturn(@RequestBody EmpDeviceResponse edr){
+		System.out.println("------------------------");
 		device_Deliver_ReceiveService.setReturn(edr);
 		return new ResponseEntity<>("Delete Success", HttpStatus.OK);
 	}

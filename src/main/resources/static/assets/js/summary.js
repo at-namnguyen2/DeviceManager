@@ -4,6 +4,12 @@ $(document).ready(function() {
 	listRequestToday();
 	listDeviceToday();
 	
+	
+
+	
+	
+	
+	
 	function listRequestToday(){
 		$.ajax({
 			url : '/listrequesttoday',         
@@ -139,8 +145,8 @@ $(document).ready(function() {
 			  element: 'donut-chart',
 			  data: [
 			    {label: "Woking", value: wPercent},
-			    {label: "Error", value: nPercent},
-			    {label: "Not Use", value: ePercent}
+			    {label: "Error", value: ePercent},
+			    {label: "Not Use", value: nPercent}
 			  ],
 			  resize: true,
 			  redraw: true

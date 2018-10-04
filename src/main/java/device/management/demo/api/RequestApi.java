@@ -112,19 +112,19 @@ public class RequestApi {
 
 			}
 		}
+		requestService.editRequest(request);
+//		if (!request.getStatus().equals(requestconst.Reply_Pending)) {
+//			requestService.editRequest(request);
+//		}
+//		Date date = new Date();
+//		RequestResponse rr = new RequestResponse();
+//		rr.setContent(request.getContentReply());
+//		rr.setUpdatedate(date);
+//		rr.setType(request.getType());
+//		rr.setStatus(requestconst.Reply);
+//		rr.setEmail(request.getEmail());
+//		rr = requestService.createRequest(rr);
 		
-		if (!request.getStatus().equals(requestconst.Reply_Pending)) {
-			requestService.editRequest(request);
-		}
-		Date date = new Date();
-		RequestResponse rr = new RequestResponse();
-		rr.setContent(request.getContentReply());
-		rr.setUpdatedate(date);
-		rr.setType(request.getType());
-		rr.setStatus(requestconst.Reply);
-		rr.setEmail(request.getEmail());
-		rr = requestService.createRequest(rr);
-
 //			else {
 //
 //			}

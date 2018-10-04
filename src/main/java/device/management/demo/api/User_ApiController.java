@@ -31,6 +31,7 @@ import device.management.demo.entity.User;
 import device.management.demo.entity.UserRole;
 import device.management.demo.entity.response.UserDTOResponse;
 import device.management.demo.entity.response.UserResponse2;
+import device.management.demo.entity.response.UserResponse2Return;
 import device.management.demo.repository.EmployeeRepository;
 import device.management.demo.repository.RoleRepository;
 import device.management.demo.repository.UserRepsository;
@@ -67,20 +68,11 @@ public class User_ApiController {
 	//lay tat ca cac user.
 	@GetMapping("/get-all-user")
 	public ResponseEntity<Object> getAllUser() {
-		System.out.println("testuser");
+		
 		List<UserResponse2> listUser = userService.showUserStateNonDel();
 		 return new ResponseEntity<Object>(listUser, HttpStatus.OK);
 		 
 	}
-	
-	//lay tat ca cac user.
-		@GetMapping("/get-all-user1")
-		public ResponseEntity<Object> getAllUser1() {
-			
-			List<UserResponse2> listUser = userService.showUserStateNonDel();
-			 return new ResponseEntity<Object>(listUser, HttpStatus.OK);
-			 
-		}
 	
 	//lay user theo id.
 	@GetMapping(path = "/getUser/{id}")
@@ -112,6 +104,33 @@ public class User_ApiController {
 		List<UserResponse2> listUser = userService.getUserAdmin();
 		return new ResponseEntity<Object>(listUser, HttpStatus.OK);		
 	}
+	//lay tat ca thong tin user khong phai la admin
+	@GetMapping("/get-all-userNotAdmin")
+	public ResponseEntity<Object> getAllUserNotAdmin() {
+		List<UserResponse2> list = userService.getAllUserNotAdmin();
+		return new ResponseEntity<Object>(list, HttpStatus.OK);
+	}
+	//xoa tat ca cac user(xoa cung).
+	@DeleteMapping(path = "/deleteAll") 
+		public ResponseEntity<Object> deleteAllUser() {
+			List<User> list = userRepository.findAll();
+			userRepository.delAllUser();
+			return new ResponseEntity<>("Da xoa tat ca user thanh cong", HttpStatus.OK);
+		}
+	
+	//xoa tat ca cac user(xoa mem).
+	@DeleteMapping(path = "/deleteAllSoft")
+	public ResponseEntity<Object> deleteAllSoft() {
+		Long id;
+		List<User> list = userRepository.findAll();
+		for(User user: list) {
+			id = user.getId();
+			userService.deleteUserSoftService(id);
+			
+		}
+		return null;
+	}
+	
 	
 	//them user
 	@PostMapping(path = "/addUser")
@@ -156,7 +175,15 @@ public class User_ApiController {
 //		//return null;
 		System.out.println(active + " " + description + " " + email + " " + nonDel + " " + nonBlock + " "+ pass + " ");
 //		//userRepository.save(user);
-		userRepository.addUser1(active, description, email,  nonDel, nonBlock, pass);
+		User useradd = new User();
+		useradd.setActive(active);
+		useradd.setDescription(description);
+		useradd.setEmail(email);
+		useradd.setNonDel(nonDel);
+		useradd.setNonLocked(nonBlock);
+		useradd.setPassword(pass);
+		userRepository.save(useradd);
+//		userRepository.addUser1(active, description, email,  nonDel, nonBlock, pass);
 		
 		Optional<User> user = userRepository.findByEmail(email);
 
@@ -207,19 +234,25 @@ public class User_ApiController {
 		user.get().getEmployee().setGender(userResponse1.getGender());
 		user.get().getEmployee().setPhone(userResponse1.getPhone());
 		user.get().getEmployee().setTeam(userResponse1.getTeam());
+		user.get().getUserRoles().get(0).getRole().setDescription(userResponse1.getDescription());
+		user.get().getUserRoles().get(0).getRole().setRoleName(userResponse1.getRoleName());
+		
 		
 		userRepository.save(user.get());
 		
 		
-		List<UserRole> list = user.get().getUserRoles();
-		for(UserRole userRole: list) {
-			role = userRole.getRole();
-		}
-		role.setDescription(userResponse1.getDescriptionRole());
-		role.setRoleName(userResponse1.getRoleName());
+//		List<UserRole> list = user.get().getUserRoles();
+//		//for(UserRole userRole: list) {
+//		//	role = userRole.getRole();
+//		//}
+//		role = list.get(0).getRole();
+//		//role.setDescription(userResponse1.getDescriptionRole());
+//		//role.setRoleName(userResponse1.getRoleName());
+//		//role.setUserRoles(list);
+//		
+//		UserRole userRole = new UserRole(user.get(), role);
+//		userRoleRepository.save(userRole);
 		
-		UserRole userRole = new UserRole(user.get(), role);
-		userRoleRepository.save(userRole);
 		
 		return new ResponseEntity<Object>("add sua thanh cong", HttpStatus.OK);
 	}

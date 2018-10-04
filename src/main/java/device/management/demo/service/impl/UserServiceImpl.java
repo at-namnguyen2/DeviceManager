@@ -101,8 +101,17 @@ public class UserServiceImpl implements UserService {
 	public Boolean editProfileUser(String email,String userdto) {
 		Date date = new Date();
 		User user = getUserByEmail(email);
-		Request request = new Request("" + userdto, requestconst.Update_Info, requestconst.Pending, date, user);
-		requestRepository.save(request);
+		Optional<Request> optionalRequest = requestRepository.findByUserAndType(user, requestconst.Update_Info);
+		if (!optionalRequest.isPresent()) {
+			Request request = new Request("content:" + userdto, requestconst.Update_Info, requestconst.Pending, date, user);
+			requestRepository.save(request);
+		} else {
+			Request request = optionalRequest.get();
+			request.setContent("content:" + userdto);
+			request.setUpdateDate(date);
+			requestRepository.save(request);
+		}
+		
 		return true;
 	}
 
@@ -323,5 +332,24 @@ public class UserServiceImpl implements UserService {
 			// TODO Auto-generated method stub
 			return null;
 		}
+		@Override
+	    public List<UserResponse2> getAllUserNotAdmin() {
+	        
+	        List<User> list = userRepository.findByUserRolesRoleRoleNameAndNonDelIsTrueAndActiveIsTrue(RoleConst.USER);
+	        List<UserResponse2> list1 = new ArrayList<>();
+	        for (User u : list) {
+	            
+	            UserResponse2 ur = convertTOResponse(u);
+	            list1.add(ur);
+	        }
+	        return list1;
+	    }
+
+	    @Override
+	    public void deleteUserSoftService(Long id) {
+	        // TODO Auto-generated method stub
+	        userRepository.deleteUserSoft(id);
+	        
+	    }
 
 }

@@ -83,10 +83,10 @@ public class RegistrationController {
 		return "register";
 	}
 	
-//	@GetMapping(path = "/registerAccount") 
-//	public String show() {
-//		return "add-user";
-//	}
+	@GetMapping(path = "/registerAccount") 
+	public String show() {
+		return "add-user";
+	}
 	@GetMapping(path ="/user")
 	public String showUser() {
 		return "user-home";
@@ -210,11 +210,12 @@ public class RegistrationController {
 	}
 
 	@GetMapping(path="activeAccount")
-	public  ResponseEntity<String> activeAccount(HttpServletRequest request, @RequestParam("token")String registCode,Model model) throws MessagingException {
+	public String activeAccount(HttpServletRequest request, @RequestParam("token")String registCode,Model model) throws MessagingException {
 
 		TokenVerifition tokenVerification = tokenVerificationService.findTokenByTokenCode(registCode);
 		if(tokenVerification == null) {
-			return new ResponseEntity<String>("Token is not true", HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<String>("Token is not true", HttpStatus.NOT_FOUND);
+			return "login";
 		}
 		User objUsers= tokenVerification.getUser();		
 		
@@ -226,17 +227,20 @@ public class RegistrationController {
 				tokenVerification.setTokenCode(veritificationUtil.generateVerificationCode(objUsers.getEmail() + objUsers.getPassword()));
 				tokenVerificationService.editToken(tokenVerification);
 				mailService.sendMail("Active Account","/activeAccount",objUsers.getEmail(),tokenVerification.getTokenCode(),tokenVerification.getExpireTime());
-				return new ResponseEntity<>("We sent you a new token", HttpStatus.OK);
+				//return new ResponseEntity<>("We sent you a new token", HttpStatus.OK);
 			}else {
 				boolean check = userService.activeUser(objUsers.getId());
 				if(check == true) {
 					tokenVerificationService.deleteTokenById(tokenVerification.getId());
-					return new ResponseEntity<>("Active user successfully", HttpStatus.OK);
+					//return new ResponseEntity<>("Active user successfully", HttpStatus.OK);
+					return "login-page";
 				}else {
-					return new ResponseEntity<>("Active user fail", HttpStatus.BAD_REQUEST);
+					//return new ResponseEntity<>("Active user fail", HttpStatus.BAD_REQUEST);
+					return "checkmail";
 				}
 			}			
 		}	
-	    return new ResponseEntity<>("Active user fail", HttpStatus.BAD_REQUEST);
+	    //return new ResponseEntity<>("Active user fail", HttpStatus.BAD_REQUEST);
+		return "checkmail";
 	}
 }	

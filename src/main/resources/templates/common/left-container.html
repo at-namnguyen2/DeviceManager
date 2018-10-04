@@ -7,10 +7,10 @@
             <div class="user-panel p-3 light mb-2">
                 <div>
                     <div class="float-left image">
-                        <img class="user_avatar" th:src="@{/assets/img/dummy/u2.png}" alt="User Image">
+                        <img class="user_avatar data-avatar" th:src="@{/assets/img/dummy/u2.png}" alt="User Image">
                     </div>
                     <div class="float-left info">
-                        <h6 class="font-weight-light mt-2 mb-1">Alexander Pierce</h6>
+                        <h6 class="font-weight-light mt-2 mb-1 fullname"></h6>
                         <a href="#"><i class="icon-circle text-primary blink"></i> Online</a>
                     </div>
                 </div>
@@ -26,16 +26,7 @@
              
             </li>
           
-            <li class="treeview"><a href="#"><i class="icon icon-account_box light-green-text s-18"></i>Users<i
-                    class="icon icon-angle-left s-18 pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a th:href="@{/admin/userall}"><i class="icon icon-circle-o"></i>All Users</a>
-                    </li>
-                    <li><a href="panel-page-users-create.html"><i class="icon icon-add"></i>Add User</a>
-                    </li>
-                    <li><a href="panel-page-profile.html"><i class="icon icon-user"></i>User Profile </a>
-                    </li>
-                </ul>
+            <li class="treeview"><a th:href="@{/admin/userall}"><i class="icon icon-account_box light-green-text s-18"></i>Users</i></a>
             </li>
             
               <li class="treeview"><a th:href="@{/admin/device}">
@@ -43,13 +34,6 @@
                 <span>Devices</span>
                 <span class="badge r-3 badge-primary pull-right"></span>
             </a>
-            <!--   <ul class="treeview-menu">
-                    <li><a href="admin/device"><i class="icon icon-circle-o"></i>All Products</a>
-                    </li>
-                    <li><a href="panel-page-products-create.html"><i class="icon icon-add"></i>Add
-                        New </a>
-                    </li>
-                </ul>   --> 
             </li>
             
               <li class="treeview"><a th:href="@{/admin/allocationreturn}">
@@ -75,3 +59,5 @@
             <li class="header light mt-3"><strong></strong></li>
         </ul>
     </section>
+    
+    	<script th:src="@{/assets/js/leftcontent.js}"></script>

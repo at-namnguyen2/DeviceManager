@@ -54,7 +54,7 @@ public interface UserRepsository extends JpaRepository<User, Long> {
 		
 		@Transactional
 		@Modifying
-		@Query(value = "insert into user values(0, ?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
+		@Query(value = "insert into user(active, description, email, non_del, non_locked,  password)  values(?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
 		int addUser1(Boolean active, String description, String email, Boolean nonDel, Boolean nonLocked, String password);
 	   
 
@@ -65,4 +65,9 @@ public interface UserRepsository extends JpaRepository<User, Long> {
 		@Modifying
 		@Query(value = "update user set non_del = 0", nativeQuery = true)
 		int delAllUser();
+		
+		@Transactional
+	    @Modifying
+	    @Query(value = "update user set non_del = 0 where id = ?1", nativeQuery = true)
+	    int deleteUserSoft(Long id);
 }

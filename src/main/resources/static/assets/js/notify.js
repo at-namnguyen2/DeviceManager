@@ -188,6 +188,9 @@ $(document).ready(function() {
 		$('.content2M2').text("content"+$row.find(".content2").text()) ;
 		$('.contentarea').val("Your device refund request is ");
 		$('.modalreturn').removeAttr('hidden',"");
+		var json = {};
+		json["employeeId"] = id;
+		
 	}
 	
 		   // Find the row
@@ -303,7 +306,8 @@ $(document).ready(function() {
 	
 			}
 		})
-		} else if(type === "Return" && status == "Approved") {
+		} else if(type == "Return" && status == "Approved") {
+			console.log("check"+jsondevice);
 			$.ajax({
 				url : '/setreturn',
 				  type: 'POST',
@@ -330,6 +334,7 @@ $(document).ready(function() {
 	})
 	getPageHistory();
 	function getPageHistory(){
+//		alert();
 		$.ajax({
 			url : '/getpagehistory',
 			data:{
@@ -337,6 +342,12 @@ $(document).ready(function() {
 			},
 			type : 'get',
 			success : function(value) {
+//				alert(value);
+				if(value ==1){
+//					alert();
+				 	$(".tablehistory").html("");
+		        	historyRequest(page-1);
+				}
 				console.log("history"+value);
 				$('#pagination-history').twbsPagination({
 			        totalPages: value,

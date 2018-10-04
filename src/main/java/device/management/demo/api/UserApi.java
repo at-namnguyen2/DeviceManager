@@ -65,7 +65,7 @@ public class UserApi {
    	**/
 	@PostMapping(path = "/userapi/editmyprofile", consumes = "multipart/form-data")
 	public ResponseEntity<Object> EditCurrentUser(@RequestPart("userdto") String userdto, @RequestPart("file") MultipartFile file, Principal p) {
-		
+		System.out.println("file:"+file);
 		String email = p.getName();
 		ObjectMapper mapper = new ObjectMapper();
 		UserDTO useredit = new UserDTO();
@@ -88,6 +88,32 @@ public class UserApi {
 		userService.editProfileUser(email, userdto);		
 		return new ResponseEntity<>("Your update request is pending", HttpStatus.OK);
 	}
+	
+	/**
+	* @summary edit profile of user
+	* @date sep 13, 2018
+	* @author Nam.Nguyen2
+	* @param userdto
+	* @return String message
+   	**/
+	@PostMapping(path = "/userapi/editmyprofile2", consumes = "multipart/form-data")
+	public ResponseEntity<Object> EditCurrentUserNotAvatar(@RequestPart("userdto") String userdto, Principal p) {
+		String email = p.getName();
+		ObjectMapper mapper = new ObjectMapper();
+		UserDTO useredit = new UserDTO();
+		try {
+			useredit = mapper.readValue(userdto, UserDTO.class);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("data:"+useredit);
+		userService.editProfileUser(email, userdto);		
+		return new ResponseEntity<>("Your update request is pending", HttpStatus.OK);
+	}
+	
 	
 	/**
 	* @summary list SA contact: phone via rolename Admin

@@ -37,6 +37,9 @@ public class Request implements Serializable{
 	@Column(name = "content", nullable = false)
 	private String content;
 	
+	@Column(name = "content_reply", nullable = true)
+	private String contentReply;
+	
 	@Column(name = "type", nullable = false)
 	private String type;
 	
@@ -103,6 +106,15 @@ public class Request implements Serializable{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+
+	public String getContentReply() {
+		return contentReply;
+	}
+
+	public void setContentReply(String contentReply) {
+		this.contentReply = contentReply;
 	}
 
 	public Request(String content, String type, String status, Date updateDate, User user) {

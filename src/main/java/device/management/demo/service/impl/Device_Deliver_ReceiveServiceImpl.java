@@ -150,7 +150,9 @@ public class Device_Deliver_ReceiveServiceImpl implements Device_Deliver_Receive
 		if (ddr.isPresent()) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
+			
 			ddr.get().setDateReturn(date);
+			System.out.println(date+"date:"+ddr.get().getDateReturn());
 			device_Deliver_ReceiveRepository.save(ddr.get());
 			DeviceDetail dd = deviceDetailRepository.findByProductId(edr.getProductId());
 			dd.setStatus(detailConst.NOTUSED);

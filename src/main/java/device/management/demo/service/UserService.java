@@ -77,4 +77,7 @@ public interface UserService {
 	List<UserResponse2> filterUser(String search);
 
 	UserResponse2 showInfoUser(User user);
+	List<UserResponse2> getAllUserNotAdmin();
+
+    void deleteUserSoftService(Long id);
 }

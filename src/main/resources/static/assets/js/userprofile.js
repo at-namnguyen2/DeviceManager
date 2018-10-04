@@ -19,7 +19,7 @@ $(document).ready(function() {
 	}
 	
 	$('#change-pass').click(function() {
-//		alert();
+
 		$('#v-pills-timeline-tab').click();
 	})
 		$.ajax({
@@ -42,7 +42,14 @@ $(document).ready(function() {
 				$('.address').val(value.address);
 				$('.dateOfBirth').text(birthday);
 				$('.dateOfBirth').val(value.dateOfBirth);
-				$('.data-avatar').attr('src',value.avatar);  
+				if(value.avatar == null || value.avatar == ""){
+					$('.data-avatar').attr('src','/images/0.png');
+				} else {	
+					$('.data-avatar').attr('src',value.avatar); 
+				$('.data-avatar-edit').attr('src',value.avatar); 
+				
+				}
+			
 				// dz-started
 				if (value.gender === true) {
 					$(".genderM").prop("checked", true);
@@ -105,8 +112,13 @@ $(document).ready(function() {
 		formData = new FormData(1);
 		files = [];
 		json = {};
+		var filedata = false;
 		  $.each(profile, function(i, field){
+			  
 			 if(field.name === "file"){
+				 if(field.value !== ""){
+					 filedata = true;
+					
 						var ImageURL = field.value;
 						// Split the base64 string in data and contentType
 						var block = ImageURL.split(";");
@@ -126,7 +138,7 @@ $(document).ready(function() {
 						var formDataToUpload = new FormData();
 						formData.append("file", blob);
 						console.log("hihi"+blob.name);
-				
+				 }
 			 } else if(field.name === "genderM"){
 				 json["gender"] = true;
 			 }  else if(field.name === "genderF"){
@@ -141,6 +153,7 @@ $(document).ready(function() {
 			var editdata = JSON.stringify(json);
 			formData.append("userdto", editdata);
 			console.log(editdata);
+			if(filedata === true){
 			$.ajax({
 				url : '/userapi/editmyprofile',
 				  type: 'POST',
@@ -154,7 +167,23 @@ $(document).ready(function() {
 //					alert(JSON.stringify(err));
 				}
 			})
-
+			} else {
+				$.ajax({
+					url : '/userapi/editmyprofile2',
+					  type: 'POST',
+						data: formData,
+					  processData: false,
+					  contentType: false,
+					success : function(value) {
+					},
+					error : function(err) {
+						console.log(err);
+//						alert(JSON.stringify(err));
+					}
+				})
+			}
+			$('.toast-save').click();
+			
 	})
 	
 					$.ajax({
@@ -220,6 +249,7 @@ $(document).ready(function() {
 			console.log("content: "+requestdata);
 			 sendrequest(requestdata);
 			 $('#content').val("");
+
 			 $('#modalRequest').modal('toggle');
 			 
 // var jsonStringProFile = JSON.stringify(proFileForm);
@@ -239,8 +269,8 @@ $(document).ready(function() {
 //			})
 	})
 	
-	
-
+	myrequest();
+	function myrequest(){
 		$.ajax({
 			url : '/myrequest',
 			type : 'get',
@@ -253,10 +283,13 @@ $(document).ready(function() {
 					 var block = request.content.split("content:");
 					 console.log(block[1]);
 					 if(request.status === "Pending"){
-						 $(".tablerequest").append("<tr><td class=\"typerequest\">"+request.type+"</td><td><a href=\"#\">"+block[1]+"</a></td><td>"+datetime+"</td><td><span class=\"statusrequest badge badge-danger\">"+request.status+"</span></td></tr>");	
 						 if(request.type === "Update Info"){
-							 disableedit();
+							 $(".tablerequest").append("<tr><td class=\"typerequest\">"+request.type+"</td><td><a href=\"#\">Update Info</a></td><td>"+datetime+"</td><td><span class=\"statusrequest badge badge-danger\">"+request.status+"</span></td></tr>");	
+//							 disableedit();
 							 $('.warning-edit').removeAttr('hidden',"");
+					 } else {
+						 $(".tablerequest").append("<tr><td class=\"typerequest\">"+request.type+"</td><td><a href=\"#\">"+block[1]+"</a></td><td>"+datetime+"</td><td><span class=\"statusrequest badge badge-danger\">"+request.status+"</span></td></tr>");	
+
 					 }
 					 }
 					 else if(request.status === "Approved"){
@@ -282,7 +315,7 @@ $(document).ready(function() {
 						 $('.tablerequest').find('td[class=typerequest]').addClass('text-primary');	
 					 }
 					 else if(request.type === "Update Info"){
-							 $('.tablerequest').find('td[class=typerequest]').addClass('text-danger');	
+							 $('.tablerequest').find('td[class=typerequest]').addClass('text-warning');	
 					 }
 			
 					  else if (request.type === "Reply"){
@@ -298,7 +331,7 @@ $(document).ready(function() {
 				
 			}
 		})
-
+	}
 	
 	// function send data request 
 	function sendrequest(requestdata){
@@ -315,7 +348,13 @@ $(document).ready(function() {
 //				alert(JSON.stringify(err));
 			}
 		})
+		
 		}
+	
+	$('#v-pills-request-tab').click(function(){
+		 $('.tablerequest').html("");
+		 myrequest();
+	})
 	
 	function disableedit(){
 		$(".fullname").prop("disabled", true);

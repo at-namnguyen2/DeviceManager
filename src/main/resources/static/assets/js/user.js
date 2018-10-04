@@ -161,7 +161,7 @@ $(document).ready(function() {
 				}
 					 }),
 					 $.ajax({
-							url : '/api/users/get-all-user',
+							url : '/api/users/get-all-userNotAdmin',
 							type : 'get',
 							success : function(value) {
 								console.log(value);
@@ -311,7 +311,7 @@ $('#checkedAll').click(function() {
 		
 	
 	 $.ajax({
-			url : '/api/users/deleteAll',
+			url : '/api/users/deleteAllSoft',
 			type : 'DELETE',
 			contentType : "application/json; charset=utf-8",
 //   		data : userString,
@@ -439,6 +439,7 @@ $('#update-user').click(function() {
             break;
          }
     }
+	user["avatar"] = "/images/16.jpg";
 	
 	var team2 = showValueTeam();
 	console.log(team2);
